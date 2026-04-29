@@ -1,0 +1,15 @@
+<api>
+  <jcw-types>
+    <type name="MainActivity" package="crc645a2969ee8ed4078e" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiAppCompatActivity" partial_assembly_qualified_name="Minemation.Mobile.MainActivity, Minemation.Mobile">
+      <constructors>
+        <constructor name="MainActivity" method="n_.ctor:()V:" jni_signature="()V" managed_parameters="" retval="void" is_dynamically_registered="True" />
+        <constructor name="MainActivity" method="n_.ctor:(I)V:" jni_signature="(I)V" managed_parameters="System.Int32, System.Private.CoreLib" params="int p0" retval="void" is_dynamically_registered="True" super_call="p0" activate_call="p0" />
+      </constructors>
+    </type>
+    <type name="MainApplication" package="crc645a2969ee8ed4078e" application_java_class="android.app.Application" mono_runtime_initialization="mono.MonoPackageManager.LoadApplication (context);" extends_type="crc6488302ad6e9e4df1a.MauiApplication" is_application="True" partial_assembly_qualified_name="Minemation.Mobile.MainApplication, Minemation.Mobile" application_constructor="MainApplication" />
+  </jcw-types>
+  <acw-types partial-assembly-name="Minemation.Mobile" module-name="Minemation.Mobile.dll">
+    <type assembly-qualified-name="Minemation.Mobile.MainActivity, Minemation.Mobile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="minemation.mobile.MainActivity" java-key="crc645a2969ee8ed4078e.MainActivity" managed-key="Minemation.Mobile.MainActivity" partial-assembly-qualified-name="Minemation.Mobile.MainActivity, Minemation.Mobile" />
+    <type assembly-qualified-name="Minemation.Mobile.MainApplication, Minemation.Mobile, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" compat-jni-name="minemation.mobile.MainApplication" java-key="crc645a2969ee8ed4078e.MainApplication" managed-key="Minemation.Mobile.MainApplication" partial-assembly-qualified-name="Minemation.Mobile.MainApplication, Minemation.Mobile" />
+  </acw-types>
+</api>

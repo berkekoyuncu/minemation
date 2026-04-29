@@ -1,0 +1,11 @@
+D:\minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.deps.json
+D:\minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.dll
+D:\minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.pdb
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.AssemblyInfoInputs.cache
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.AssemblyInfo.cs
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.csproj.CoreCompileInputs.cache
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.dll
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\refint\Minemation.Domain.dll
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.pdb
+D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\ref\Minemation.Domain.dll

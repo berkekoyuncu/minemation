@@ -1,0 +1,15 @@
+D:\minemation\src\Minemation.Application\bin\Debug\net10.0\Minemation.Application.deps.json
+D:\minemation\src\Minemation.Application\bin\Debug\net10.0\Minemation.Application.dll
+D:\minemation\src\Minemation.Application\bin\Debug\net10.0\Minemation.Application.pdb
+D:\minemation\src\Minemation.Application\bin\Debug\net10.0\Minemation.Domain.dll
+D:\minemation\src\Minemation.Application\bin\Debug\net10.0\Minemation.Domain.pdb
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.csproj.AssemblyReference.cache
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.AssemblyInfoInputs.cache
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.AssemblyInfo.cs
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.csproj.CoreCompileInputs.cache
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemati.BE4BCA51.Up2Date
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.dll
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\refint\Minemation.Application.dll
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.pdb
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\ref\Minemation.Application.dll
