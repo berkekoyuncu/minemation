@@ -1,0 +1,3 @@
+# Minemation
+
+Initial project skeleton.
