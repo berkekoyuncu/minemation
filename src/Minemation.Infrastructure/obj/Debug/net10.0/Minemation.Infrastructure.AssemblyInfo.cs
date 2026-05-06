@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Minemation.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87feddf73e1cb4c6938266b34b991f42b4d4a374")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8ac8306f17144846506835f0adb8b555d284867")]
 [assembly: System.Reflection.AssemblyProductAttribute("Minemation.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Minemation.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
