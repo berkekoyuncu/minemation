@@ -309,3 +309,4 @@ D:\minemation\src\Minemation.Mobile\obj\Debug\net10.0-maccatalyst\maccatalyst-x6
 D:\minemation\src\Minemation.Mobile\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\Minemation.Mobile.pdb
 D:\minemation\src\Minemation.Mobile\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\Minemation.Mobile.genruntimeconfig.cache
 D:\minemation\src\Minemation.Mobile\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\ref\Minemation.Mobile.dll
+D:\minemation\src\Minemation.Mobile\obj\Debug\net10.0-maccatalyst\maccatalyst-x64\Minemation.Mobile.sourcelink.json

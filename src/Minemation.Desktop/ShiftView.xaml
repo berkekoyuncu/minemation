@@ -1,0 +1,87 @@
+<UserControl x:Class="Minemation.Desktop.ShiftView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent">
+    
+    <materialDesign:DialogHost Identifier="ShiftDialog" CloseOnClickAway="True">
+        <!-- Dialog Content remains similar... -->
+        
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!-- Header -->
+                <RowDefinition Height="Auto" /> <!-- Search & Tabs -->
+                <RowDefinition Height="*" />    <!-- List -->
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Grid.Row="0" Text="VARDİYA YÖNETİMİ" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,20" />
+
+            <!-- Search & Tabs -->
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="350" />
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button Content="Aktif Vardiyalar" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource PrimaryBrush}" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="0,0,0,2" Margin="0,0,10,0" />
+                    <Button Content="Vardiya Geçmişi" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0" />
+                </StackPanel>
+
+                <TextBox Grid.Column="1" x:Name="ShiftSearchBox" materialDesign:HintAssist.Hint="Vardiya Ara (İsim, RFID...)" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" Foreground="{DynamicResource TextPrimaryBrush}" Padding="10,8" />
+            </Grid>
+
+            <!-- Grid -->
+            <DataGrid Grid.Row="2" x:Name="ShiftGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+                      Background="{DynamicResource SurfaceBrush}" 
+                      RowBackground="{DynamicResource SurfaceBrush}"
+                      AlternatingRowBackground="{DynamicResource CardBrush}"
+                      Foreground="{DynamicResource TextPrimaryBrush}"
+                      BorderBrush="{DynamicResource BorderBrush}"
+                      BorderThickness="1"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
+                      RowHeight="45">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                        <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Padding" Value="15,5" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                        <Setter Property="BorderThickness" Value="0,0,0,2" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Saat" Width="100" Binding="{Binding Time}" />
+                    <DataGridTextColumn Header="RFID No" Width="100" Binding="{Binding Rfid}" />
+                    <DataGridTextColumn Header="Personel" Width="*" Binding="{Binding PersonName}" />
+                    <DataGridTextColumn Header="Kan Grubu" Width="80" Binding="{Binding BloodType}" />
+                    <DataGridTextColumn Header="Bölge" Width="*" Binding="{Binding Location}" />
+                    <DataGridTextColumn Header="Görev" Width="*" Binding="{Binding Task}" />
+                    <DataGridTemplateColumn Header="Durum" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource InfoBrush}" CornerRadius="10" Padding="8,2" HorizontalAlignment="Left">
+                                    <TextBlock Text="Vardiyada" Foreground="White" FontSize="11" FontWeight="Bold" />
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="İşlem" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0">
+                                    <materialDesign:PackIcon Kind="SwapHorizontal" Foreground="{DynamicResource InfoBrush}" Width="18" Height="18" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

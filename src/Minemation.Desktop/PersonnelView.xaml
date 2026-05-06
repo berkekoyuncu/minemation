@@ -1,0 +1,188 @@
+<UserControl x:Class="Minemation.Desktop.PersonnelView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent">
+    
+    <materialDesign:DialogHost Identifier="PersonnelDialog" CloseOnClickAway="True">
+        <!-- Add/Edit Form Dialog Content -->
+        <materialDesign:DialogHost.DialogContent>
+            <Border Width="600" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
+                <StackPanel>
+                    <TextBlock x:Name="FormTitle" Text="Yeni Personel Kaydı" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,20" />
+                    
+                    <TabControl Style="{StaticResource MaterialDesignTabControl}">
+                        <TabItem Header="Kişisel Bilgiler">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox Grid.Row="0" Grid.Column="0" materialDesign:HintAssist.Hint="Ad" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBox Grid.Row="0" Grid.Column="1" materialDesign:HintAssist.Hint="Soyad" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="T.C. Kimlik No" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" MaxLength="11" />
+                                <DatePicker Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Doğum Tarihi" Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <ComboBox Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Cinsiyet" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Erkek" />
+                                    <ComboBoxItem Content="Kadın" />
+                                </ComboBox>
+                                <ComboBox Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="Kan Grubu" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="0 Rh+" />
+                                    <ComboBoxItem Content="A Rh+" />
+                                    <ComboBoxItem Content="B Rh+" />
+                                    <ComboBoxItem Content="AB Rh+" />
+                                </ComboBox>
+                            </Grid>
+                        </TabItem>
+                        
+                        <TabItem Header="İş ve Sistem">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <ComboBox Grid.Row="0" Grid.Column="0" materialDesign:HintAssist.Hint="Uzmanlık" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Maden Mühendisi" />
+                                    <ComboBoxItem Content="Saha Operatörü" />
+                                    <ComboBoxItem Content="İSG Uzmanı" />
+                                    <ComboBoxItem Content="Tekniker" />
+                                </ComboBox>
+                                <ComboBox Grid.Row="0" Grid.Column="1" materialDesign:HintAssist.Hint="Çalışan Tipi" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Tam Zamanlı" />
+                                    <ComboBoxItem Content="Yarı Zamanlı" />
+                                    <ComboBoxItem Content="Stajyer" />
+                                </ComboBox>
+                                <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="RFID Kart No" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                <ComboBox Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Kullanıcı Rolü" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Yönetici" />
+                                    <ComboBoxItem Content="Saha Personeli" />
+                                </ComboBox>
+                                <TextBox Grid.Row="2" Grid.ColumnSpan="2" materialDesign:HintAssist.Hint="Adres" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" Height="80" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="İptal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0,0,10,0" Foreground="{DynamicResource TextSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" />
+                        <Button Content="Kaydet" Background="{DynamicResource PrimaryBrush}" Foreground="White" Width="100" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+
+        <!-- Main Content -->
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" /> <!-- Header -->
+                <RowDefinition Height="Auto" /> <!-- Tabs & Search -->
+                <RowDefinition Height="*" />    <!-- Table -->
+                <RowDefinition Height="Auto" /> <!-- Footer -->
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <TextBlock Grid.Row="0" Text="PERSONEL YÖNETİMİ" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,20" />
+
+            <!-- Tabs & Search -->
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="350" />
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button x:Name="BtnAdmin" Content="İdari Personel" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource PrimaryBrush}" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="0,0,0,2" Click="BtnAdmin_Click" Margin="0,0,10,0" />
+                    <Button x:Name="BtnField" Content="Saha Personeli" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Click="BtnField_Click" Margin="0,0,10,0" />
+                </StackPanel>
+
+                <TextBox Grid.Column="1" x:Name="SearchBox" materialDesign:HintAssist.Hint="Personel Ara (Ad, Soyad, T.C...)" materialDesign:TextFieldAssist.HasClearButton="True" TextChanged="SearchBox_TextChanged" Style="{StaticResource MaterialDesignOutlinedTextBox}" Foreground="{DynamicResource TextPrimaryBrush}" Padding="10,8" />
+            </Grid>
+
+            <!-- Data Grid -->
+            <DataGrid Grid.Row="2" x:Name="PersonnelGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+                      Background="{DynamicResource SurfaceBrush}" 
+                      RowBackground="{DynamicResource SurfaceBrush}"
+                      AlternatingRowBackground="{DynamicResource CardBrush}"
+                      Foreground="{DynamicResource TextPrimaryBrush}"
+                      BorderBrush="{DynamicResource BorderBrush}"
+                      BorderThickness="1"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
+                      RowHeight="45">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                        <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Padding" Value="15,5" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                        <Setter Property="BorderThickness" Value="0,0,0,2" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="No." Width="50" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="RFID No" Width="100" Binding="{Binding Rfid}" />
+                    <DataGridTextColumn Header="Ad Soyad" Width="*" Binding="{Binding FullName}" />
+                    <DataGridTextColumn Header="T.C. Kimlik" Width="120" Binding="{Binding Identity}" />
+                    <DataGridTextColumn Header="Telefon" Width="120" Binding="{Binding Phone}" />
+                    <DataGridTextColumn Header="Kan Grubu" Width="80" Binding="{Binding BloodType}" />
+                    <DataGridTextColumn Header="Uzmanlık" Width="*" Binding="{Binding Role}" />
+                    <DataGridTemplateColumn Header="Durum" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border Background="{DynamicResource SuccessBrush}" CornerRadius="10" Padding="8,2" HorizontalAlignment="Left">
+                                    <TextBlock Text="{Binding Status}" Foreground="White" FontSize="11" FontWeight="Bold" />
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="İşlemler" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Click="BtnEdit_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
+                                    </Button>
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Margin="5,0,0,0">
+                                        <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Bottom Bar / Pagination Simulation -->
+            <Grid Grid.Row="3" Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="Toplam 150 Personel" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" Margin="0,0,20,0" />
+                    <Button Style="{StaticResource MaterialDesignOutlinedButton}" Content="Yazdır" Foreground="{DynamicResource TextSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" Height="35" Padding="10,0" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Yenile" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="BtnAddNew" Click="BtnAddNew_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}" Content="+ Yeni Personel" Style="{StaticResource MaterialDesignPaperButton}" Background="{DynamicResource PrimaryBrush}" Foreground="White" Height="40" Padding="15,0" FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

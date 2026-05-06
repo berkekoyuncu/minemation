@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Minemation.Mobile.Views.PersonnelPage"
+             Title="Personel"
+             BackgroundColor="{DynamicResource Black}">
+
+    <Grid RowDefinitions="Auto, *">
+        
+        <!-- Sub Tabs -->
+        <HorizontalStackLayout Grid.Row="0" Spacing="20" Padding="15">
+            <Label Text="İdari Personel" TextColor="{DynamicResource Gray300}" FontSize="16" />
+            <Label Text="Saha Personeli" TextColor="{DynamicResource Primary}" FontSize="16" FontAttributes="Bold">
+                <Label.TextDecorations>Underline</Label.TextDecorations>
+            </Label>
+        </HorizontalStackLayout>
+
+        <!-- Personnel List -->
+        <CollectionView Grid.Row="1" x:Name="PersonnelList" Margin="15,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BackgroundColor="{DynamicResource MidnightBlue}" 
+                           BorderColor="{DynamicResource Gray600}"
+                           CornerRadius="10"
+                           Padding="15"
+                           Margin="0,0,0,15"
+                           HasShadow="True">
+                        <Grid RowDefinitions="Auto, Auto" ColumnDefinitions="*, Auto">
+                            <Label Grid.Row="0" Grid.Column="0" Text="{Binding FullName}" FontAttributes="Bold" TextColor="{DynamicResource White}" FontSize="18" />
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding Role}" TextColor="{DynamicResource Gray300}" FontSize="14" />
+                            
+                            <Frame Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" 
+                                   BackgroundColor="{DynamicResource Primary}" 
+                                   CornerRadius="5" Padding="10,5" 
+                                   VerticalOptions="Center"
+                                   BorderColor="Transparent">
+                                <Label Text="{Binding Status}" TextColor="{DynamicResource RealWhite}" FontSize="12" FontAttributes="Bold" />
+                            </Frame>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- FAB: Ekle -->
+        <Button Grid.Row="1" 
+                Text="+" 
+                FontSize="32" 
+                CornerRadius="28" 
+                WidthRequest="56" 
+                HeightRequest="56"
+                BackgroundColor="{DynamicResource Secondary}"
+                TextColor="{DynamicResource RealWhite}"
+                HorizontalOptions="End" 
+                VerticalOptions="End" 
+                Margin="20" />
+    </Grid>
+</ContentPage>
