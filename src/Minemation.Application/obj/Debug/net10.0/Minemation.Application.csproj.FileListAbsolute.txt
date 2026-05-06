@@ -13,3 +13,4 @@ D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Applicatio
 D:\minemation\src\Minemation.Application\obj\Debug\net10.0\refint\Minemation.Application.dll
 D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.pdb
 D:\minemation\src\Minemation.Application\obj\Debug\net10.0\ref\Minemation.Application.dll
+D:\minemation\src\Minemation.Application\obj\Debug\net10.0\Minemation.Application.sourcelink.json

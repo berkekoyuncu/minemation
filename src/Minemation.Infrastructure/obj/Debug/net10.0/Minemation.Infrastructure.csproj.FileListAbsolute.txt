@@ -15,3 +15,4 @@ D:\minemation\src\Minemation.Infrastructure\obj\Debug\net10.0\Minemation.Infrast
 D:\minemation\src\Minemation.Infrastructure\obj\Debug\net10.0\refint\Minemation.Infrastructure.dll
 D:\minemation\src\Minemation.Infrastructure\obj\Debug\net10.0\Minemation.Infrastructure.pdb
 D:\minemation\src\Minemation.Infrastructure\obj\Debug\net10.0\ref\Minemation.Infrastructure.dll
+D:\minemation\src\Minemation.Infrastructure\obj\Debug\net10.0\Minemation.Infrastructure.sourcelink.json

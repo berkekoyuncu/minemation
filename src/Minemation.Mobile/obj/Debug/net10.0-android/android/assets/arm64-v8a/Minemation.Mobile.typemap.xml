@@ -1,4 +1,4 @@
-<api type="debug" assembly-name="Minemation.Mobile" mvid="6d1c1094deb643589fd8c96ad3ad7ec8">
+<api type="debug" assembly-name="Minemation.Mobile" mvid="5fc12fdfa1a9479b9e8bd35aade572ff">
   <java-to-managed>
     <entry java-name="crc645a2969ee8ed4078e/MainActivity" managed-name="Minemation.Mobile.MainActivity, Minemation.Mobile" managed-type-token-id="33554441" />
     <entry java-name="crc645a2969ee8ed4078e/MainApplication" managed-name="Minemation.Mobile.MainApplication, Minemation.Mobile" managed-type-token-id="33554442" />

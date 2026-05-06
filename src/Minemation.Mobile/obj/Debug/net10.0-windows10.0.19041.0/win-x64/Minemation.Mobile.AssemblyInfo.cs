@@ -11,14 +11,10 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyMetadataAttribute("Microsoft.Maui.ApplicationModel.AppInfo.PackageName", "com.companyname.minemation.mobile")]
-[assembly: System.Reflection.AssemblyMetadataAttribute("Microsoft.Maui.ApplicationModel.AppInfo.PublisherName", "User Name")]
-[assembly: System.Reflection.AssemblyMetadataAttribute("Microsoft.Maui.ApplicationModel.AppInfo.Name", "Minemation.Mobile")]
-[assembly: System.Reflection.AssemblyMetadataAttribute("Microsoft.Maui.ApplicationModel.AppInfo.Version", "1.0.0.1")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("Minemation.Mobile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+55bc60da2a89d8ae16b9481410b9f626ed4e152e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87feddf73e1cb4c6938266b34b991f42b4d4a374")]
 [assembly: System.Reflection.AssemblyProductAttribute("Minemation.Mobile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Minemation.Mobile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

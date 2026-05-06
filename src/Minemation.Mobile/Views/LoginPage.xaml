@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Minemation.Mobile.Views.LoginPage"
+             BackgroundColor="{DynamicResource Black}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30,50" Spacing="25">
+            <!-- Icon -->
+            <Path Data="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" Fill="{DynamicResource Primary}" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" Scale="2" Margin="0,40,0,20"/>
+
+            <Label Text="MINEMATION"
+                   FontSize="32"
+                   FontAttributes="Bold"
+                   TextColor="{DynamicResource White}"
+                   HorizontalOptions="Center" />
+            
+            <Label Text="Maden Sahası Yönetimi"
+                   FontSize="16"
+                   TextColor="{DynamicResource Gray300}"
+                   HorizontalOptions="Center" />
+
+            <VerticalStackLayout Spacing="15" Margin="0,30,0,0">
+                <Entry x:Name="IdentityEntry"
+                       Placeholder="T.C. Kimlik Numarası"
+                       TextColor="{DynamicResource White}"
+                       PlaceholderColor="{DynamicResource Gray400}"
+                       Keyboard="Numeric"
+                       MaxLength="11" />
+                       
+                <Entry x:Name="PasswordEntry"
+                       Placeholder="Şifre"
+                       IsPassword="True"
+                       TextColor="{DynamicResource White}"
+                       PlaceholderColor="{DynamicResource Gray400}" />
+            </VerticalStackLayout>
+
+            <Button Text="Giriş Yap"
+                    Clicked="OnLoginClicked"
+                    BackgroundColor="{DynamicResource Primary}"
+                    TextColor="{DynamicResource RealWhite}"
+                    CornerRadius="8"
+                    FontAttributes="Bold"
+                    Margin="0,20,0,0" />
+                    
+            <Label x:Name="ErrorLabel"
+                   TextColor="{DynamicResource Magenta}"
+                   HorizontalOptions="Center"
+                   IsVisible="False" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
