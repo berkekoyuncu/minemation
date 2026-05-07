@@ -1,0 +1,3044 @@
+=== START OF MINEMATION_SDD.pdf ===
+ Yazılım Tasarım Tanımlaması 
+(Software Design Description – SDD)  
+ 
+ 
+MINEMATION  
+Maden Saha sı Yönetim Otomasyonu 
+  
+Ders: BM314 – Yazılım Mühendisliği  
+Öğretim Üyesi: Prof. Dr. Hacer Karacan  
+Bilgisayar Mühendisliği Bölümü  
+Mühendislik Fakültesi  
+Gazi Üniversitesi  
+  
+Hazırlayanlar  
+Berke Koyuncu ( 23118080012)  
+Büşra Arslan (22118080007)  
+Elif Nisa Okur (22118080077)  
+ 
+ 
+Dönem: 2025- 2026 Bahar  
+Teslim Tarihi: 22 Nisan  2026
+ Revizyon Geçmişi  
+Versiyon  Tarih  Açıklama  Yazar  
+0.1 07.04.2026  Taslak oluşturuldu  ve 
+ilk içerik girişleri 
+yapıldı . Berke Koyuncu  
+0.2 19.04.2026  3. Bölüm içerik girişi 
+yapıldı.  Proje Ekibi  
+0.3 20.04.2026  3. ve 4. Bölüm içerik 
+girişi yapıldı.  Berke Koyuncu  
+0.4 20.04.2026  3. Bölüm içerik girişi 
+yapıldı.  Büşra Arslan  
+0.5 20.04.2026  3. Bölüm içerik girişi 
+yapıldı.  Elif Nisa Okur  
+1.0 22.04.2026  Bölümler birleştirildi 
+ve teslime hazırlandı.  Proje Ekibi  
+ 
+ İçindekiler  
+1. Giriş  ................................................................................................................................. 1 
+1.1 Tasarım Genel Bakış  ................................................................................................. 1 
+1.2 Gereksinim İzlenebilirlik Matrisi  .............................................................................. 1 
+1.3 Tanımlar, Kısaltmalar ve Terimler ............................................................................. 3 
+2. Sistem Mimari Tasarımı  .................................................................................................. 4 
+2.1 Seçilen Sistem Mimarisi  ........................................................................................... 4 
+2.1.1 Sunum Katmanı (Presentation Layer)  ................................................................ 5 
+2.1.2 Uygulama Katmanı (Application Layer)  ........................................................... 5 
+2.1.3 Veri Erişim Katmanı (Data Access Layer)  ......................................................... 5 
+2.1.4 Veri Tabanı Katmanı (Database Layer)  .............................................................. 5 
+2.2 Alternatif Tasarımların Tartışılması  ........................................................................... 5 
+2.3 Sistem Arayüz Tanımı  ............................................................................................... 5 
+2.3.1 Kullanıcı Arayüzleri (User Interfaces)  ............................................................... 5 
+2.3.2 Programlama Arayüzü (API)  .............................................................................. 5 
+2.3.3 Veri Tabanı Katman Arayüzü ............................................................................. 6 
+2.3.4 Donanım ve Sensör Arayüzleri  .......................................................................... 6 
+2.3.5 İletişim ve Ağ Protokolleri  ................................................................................. 6 
+3. Bileşenlerin Detaylı Tanımı  ............................................................................................ 6 
+3.1 Sistem İzleme ve Bakım Bileşeni  ............................................................................. 6 
+3.1.1 Amaç  .................................................................................................................. 6 
+3.1.2 İşlevler  ................................................................................................................ 6 
+3.1.3 Veri Yapıları  ........................................................................................................ 6 
+3.1.4 Arayüzler  ............................................................................................................ 6 
+3.1.5 Diğer Bileşenlerle Etkileşim  .............................................................................. 7 
+3.2 Güvenlik ve Kimlik Doğrulama Bileşeni  .................................................................. 7 
+3.2.1 Amaç  .................................................................................................................. 7 
+3.2.2 İşlevler  ................................................................................................................ 7 
+3.2.3 Veri Yapıları  ........................................................................................................ 7 
+3.2.4 Arayüzler  ............................................................................................................ 8 
+3.2.5 Diğer Bileşenlerle Etkileşim  .............................................................................. 8 
+3.3 Kullanıcı Arayüzü Bileşeni  ....................................................................................... 8 
+3.3.1 Amaç  .................................................................................................................. 8 
+ 3.3.2 İşlevler  ................................................................................................................ 8 
+3.3.3 Veri Yapıları  ........................................................................................................ 9 
+3.3.4 Arayüzler  ............................................................................................................ 9 
+3.3.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 10 
+3.4 Veri Erişim Bileşeni  ................................................................................................ 10 
+3.4.1 Amaç  ................................................................................................................ 10 
+3.4.2 İşlevler  .............................................................................................................. 10 
+3.4.3 Veri Yapıları  ...................................................................................................... 10 
+3.4.4 Arayüzler  .......................................................................................................... 11 
+3.4.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 11 
+3.5 Uygulama Katmanı  ................................................................................................. 12 
+3.5.1 Amaç  ................................................................................................................ 12 
+3.5.2 İşlevler  .............................................................................................................. 12 
+3.5.3 Veri Yapıları  ...................................................................................................... 12 
+3.5.4 Arayüzler  .......................................................................................................... 13 
+3.5.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 14 
+3.6 Vardiya Yönetim Bileşeni  ....................................................................................... 14 
+3.6.1 Amaç  ................................................................................................................ 14 
+3.6.2 İşlevler  .............................................................................................................. 14 
+3.6.3 Veri Yapıları  ...................................................................................................... 15 
+3.6.4 Arayüzler  .......................................................................................................... 15 
+3.6.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 16 
+3.7 Bildirim / Raporlama Bileşeni  ................................................................................ 16 
+3.7.1 Amaç  ................................................................................................................ 16 
+3.7.2 İşlevler  .............................................................................................................. 16 
+3.7.3 Veri Yapıları  ...................................................................................................... 17 
+3.7.4 Arayüzler  .......................................................................................................... 17 
+3.7.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 18 
+3.8 Harita ve Konum İzleme Bileşeni  ........................................................................... 19 
+3.8.1 Amaç  ................................................................................................................ 19 
+3.8.2 İşlevler  .............................................................................................................. 19 
+3.8.3 Veri Yapıları  ...................................................................................................... 19 
+3.8.4 Arayüzler  .......................................................................................................... 19 
+ 3.8.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 20 
+3.9 Donanım ve Sensör Entegrasyon Bileşeni  .............................................................. 20 
+3.9.1 Amaç  ................................................................................................................ 20 
+3.9.2 İşlevler  .............................................................................................................. 20 
+3.9.3 Veri Yapıları  ...................................................................................................... 20 
+3.9.4 Arayüzler  .......................................................................................................... 21 
+3.9.5 Diğer Bileşenlerle Etkileşim  ............................................................................ 21 
+3.10 Hata Yönetimi ve Loglama Bileşeni  ..................................................................... 21 
+3.10.1 Amaç  .............................................................................................................. 21 
+3.10.2 İşlevler  ............................................................................................................ 21 
+3.10.3 Veri Yapıları  .................................................................................................... 22 
+3.10.4 Arayüzler  ........................................................................................................ 22 
+3.10.5 Diğer Bileşenlerle Etkileşim  .......................................................................... 22 
+4. Kullanıcı Arayüzü Tasarımı  .......................................................................................... 22 
+4.1 Kullanıcı Arayüzünün Tanımı  ................................................................................. 22 
+4.1.1 Kullanıcı Rolleri ve Arayüz Yapısı  ................................................................... 23 
+4.1.2 Gezinme Yapısı (Navigation)  ........................................................................... 23 
+4.1.3 Giriş ve Kimlik Doğrulama Arayüzü ............................................................... 24 
+4.1.4 Ekran Görüntüleri  ............................................................................................. 24 
+4.1.5 Nesneler ve İşlemler  ......................................................................................... 35 
+5. Kaynakça  ....................................................................................................................... 54 
+6. Ek Materyaller  ............................................................................................................... 54 
+Ek A: Diyagramlar  ........................................................................................................ 54 
+Ek B: Toplantı Notları  ................................................................................................... 58 
+1 1. Giriş  
+1.1 Tasarım Genel Bakış  
+Bu doküman, Minemation otomasyon yazılımının tasarımını tanımlar. Minemation, maden 
+sahasında personel, vardiya, ekipman takibi ve yönetimi yapmayı sağlayacaktır . Minemation, 
+bunlara ek olarak güvenlik, risk analizi ve saha düzeni süreçlerini yöneti lmesini sağlayacaktır.  
+Dokümanın gayesi, yazılım gereksinimlerinde bahsi geçen işlevlerin, sistem içerisinde 
+nasıl gerçekleneceğini açıklamak ve gerçekleme aşaması için teknik bir temel olmaktır.  
+1.2 Gereksinim İzlenebilirlik Matrisi  
+Gereksinim No.  Açıklama  Tasarım Bileşeni  
+ERS-01 Planlı sistem bakımları yılda en fazla 12 
+adet gerçekleştirilecektir.  3.1 Sistem İzleme ve Bakım 
+Bileşeni  
+ERS-02 Planlı bakım süreleri önceden 
+kullanıcılara bildirilecek ve bakım 
+işlemleri mümkün olduğunca 00.00 – 
+06.00 saatleri arasında gerçekleştirilecektir.  3.1 Sistem İzleme ve Bakım 
+Bileşeni, 3.7  
+Bildirim/Raporlama Bileşeni  
+ERS-03 Veri tabanı ile bir bağlantı hatası 
+oluştuğunda sistem 5 saniye içerisinde 
+hata mesajı döndürecektir.  3.10 Hata Y önetimi ve 
+Loglama Bileşeni, 3.4 Veri 
+Erişim Bileşeni  
+ERS-04 İstemci uygulamaları sunucu ile bağlantı 
+kuramazsa 10 saniye içinde bağlantı hatası bildirimi gösterecektir.  3.3 Kullanıcı Arayüzü 
+Bileşeni, 3.10 Hata Yönetimi Bileşeni  
+ERS-05 Sistem servislerinin çalışabilirlik durumu 
+her 30 saniyede bir sağlık kontrolü 
+mekanizması ile kontrol edilecektir.  3.1 Sistem İzleme ve Bakım 
+Bileşeni  
+GUV -01 Sistem, kullanıcı ve sistem bilgilerinin 
+korunması amacıyla rol tabanlı erişim denetimi (RBAC) kullanacaktır.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni  
+GUV -02 Kullanıcılar, sisteme sadece kendi kimlik 
+numarası ve şifre bilgisi ile girecektir.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni  
+GUV -03 Kullanıcı şifreleri düz metin olarak 
+saklanmayacak olup veri tabanında şifrelenmiş biçimde saklanacaktır.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni, 3.4  Veri 
+Erişim Bileşeni  
+GUV -04 Yeni kullanıcılar ilk girişlerinde 
+şifrelerini değiştirmeye zorlanacak olup 
+aksi takdirde sisteme giriş 
+yapamayacaklardır.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni  
+2 GUV -05 Kullanıcı şifreleri en az 8 karakter 
+uzunluğunda olacak ve en az bir büyük 
+harf, bir küçük harf, bir rakam ve bir özel 
+karakter içerecektir.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni  
+GUV -06 Yanlış kullanıcı bilgileri ile giriş 
+yapılması hâlinde sistem loglarına kaydedilecektir.  3.10 Hata Yönetimi ve 
+Loglama Bileşeni , 3.7 
+Bildirim/Raporlama Bileşeni  
+GUV -07 Sistem, kullanıcıların rollerine göre 
+erişim sınırlandırması uygulayacaktır.  3.2 Güvenlik ve Kimlik 
+Doğrulama Bileşeni  
+GUV -08 Saha personeli sadece  kendisine ait sağlık 
+bilgilerini, vardiya bilgilerini ve kendi vardiyasını etkileyen kayıtları 
+görüntüleyebilecektir.  3.2 Güvenlik v e Kimlik 
+Doğrulama Bileşeni, 3.3  
+Kullanıcı Arayüzü Bileşeni, 3.6 Vardiya Yönetim Bileşeni  
+SUR -1 Sistem bileşenleri, birbirinden bağımsız 
+çalışabilecek modüller h âlinde 
+tasarlanacaktır. Bu sayede bir modülde 
+yapılan değişiklik diğer modülleri 
+etkilemeyecektir.  2.1 Seçilen Sistem Mimarisi , 
+3.x Tüm Modüler Bileşenler  
+SUR -2 Sistem mimarisi ve veri yapıları geliştirici 
+dokümantasyonu ile saklanacak ve gelecekteki bakım süreçleri ni 
+kolaylaştıracaktır.  2. Sistem Mimari Tasarımı  
+TAS-1 Yazılım yalnızca tek bir bilgisayara veya 
+tek bir maden sahasına bağlı olmayacaktır. Gerekli kurulum 
+yapıldığında sistem başka bilgisayarlarda 
+veya başka maden sahalarında da 
+çalıştırılabilecektir.  2.1 Seçilen Sistem Mimarisi, 
+3.5 Uygulama Katmanı  
+TAS-2 Sistemin kullanıcı arayüzleri hem 
+masaüstü hem de mobil cihazlardan erişilebilecek biçimde tasarlanacaktır.  3.3 Kullanıcı Arayüzü 
+Bileşeni  
+PER-1 Kullanıcı işlemleri, sistem tarafından en 
+fazla 3 saniye içinde yanıtlanacaktır.  3.5 Uygulama Katmanı, 3.4  
+Veri Erişim Bileşeni  
+PER-2 Sistem, en az 200 eş zamanlı kullanıcıyı 
+destekleyecektir.  2.1 Seçilen Sistem Mimarisi, 
+3.5 Uygulama Katmanı  
+PER-3 Sensör ve çevre aygıtlardan gelen veriler 
+en fazla 6 saniye içinde sistem tarafından 
+işlenecek ve görüntülenebilecektir.  3.9 Donanım ve Sensör 
+Entegrasyon Bileşeni, 3. 5 
+Uygulama Katmanı  
+ 
+3 1.3 Tanımlar, Kısaltmalar ve Terimler  
+Terim  Açıklama  
+API (Application 
+Programming 
+Interface)  API'ler , iki farklı uygulamanın birbirleriyle iletişim kurmasına olanak 
+tanıyan bir aracı görevi görür. Bu iletişim veri göndermeyi ve almayı 
+içerebilir veya farklı yazılım bileşenlerinin etkileşim kurmasına ve 
+görevleri gerçekleştirmesine izin verebilir. [1]  
+Backend  Arka uç Katmanı, Sunucu Katmanı  
+Branch  Repository içinde, ana geliştirme hattından (ör. main/master) ayrılarak 
+bağımsız geliştirme yapılmasını sağlayan paralel çalışma dalıdır.  
+Build  Kaynak kodun derlenmesi, bağlanması ve gerekli bağımlılıkların 
+entegre edilmesi sonucunda çalıştırılabilir bir yazılım çıktısının 
+(executable, package vb.) üretilmesi sürecidir.  
+Developer  Geliştirici  
+Frontend  Ön yüz Katmanı, Kullanıcı Katmanı  
+GPS (Global 
+Positioning 
+System)  Kullanıcıların dünyanın her yerinde, günün 24 saati, tüm hava 
+koşullarında tam konumlarını, hızlarını ve zamanlarını sağlamalarına olanak tanıyan uydu tabanlı bir navigasyon sistemidir. [ 2] 
+Güvenlik ve Sağlık 
+Personeli  İş güvenliği uzmanı, iş sağlığı doktoru ve herhangi bir sağlık 
+personelini temsil eden roldür.  
+Hash  Hash, belirli bir girdinin (mesela bir metin veya dosya) benzersiz bir 
+temsilini veren bir fonksiyondur. Genellikle şifreleme, veri 
+doğrulama, veri bütünlüğü ve özetleme gibi amaçlarla kullanılır. [3]  
+IDE (Integrated 
+Development 
+Environment)  Kaynak kod editörü, derleyici/yorumlayıcı, hata ayıklayıcı (debugger) 
+ve çeşitli geliştirme araçlarını entegre biçimde sunan yazılım 
+geliştirme ortamıdır. Geliştirme sürecinin verimliliğini artırmayı 
+amaçlar.  
+İşletme Dışı 
+(Geçici) Personel  Normal şartlar altında işletmede çalışmayıp lojistik, teslimat, ek 
+ihtiyaç gibi muhtelif sebeplerden belirli bir süre için işletmeye 
+girmesi gereken personeli temsil eden roldür.  
+Log Bilgi işlemde log kaydı, bir bilgisayar sisteminde meydana gelen 
+olaylar hakkındaki bilgileri bir günlük dosyasında depolamak 
+anlamına gelir. [4] 
+Minimum Çalışan 
+Ürün (MVP)  Ürünün temel işlevlerini içeren, kullanıcıya değer sunabilecek en 
+basit ve erken sürümüdür. Amaç, minimum geliştirme maliyetiyle 
+gerçek kullanıcı geri bildirimi toplamaktır.  
+OOP  Object Oriented Programming (Nesne Tabanlı Programlama)  
+4 Repository (Repo)  Proje kaynak kodlarının, dokümanlarının ve ilgili tüm dosyaların 
+versiyon kontrol sistemi (ör. Git) üzerinde tutulduğu merkezi 
+depolama alanıdır.  
+RFID (Radio 
+Frequency Identification) RFID, üzerinde mikroişlemci ile donanmış etiket taşıyan bir nesnenin, 
+bu etikette taşıdığı kimlik yapısı ile hareketlerinin izlenebilmesine imkân  veren radyo frekansları ile çalışan teknolojiye verilen addır . [5] 
+Rol Tabanlı Erişim 
+Denetimi (RBAC)  Bir sistem  içerisindeki kullanıcı izinlerinin, çalışanların rollerine göre 
+atamasını mümkün kılan bir sistemdir. [ 6] 
+Saha Personeli  Makine operatörleri, teknisyenler, üretim ekibi üyeleri, destek 
+personeli vb. saha içinde görevli personeli temsil eden roldür.  
+SDD  Software Design Description (Yazılım Tasarım Tanımlaması)  
+Sistem Yöneticisi 
+(Administrator)  Sistem yöneticisi, en temel tanımıyla sistem üzerindeki tüm yetkilere 
+sahip kullanıcıdır.  
+SPMP  Software Project Management Plan (Yazılım Projesi Yönetim Planı)  
+SRS Software Requirements Specifications (Yazılım Gereksinim Belirtimi)  
+STD  Software Test Documentation (Yazılım Test Dokümanı)  
+TCP/IP Verinin bir uçtan diğer uca güvenilir ve yönlendirilebilir biçimde 
+taşınmasını sağlayan kurallar bütünüdür. 
+Teknik Personel  Baş mühendis, maden mühendisi, jeoloji mühendisi, üretim şefi, 
+vardiya amiri, saha koordinatörü gibi sahadaki teknik personeli temsil eden roldür.  
+Use Case  Kullanım Senaryosu  
+Üst Yönetim  Genel müdür, işletme müdürü, maden sahası müdürü vb. işletmenin 
+en üst yönetim birimlerini temsil eden roldür.  
+Veri Tabanı 
+Yönetim Sistemi (DBMS)  Veri tabanları oluşturmak ve yönetmek için bir sistem yazılımıdır.  
+2. Sistem Mimari Tasarımı  
+2.1 Seçilen Sistem Mimarisi  
+Minemation'da , sistemin sürdürülebilirliğini ve farklı platformlara uyum yeteneğini 
+artırmak amacıyla, istemci -sunucu modelini temel alan katmanlı bir yazılım mimarisi 
+benimsenecektir. Tasarlanan yapı, Windows tabanlı masaüstü sistemler ve mobil cihazlar gibi ortamlard an gelen talepleri, merkezi bir sunucu üzerinden karşılayacak şekilde kurgulanacaktır.  
+Bu ayrık yapı sayesinde, her bir katman kendi içerisinde bağımsız olarak geliştirilebilecek 
+ve sistemin genelinde bakım süreçleri daha etkin bir şekilde yürütülebilecektir.  
+5 2.1.1 Sunum Katmanı (Presentation Layer)  
+Bu katmanda masaüstü platformu için WPF, mobil için  ise .NET MAUI teknolojileri tercih 
+edilerek çok platformlu arayüz deneyimi hedeflenecek  ve kullanıcı etkileşimi yönetilecektir.  
+2.1.2 Uygulama Katmanı (Application Layer)  
+Sistemin iş mantığının merkezidir. Kullanıcı talepleri bu katmandaki servisler aracılığıyla 
+işlenecek ve veri akış süreçleri burada gerçekleştirilecektir.  
+2.1.3 Veri Erişim Katmanı (Data Access Layer)  
+Uygulama ile veri tabanı  arasındaki soyutlamayı sağlayan katmandır. Veri manipülasyon 
+işlemleri için nesne -ilişkisel eşleme (ORM) yeteneklerine sahip Entity Framework Core 
+kullanılacaktır.  
+2.1.4 Veri Tabanı  Katmanı (Database Layer)  
+Sistem verilerinin bütünlüğünü ve kalıcılığını sağlamak üzere ilişkisel veri tabanı  yönetim 
+sistemi olarak Microsoft SQL Server kullanılacaktır.  Personel, ekipman, vardiya, vaka ve rapor 
+verileri merkezi bir veri tabanında tutulmaktadır . 
+2.2 Alternatif Tasarımların Tartışılması 
+Sistem tasarımı sürecinde katmanlı mimari dışında monolitik mimari ve mikroservis 
+mimari yaklaşımları da değerlendirilmiştir.  
+Monolitik mimaride tüm bileşenler birleşik olarak geliştirildiği için uygulaması basit gibi 
+görünür lakin bu durum küçük ölçekli projelerde yarar sağlasa da sistem büyüdükçe geliştirim 
+ve bakım süreçleri ni zorlaştır acaktır.  
+Bilakis mikroservis mimarisin in gayesi olan  yüksek ölçeklenebilirlik ve bağımsız servis 
+yönetimi, bu proje özelinde gereksiz karmaşıklık oluşturacağı ve fazladan yük getireceği için 
+tercih edilmeyecektir.  
+Bu değerlendirmeler sonucu, bu proje özelinde ihtiyaçlara en uygun mimari, katmanlı 
+mimari seçilmiştir.  
+2.3 Sistem Arayüz Tanımı  
+Sistemi oluşturan bileşenlerin birbiriyle uyumlu çalışabilmesi ve veri bütünlüğünün 
+korunması amaçlanacaktır. Sistemin iletişim altyapısı beş temel bileşenden oluşmaktadır.  
+2.3.1 Kullanıcı Arayüzleri (User Interfaces)  
+Sistem, masaüstü ve mobil platformlar için optimize edilmiş grafiksel kullanıcı arayüzleri 
+sunmaktadır. Kullanıcıların sisteme erişimi, platformdan bağımsız erişimi sağlayan bu 
+katmanlar üzerinden gerçekleştirilecektir.  
+2.3.2 Programlama Arayüzü (API)  
+İstemci uygulamaları ile merkezi sunucu arasındaki veri trafiği RESTful API mimarisi 
+üzerinden yönetilecektir.  
+6 2.3.3 Veri Tabanı Katman Arayüzü  
+Sunucu uygulaması, verilerin kalıcılığını sağlamak amacıyla ilişkisel bir veri tabanı  
+yönetim sistemi ile entegre çalışacaktır. Veri erişim süreçlerinde, veri tabanı  şeması ile nesne 
+modellerini eşleştiren ORM (Object -Relational Mapping) yaklaşımı benimsenerek kod 
+seviyesinde soyutlama ve güvenlik sağlanacaktır.  
+2.3.4 Donanım ve Sensör Arayüzleri  
+Minemation, fiziksel katmandan veri toplamak amacıyla gaz sensörleri, GPS modülleri ve 
+RFID okuyucular gibi çeşitli donanım bileşenleriyle tümleşik olabilecek şekilde esnek bir 
+yapıda tasarlanacaktır.  
+2.3.5 İletişim ve Ağ Protokolleri  
+Sistem bileşenleri arasındaki veri iletimi TCP/IP tabanlı ağ altyapısı üzerinde 
+yapılandırılacaktır. İstemci- sunucu haberleşmesinde veri güvenliğini ve standartları sağlamak 
+amacıyla HTTP/HTTPS protokolleri temel iletişim kanalı olarak belirlenmiştir.  
+3. Bileşenlerin Detaylı Tanımı  
+3.1 Sistem İzleme ve Bakım Bileşeni  
+3.1.1 Amaç  
+Bu bileşenin amacı, gereksinim izleme matrisinde tanımlanan ERS -01, ERS -02 ve ERS -
+05 numaralı  gereksinimleri karşılamaktır. Bu bileşen sistemin kesintisiz çalışmasını sağlamak, 
+sistem servislerinin sağlık d urumunu izlemek ve planlı  bakım sür eçlerini yönetmekle 
+sorumludur.  
+3.1.2 İşlevler  
+• Uygulamanın çalışması için gerekli olan temel servislerin durumunu belirli aralıklarla denetleyecektir.  
+• Servislerden birinin yanıt vermemesi, beklenen sürede cevap dönmemesi veya hata 
+üretmesi durumunda ilgili durumu sistem hatası veya servis kesintisi olarak 
+işaretleyecektir.  
+• Sistem genelinde oluşan çalışma zamanı hatalarının, erişim problemlerinin ve 
+bakım kaynaklı kesintilerin tek bir izleme mantığı altında değerlendirilmesine katkı 
+sağlayacaktır.  
+• Planlı bakım süreçlerinin başlangıç zamanı, bitiş zamanı, bakım açıklaması ve 
+bakım kapsamı gibi bilgilerin tanımlanmasını destekleyecektir.   
+3.1.3 Veri Yapıları  
+Bu bileşen için bağımsız bir veri yapısı tanımlanmamıştır.  
+3.1.4 Arayüzler  
+Bu bileşen, uygulama katmanı üzerinden sağlanan servisler aracılığıyla 
+gerçekleştirilecektir. Sistem izleme ve bakım işlemleri için aşağıdaki türde servislerin 
+bulunması planlanmaktadır:  
+ 
+7 • Sistem sağlık durumunun sorgulanması  
+• Sistem servislerinin durumunun görüntülenmesi  
+• Planlı bakım işlemlerinin başlatılması ve yönetilmesi  
+Planlanan API servisleri:  
+• GET /system/status → sistem genel durumunu döndürür  
+• GET /system/health → servislerin sağlık durumunu döndürür  
+• POST /maintenance → bakım süreci başlatır  
+3.1.5 Diğer Bileşenlerle Etkileşim  
+• Hata Yönetimi ve Loglama Bileşeni ile iletişim kurarak servis hatalarının, erişim 
+problemlerinin ve bakım olaylarının kayıt altına alınmasını sağlayacaktır. 
+• Bildirim ve Raporlama Bileşeni ile entegre çalışarak bakım başlangıcı, bakım bitişi, kritik hata ve sistem uyarısı gibi olayların ilgili kullanıcılara iletilmesine katkı sağlayacaktır.  
+3.2 Güvenlik ve Kimlik Doğrulama Bileşeni  
+3.2.1 Amaç  
+Bu bileşenin amacı gereksinim izleme matrisinde tanımlanan GUV -01, GUV -02, GUV -04, 
+GUV -05, GUV -07 ve GUV -08 numaralı gereksinimleri karşılamaktır. Bu bileşen kullanıcıların 
+sisteme güvenli biçimde giriş yapmasını sağlamak, kimlik doğrulama işlemlerini yürü tmek, rol 
+tabanlı erişim denetimini uygulamak ve kullanıcıların yalnızca yetkili oldukları veri ve 
+modüllere erişebilmesini sağlamakla sorumludur. Güvenlik yaklaşımı, sistemde benimsenen 
+RBAC yapısına uygun olacaktır.  
+3.2.2 İşlevler  
+• Kullanıcının kimlik numarası ve şifre bilgisi ile sisteme giriş yapmasını sağlayacaktır.  
+• Girilen kullanıcı bilgilerini doğrulayacak ve doğrulama sonucuna göre oturum başlatacaktır.  
+• İlk giriş yapan kullanıcıları şifre değiştirme akışına yönlendirecektir.  
+• Şifre karmaşıklık kurallarını denetleyecek ve uygun olmayan şifrelerin kabul edilmesini engelleyecektir.  
+• Kullanıcı rolüne göre erişebileceği modülleri ve işlemleri belirleyecektir.  
+• Saha personeli gibi kısıtlı erişime sahip kullanıcıların yalnızca kendilerine ait veya kendi vardiyalarını etkileyen verilere erişmesini sağlayacaktır.  
+• Yetkisiz erişim taleplerini reddedecek ve ilgili durumu uygun bileşenlere iletecektir.  
+3.2.3 Veri Yapıları  
+Bu bileşen, güvenlik süreçlerini yürütebilmek amacıyla uygulama ve veri tabanı 
+katmanında Ek A’da ( Şekil A2  ve Şekil A4) gösterilen  türde mantıksal veri yapılarından 
+yararlanacaktır . 
+8 3.2.4 Arayüzler  
+Bu bileşen, istemci uygulamaları ile sunucu arasında kimlik doğrulama ve yetkilendirme 
+akışını yöneten servisler aracılığıyla gerçekleştirilecektir. Güvenlik işlemleri için aşağıdaki 
+türde servislerin bulunması planlanmaktadır:  
+• Kullanıcı giriş doğrulama servisi  
+• İlk giriş ve şifre değiştirme servisi  
+• Rol ve yetki sorgulama servisi  
+• Oturum doğrulama ve erişim kontrol servisi  
+Planlanan API servisleri:  
+• POST /auth/login → kullanıcı kimlik doğrulaması yapar  
+• POST /auth/change-password → ilk giriş veya normal şifre değiştirme 
+işlemini gerçekleştirir  
+• GET /auth/me → aktif kullanıcının temel oturum ve rol bilgisini döndürür  
+• GET /auth/permissions → kullanıcının erişebileceği modülleri ve yetkileri 
+döndürür  
+• POST /auth/logout → aktif oturumu sonlandırır  
+3.2.5 Diğer Bileşenlerle Etkileşim  
+• Kullanıcı Arayüzü Bileşeni ile birlikte  çalışarak giriş ekranı, şifre değiştirme ekranı 
+ve yetkiye bağlı ekran yönlendirmelerini yönetecektir.  
+• Veri Erişim Bileşeni ile iletişim kurarak kullanıcı, rol ve şifre bilgilerini güvenli 
+biçimde okuyacak ve güncelleyecektir.  
+• Uygulama Katmanı ile birlikte çalışarak erişim kontrol kararlarının iş mantığı seviyesinde uygulanmasını sağlayacaktır.  
+• Hata Yönetimi ve Loglama Bileşeni ile entegre çalışarak başarısız giriş denemeleri, yetkisiz erişim girişimleri ve güvenlik ihlali niteliğindeki olayların kayıt altına alınmasına katkı sağlayacaktır.  
+3.3 Kullanıcı Arayüzü Bileşeni  
+3.3.1 Amaç  
+Bu bileşenin amacı gereksinim izleme matrisinde tanımlanan ERS -04, GUV -08 ve TAS -2 
+numaralı gereksinimleri karşılamak ve sistemin masaüstü ile mobil platformlarda kullanılabilmesini sağlamaktır. Bu bileşen kullanıcıların sisteme eriştiği grafiksel katmanı 
+oluşturacak, kullanıcı etkileşimlerini yönetecek, rol bazlı ekran gösterimini sağlayacak ve 
+sistem modüllerine düzenli biçimde erişilmesini mümkün kılacaktır.  
+3.3.2 İşlevler  
+• Kullanıcıya giriş ekranı, şifre belirleme ekranı ve rolüne bağlı ana ekranları sunacaktır.  
+• Gezinme çubuğu ve benzeri arayüz bileşenleri ile modüller arası geçişi sağlayacaktır.  
+9 • Rol tabanlı erişim denetimi sonucunda yalnızca ilgili modülleri kullanıcıya 
+gösterecektir.  
+• Personel, ekipman, vardiya, vaka, raporlama ve harita modüllerine ait ekranların 
+görüntülenmesini sağlayacaktır.  
+• Kullanıcının yaptığı işlemler sonucu API isteklerini tetikleyecek ve dönen sonuçları kullanıcıya sunacaktır.  
+• Sunucuya veya veri tabanına erişim kaynaklı hata durumlarında kullanıcıya 
+anlaşılır hata mesajları gösterecektir.  
+• Masaüstü ve mobil platformlarda tutarlı bir kullanım akışı sağlayacaktır.  
+3.3.3 Veri Yapıları  
+Bu bileşen için kullanıcı arayüzü durumunu yönetmek amacıyla aşağıdaki mantıksal veri 
+yapılarından yararlanılması planlanmaktadır:  
+• Oturum Görünüm Modeli: Aktif kullanıcı bilgisi, rol, erişilebilir modüller ve 
+oturum durumu bilgisini tutacaktır.  
+• Gezinme Öğesi: Menü başlığı, modül adı, ikon bilgisi ve erişim yetkisi gibi verileri içerecektir.  
+• Ekran Durumu: Yükleniyor, başarılı, boş veri, hata gibi arayüz durumlarını temsil edecektir.  
+• Listeleme ve Filtreleme Parametreleri: Tablo veya liste ekranlarında sıralama, 
+filtreleme ve arama bilgilerini taşıyacaktır.  
+Bu yapılar doğrudan veri tabanı yapıları olmayıp, istemci taraflı arayüz yönetimi için 
+kullanılacaktır.  
+3.3.4 Arayüzler  
+Bu bileşen, kullanıcı ile sistem arasındaki doğrudan etkileşimi sağlayan istemci 
+uygulamaları üzerinden gerçekleştirilecektir. Masaüstü tarafında WPF, mobil tarafında .NET 
+MAUI kullanılacaktır. Kullanıcı arayüzü bileşeninin haberleşeceği başlıca servis türleri 
+şunlardır:  
+• Kimlik doğrulama servisleri  
+• Personel ve ekipman yönetim servisleri  
+• Vardiya yönetim servisleri  
+• Vaka, rapor ve harita servisleri  
+• Bildirim ve durum sorgulama servisleri  
+Planlanan API servisleri : 
+• POST /auth/login → giriş işlemi  
+• GET /personnel → personel listeleme  
+• GET /equipment → ekipman listeleme  
+• GET /shift → vardiya bilgilerini görüntüleme  
+• GET /incident → vaka kayıtlarını görüntüleme  
+• GET /reports → rapor kayıtlarını görüntüleme  
+10 • GET /map → harita ve konum verilerini görüntüleme  
+3.3.5 Diğer Bileşenlerle Etkileşim  
+• Güvenlik ve Kimlik Doğrulama Bileşeni ile birlikte  çalışarak giriş, oturum ve yetki 
+kontrol sonuçlarına göre ekran gösterimini yönetecektir.  
+• Uygulama Katmanı ile iletişim kurarak kullanıcı işlemlerine karşılık gelen iş 
+mantığı süreçlerini başlatacaktır.  
+• Veri Erişim Bileşeni ile doğrudan değil, uygulama katmanı ve API üzerinden 
+dolaylı biçimde veri alışverişi yapacaktır.  
+• Harita ve Konum İzleme Bileşeni, Vardiya Yönetim Bileşeni ve 
+Bildirim/Raporlama Bileşeni gibi alan bileşenlerinden gelen verileri kullanıcıya sunacaktır.  
+• Hata Yönetimi ve Loglama Bileşeni ile bağlantılı çalışarak erişim veya sistem hatalarında kullanıcıya uygun geri bildirim verilmesine katkı sağlayacaktır.  
+3.4 Veri Erişim Bileşeni  
+3.4.1 Amaç  
+Bu bileşenin amacı, gereksinim izleme matrisinde tanımlanan ERS -03, GUV -03 ve PER -
+01 gereksinimlerini desteklemek ve sistemin veri tabanı ile güvenli, tutarlı ve sürdürülebilir biçimde haberleşmesini sağlamaktır.  
+3.4.2 İşlevler  
+• Uygulama katmanından gelen veri okuma, ekleme, güncelleme ve silme taleplerini veri tabanı işlemlerine dönüştürecektir.  
+• Personel, ekipman, vardiya, vaka, rapor ve kullanıcı verilerinin kalıcı biçimde saklanmasını sağlayacaktır.  
+• Tablolar arası ilişkileri uygulama seviyesinde yöneterek veri bütünlüğünün korunmasına katkı sağlayacaktır.  
+• Kullanıcı şifrelerinin düz metin olarak değil, hash’lenmiş biçimde saklanmasını destekleyecektir.  
+• Veri tabanı bağlantı hatalarını algılayacak ve ilgili hata bilgilerini üst katmanlara iletecektir.  
+• Sorgu ve kayıt işlemlerinde performans gereksinimlerini destekleyecek bir erişim düzeni sağlayacaktır.  
+• ORM yaklaşımı ile veri tabanı ayrıntılarını uygulama katmanından soyutlayacaktır.  
+3.4.3 Veri Yapıları  
+Bu bileşen, veri tabanı varlıklarını ve ilişkilerini temsil eden kalıcı veri yapıları üzerine 
+kurulacaktır. Mantıksal olarak aşağıdaki temel yapılar üzerinde çalışacaktır:  
+• Personel  
+• Rol 
+• Ekipman  
+• Vardiya  
+11 • Vaka  
+• Rapor  
+• Konum Kaydı  
+• Bildirim  
+Bu veri yapılarında her tablo için birincil anahtar bulunacak, ilişkiler yabancı anahtarlarla 
+tanımlanacak ve zorunlu alanların boş bırakılmasına izin verilmeyecektir. Veri yapılarının 
+mantıksal karşılıkları Ek A'da ( Şekil A2  ve Şekil A4) gösterilmiştir.  
+3.4.4 Arayüzler  
+Bu bileşen, uygulama katmanına veri erişim servisleri sunan bir soyutlama katmanı olarak 
+gerçekleştirilecektir. Gerçekleştirim sırasında Entity Framework Core tabanlı repository veya 
+benzeri veri erişim sınıfları kullanılması planlanmaktadır. Bu bileşen do ğrudan istemciye açık 
+bir API sunmamakta olup, uygulama katmanındaki servisler tarafından kullanılacaktır. 
+Veri erişim işlemleri için aşağıdaki türde servislerin bulunması planlanmaktadır:  
+• Kullanıcı sorgulama ve güncelleme işlemleri  
+• Personel ve ekipman kayıt işlemleri  
+• Vardiya ve vaka kayıt işlemleri  
+• Rapor kayıt ve listeleme işlemleri  
+• Konum ve sensör verilerinin saklanması  
+• Log ve hata kayıtlarının kalıcı olarak tutulması  
+Bu bileşenin dolaylı olarak desteklediği planlanan API servisleri:  
+• GET /personnel 
+• POST /personnel 
+• GET /equipment 
+• POST /equipment 
+• GET /shifts 
+• POST /shifts 
+• GET /incidents 
+• POST /incidents 
+• GET /reports 
+• POST /reports 
+3.4.5 Diğer Bileşenlerle Etkileşim  
+• Güvenlik ve Kimlik Doğrulama Bileşeni ile birlikte  çalışarak kullanıcı, rol ve şifre 
+özet bilgilerini güvenli biçimde yönetecektir.  
+• Uygulama Katmanı ile doğrudan etkileşim kurarak iş mantığının ihtiyaç duyduğu 
+verileri sağlayacak ve iş mantığı tarafından üretilen değişiklikleri kalıcı hale 
+getirecektir.  
+• Donanım ve Sensör Entegrasyon Bileşeni tarafından iletilen sensör ve konum 
+verilerinin veri tabanına kaydedilmesine katkı sağlayacaktır.  
+12 • Hata Yönetimi ve Loglama Bileşeni ile entegre çalışarak veri tabanı bağlantı 
+hataları ve erişim istisnalarının kayıt altına alınmasını destekleyecektir.  
+• Bildirim/Raporlama Bileşeni, Vardiya Yönetim Bileşeni ve Harita ve Konum 
+İzleme Bileşeni gibi alan bileşenlerinin ihtiyaç duyduğu kalıcı veri altyapısını sağlayacaktır.  
+3.5 Uygulama Katmanı  
+3.5.1 Amaç  
+Bu bileşenin amacı, sistemin iş mantığını merkezi bir yapıda gerçekleştirmektir. Uygulama 
+katmanı, kullanıcı arayüzlerinden gelen istekleri karşılayacak ve bu istekleri belirlenen iş 
+kurallarına göre işleyecektir. Gerekli durumlarda veri erişim katmanı, gü venlik bileşeni, 
+bildirim bileşeni ve diğer sistem bileşenleri ile iletişim kuracaktır.  
+Bu katman gereksinim izlenebilirlik matrisinde belirtilen TAS -1, PER -1, PER -2 ve PER -3 
+gereksinimlerinin karşılanmasına katkı sağlayacaktır.  
+3.5.2 İşlevler  
+Uygulama katmanı, sistemin ana iş kurallarını yöneten servisleri içerecektir. Bu kapsamda 
+da aşağıdaki işlevleri yerine getirecektir:  
+• Kullanıcı arayüzlerinden gelen istekleri alıp ilgili iş mantığına yönlendirecektir.  
+• Personel, ekipman, vardiya, vaka, aksiyon, harita ve rapor işlemleri için uygulama 
+servislerini yürütecektir.  
+• Kullanıcı rolüne göre hangi işlemleri yapabileceğini kontrol edecektir.  
+• Veri erişim katmanına gönderilecek işlemleri doğrulama, filtreleme yapacak ve iş 
+kuralı kontrolünden geçirecektir.  
+• Vardiya oluşturma, vardiyaya personel ve ekipman atama, vaka değerlendirme ve rapor oluşturma gibi süreçlerin mantığını yönetecektir.  
+• Sensör ve çevre aygıtlardan gelen verileri uygun işleme adımlarından geçirerek ilgili modüle aktaracaktır.  
+• Kritik durumlarda bildirim oluşturulmasını ve uygun aksiyonların tetiklenmesini sağlayacaktır.  
+3.5.3 Veri Yapıları  
+Bu katman, veriyi doğrudan kalıcı bir biçimde saklayan katman değil; iş kurallarını 
+yürütmek için kullanılan katmandır. Uygulama düzeyinde veri yapıları ve servis modelleri bu 
+katmanda tanımlanacaktır. Bu veri yapıları da aşağıdaki türlerden oluşacaktır:  
+• İstek modelleri (Request DTOs): Kullanıcı arayüzlerinden veya dış bileşenlerden 
+gelen verileri taşıyan yapı. 
+• Yanıt modelleri (Response DTOs): İşlenen verilerin istemciye düzenli ve kontrollü bir biçimde iletilmesini sağlayan yapı. 
+• Servis modelleri: personel, ekipman, vardiya, vaka ve rapor süreçlerinde kullanılan iş mantığına ait veri yapıları.  
+13 • Doğrulama modelleri: Zorunlu alan, veri tipi, tarih -saat uyumu ve yetki denetimi 
+gibi kontrollerde kullanılan yardımcı yapılar.  
+Bu veri yapıları, sunum katmanından gelen verilerin doğrudan veri tabanına aktarılmasını 
+engelleyecek ve katmanlar arası bağımlılığı azaltacaktır.  
+3.5.4 Arayüzler  
+Uygulama katmanı, temel olarak API denetleyicileri üzerinden çağrılan servis arayüzleri 
+ile gerçekleştirilecektir. Bu katmanda her ana iş alanı için ayrı servis tanımlaması 
+planlanmaktadır. Böylece modülerlik korunacak ve bir modülde yapılan değişiklik diğer 
+modülleri en az düzeyde etkileyecektir.  
+Planlanan başlıca servis arayüzleri aşağıdaki gibidir:  
+• IPersonnelService 
+• IEquipmentService 
+• IShiftService 
+• IIncidentService  
+• IActionService 
+• IReportService 
+• INotificationService 
+• IMapService 
+• ISensorProcessingService 
+Planlanan örnek API uç noktaları aşağıdaki gibi olacaktır:  
+• POST /auth/login 
+• GET /personnel 
+• POST /personnel 
+• GET /equipment 
+• POST /shifts 
+• PUT /shifts/{id} 
+• POST /shifts/{id}/assign-personnel 
+• GET /incidents 
+• PUT /incidents/{id} 
+• POST /reports 
+• POST /sensor-data 
+Bu servisler üzerinden sağlanacak işlemler örnek olarak aşağıdaki türde olacaktır:  
+• personel listeleme, ekleme, güncelleme  
+• ekipman listeleme, ekleme, güncelleme  
+• vardiya oluşturma, vardiya güncelleme, vardiyaya personel/ekipman atama  
+• vaka listeleme ve vaka durumu güncelleme  
+• rapor oluşturma ve rapor listeleme  
+• sensör verisi alma, işleme ve ilgili modüle aktarma  
+14 • gerekli durumlarda bildirim oluşturma  
+3.5.5 Diğer Bileşenlerle Etkileşim  
+Uygulama katmanı, sistemin merkezi işleyiş katmanı olduğu için diğer birçok bileşen ile 
+etkileşim halindedir. Bunları aşağıdaki şekilde açıklayabiliriz:  
+• Kullanıcı Arayüzü Bileşeni ile etkileşerek istemciden gelen kullanıcı işlemlerini 
+alır ve sonuçlarını uygun yanıt modelleri ile geri döndürür.  
+• Güvenlik ve Kimlik Doğrulama Bileşeni ile entegre çalışarak kullanıcı kimliğini, rol bilgisini ve işlem yetkilerini kontrol eder.  
+• Veri Erişim Bileşeni ile iletişim kurarak kalıcı veri işlemlerini gerçekleştirir. Uygulama katmanı iş kurallarını uygular, veri erişim katmanı ise veriyi saklar ve getirir.  
+• Vardiya Yönetim Bileşeni için vardiya oluşturma, atama, güncelleme ve listeleme süreçlerinin servis mantığını sağlar.  
+• Bildirim / Raporlama Bileşeni ile etkileşerek bakım bildirimi, kritik vaka bildirimi ve sistem içi rapor üretim süreçlerini tetikler.  
+• Harita ve Konum İzleme Bileşeni ile personel, ekipman ve saha konum bilgilerinin işlenmesi ve istemciye uygun biçimde sunulması süreçlerinde birlikte çalışır.  
+• Donanım ve Sensör Entegrasyon Bileşeninden gelen verileri işleyerek vaka yönetimi, risk izleme ve aksiyon süreçlerine aktarır.  
+• Hata Yönetimi ve Loglama Bileşeni ile entegre çalışarak uygulama servislerinde oluşan hata, istisna ve işlem kayıtlarının izlenmesini sağlar.  
+Kurulan bu yapı sayesinde uygulama katmanı, sistemdeki tüm modellerin ortak iş 
+mantığında çalışmasını sağlayacak ve merkezi bir yapı sağlayacaktır.  
+3.6 Vardiya Yönetim Bileşeni  
+3.6.1 Amaç  
+Bu bileşenin amacı, maden sahasında gerçekleştirilen operasyonların düzenli bir şekilde 
+yürütülebilmesi için vardiya planlama ve yönetimi süreçlerinin kontrol altına alınmasıdır.  
+Bu bileşen vardiyaların oluşturulması, düzenlenmesi, personel ve ekipman atamalarının 
+yapılması ve vardiya bilgilerinin görüntülenmesini sağlayarak sistemin operasyonel anlamda düzeninin sağlar. Kullanıcıların rol ve yetkilerine bağlı olarak vardiya bilgilerine erişmelerini 
+sağlar. Bu sayede de sistemin iş akışlarının düzenli ilerlemesine katkı sağlar.  
+Bu bileşen gereksinim izlenebilirlik matrisinde belirtilen GUV -08 ve SUR -1 
+gereksinimlerinin karşılanmasına katkı sağlayacaktır.  
+3.6.2 İşlevler  
+Bu bileşen aşağıda belirtilen temel işlevleri yerine getirecektir:  
+• Mevcut vardiyaların listelenmesini sağlar.  
+• Vardiya listeleri üzerinde filtreleme ve sıralama yapılmasına olanak tanır.  
+• Yetkili kullanıcılar tarafından yeni vardiya oluşturulmasını sağlar.  
+• Var olan vardiya bilgilerinin güncellenmesine imkân tanır.  
+15 • Vardiyalara personel ve ekipman atama işlemlerini gerçekleştirir.  
+• Vardiya tarih, saat, ekip, sorumlu kişi (vardiya amiri) gibi bilgilerin yönetilmesini 
+sağlar.  
+• Kullanıcının rolüne göre yalnızca yetkili olduğu vardiyalara erişmesini sağlar.  
+• Saha personeline yalnızca kendi vardiyası ile ilgili bilgileri görüntüleme imkânı 
+sunar.  
+• Vardiya ile ilişkili vaka ve rapor bilgilerine erişimi destekler.  
+3.6.3 Veri Yapıları  
+Vardiya Yönetim Bileşeni kapsamında aşağıdaki temel veri yapıları kullanılacaktır:  
+• Shift (Vardiya):  
+o ShiftId (PK)  
+o ShiftName  
+o StartTime  
+o EndTime  
+o SupervisorId  
+o Description  
+o Status  
+• ShiftPersonnel (Vardiya -Personel İlişkisi):  
+o Id (PK)  
+o ShiftId (FK)  
+o PersonnelId (FK)   
+• ShiftEquipment (Vardiya -Ekipman İlişkisi):  
+o Id (PK)  
+o ShiftId (FK)  
+o EquipmentId (FK)  
+Bu bileşende kullanılacak veri yapıları Ek A’da ( Şekil A2 ve Şekil A 4) gösterilmiştir.  
+3.6.4 Arayüzler  
+Bu bileşen, uygulama katmanı üzerinden sağlanan servisler ve API uç noktaları aracılığıyla 
+gerçekleştirecektir.  
+Planlanan servis arayüzleri şu şekildedir:  
+• IShiftService  
+• IShiftAssignmentService 
+Bu servisler üzerinden sağlanacak işlemler:  
+• vardiya listeleme  
+• vardiya oluşturma  
+• vardiya güncelleme  
+• vardiya silme  
+• vardiyaya personel atama  
+• vardiyaya ekipman atama  
+16 • vardiya detaylarını görüntüleme  
+Planlanan örnek API uç noktaları:  
+• GET /shifts → vardiya listesini döndürür  
+• GET /shifts/{id} → vardiya detayını döndürür  
+• POST /shifts → yeni vardiya oluşturur  
+• PUT /shifts/{id} → vardiya bilgilerini günceller  
+• POST /shifts/{id}/assign-personnel → vardiyaya personel atar  
+• POST /shifts/{id}/assign-equipment → vardiyaya ekipman atar  
+Bu arayüzler sayesinde istemci uygulamaları, vardiya yönetim işlemlerini merkezi sistem 
+üzerinden gerçekleştirebilecektir.  
+3.6.5 Diğer Bileşenlerle Etkileşim  
+• Uygulama Katmanı ile doğrudan entegre çalışarak vardiya işlemlerinin iş mantığını 
+yürütür.  
+• Kullanıcı Arayüzü Bileşeni üzerinden gelen vardiya işlemleri (oluşturma, görüntüleme, düzenleme) bu bileşene iletilir ve sonuçlar kullanıcıya sunulur.  
+• Güvenlik ve Kimlik Doğrulama Bileşeni ile etkileşerek kullanıcıların rol ve yetkilerine göre vardiya işlemlerine erişimi kontrol edilir.  
+• Veri Erişim Bileşeni ile iletişim kurarak vardiya, personel ve ekipman verilerinin veri tabanında saklanması ve getirilmesi sağlanır.  
+• Bildirim / Raporlama Bileşeni ile entegre çalışarak vardiya oluşturma, güncelleme veya kritik değişiklik durumlarında ilgili kullanıcılara bildirim gönderilmesini sağlar.  
+• Harita ve Konum İzleme Bileşeni ile etkileşerek vardiya kapsamındaki personel ve 
+ekipmanların saha üzerindeki konum bilgilerinin görüntülenmesini destekler.  
+• Hata Yönetimi ve Loglama Bileşeni ile birlikte çalışarak vardiya işlemleri sırasında oluşan hataların ve işlem kayıtlarının sistem loglarına yazılmasını sağlar.  
+3.7 Bildirim / Raporlama Bileşeni  
+3.7.1 Amaç  
+Bu bileşenin amacı, sistem içerisinde gerçekleşen önemli olayların ilgili kullanıcılara 
+iletilmesini ve sitem verilerinin anlamlı raporlar halinde sunulmasını sağlamaktır.  
+Bu bileşen; bakım süreçleri, kritik sistem olayları, vaka durumları ve kullanıcı işlemleri 
+gibi durumlarda kullanıcıların bilgilendirilmesini sağlarken eş zamanlı olarak da sistemde 
+biriken verilerin analiz edilerek raporlanmasını sağlar.  Bu bileşen siste min izlenebilirliği 
+açısından büyük öneme sahiptir. Yönetim süreçlerini de destekler.  
+Bu bileşen gereksinim izlenebilirlik matrisinde belirtilen ERS -02 ve GUB -06 
+gereksinimlerinin karşılanmasına katkı sağlayacaktır.  
+3.7.2 İşlevler  
+Bu bileşen aşağıdaki temel işlevleri yerine getirecektir:  
+17 • Sistem bakım başlangıcı ve bitişi gibi durumlarda kullanıcılara bildirim gönderir.  
+• Kritik hata, sistem uyarısı ve olağan dışı durumlarda ilgili kullanıcılara uyarı iletir.  
+• Vaka oluşumu, vaka güncellemeleri ve aksiyon gerektiren durumlarda bildirim üretir.  
+• Vardiya değişiklikleri hakkında ilgili kullanıcılara bildirim sağlar.  
+• Kullanıcıların rolüne göre özelleştirilmiş bildirim içerikleri sunar.  
+• Bildirimlerin sistem içerisinde görüntülenmesini ve gerektiğinde geçmiş bildirimlere 
+erişimi sağlar.  
+• Kullanıcıların belirli olaylara ilişkin rapor oluşturmasına imkân tanır.  
+• Personel, ekipman, vardiya ve vaka verilerine dayalı raporların oluşturulmasını sağlar.  
+• Raporların filtrelenmesi, sıralanması ve farklı türlere göre listelenmesini destekler.  
+• Oluşturulan raporların kullanıcı arayüzü üzerinden görüntülenmesini sağlar.  
+3.7.3 Veri Yapıları  
+Bu bileşen kapsamında aşağıdaki temel veri yapıları kullanılacaktır:  
+Notification (Bildirim):  
+• NotificationId (PK)  
+• Title  
+• Message  
+• Type (Bilgilendirme, Uyarı, Kritik)  
+• CreatedDate  
+• IsRead  
+• UserId (FK)  
+Report (Rapor):  
+• ReportId (PK)  
+• ReportType (Personel, Ekipman, Vaka, Vardiya vb.)  
+• CreatedDate  
+• CreatedBy (FK)  
+• Parameters (filtreleme kriterleri)  
+• Content (rapor verisi / referansı)  
+Request / Response Modelleri:  
+• CreateNotificationRequest  
+• NotificationResponseModel  
+• CreateReportRequest  
+• ReportResponseModel  
+Bu veri yapıları sayesinde bildirimlerin kullanıcı bazlı takibi yapılabilecek ve raporlar 
+sistem içerisinde düzenli bir biçimde saklanabilecektir.  Bu bileşende kullanılan veri yapıları Ek 
+A’da ( Şekil A2 ve Şekil A 4) gösterilmiştir.  
+3.7.4 Arayüzler  
+Bu bileşen, uygulama katmanı üzerinden sağlanan servisler ve API uç noktaları aracılığıyla 
+gerçekleştirilecektir.  
+18 Planlanan servis arayüzleri:  
+• INotificationService  
+• IReportService  
+Bu servisler üzerinden sağlanacak işlemler:  
+• bildirim oluşturma  
+• bildirim listeleme  
+• bildirim okundu bilgisi güncelleme  
+• kullanıcıya özel bildirim getirme  
+• rapor oluşturma  
+• rapor listeleme  
+• rapor detay görüntüleme  
+Planlanan örnek API uç noktaları:  
+• GET /notifications → kullanıcıya ait bildirimleri getirir  
+• PUT /notifications/{id}/read → bildirimi okundu olarak işaretler  
+• POST /notifications → yeni bildirim oluşturur  
+• GET /reports → rapor listesini getirir  
+• GET /reports/{id} → rapor detayını getirir  
+• POST /reports → yeni rapor oluşturur  
+Bu arayüzler sayesinde istemci uygulamaları, sistemdeki bildirim ve raporlama işlemlerini 
+merkezi bir yapı üzerinden gerçekleştirebilecektir.  
+3.7.5 Diğer Bileşenlerle Etkileşim  
+• Uygulama Katmanı ile entegre çalışarak sistemde oluşan olaylara bağlı olarak 
+bildirim ve rapor oluşturma süreçlerini tetikler.  
+• Sistem İzleme ve Bakım Bileşeni ile etkileşerek bakım süreçleri ve sistem durumu 
+hakkında kullanıcıların bilgilendirilmesini sağlar.  
+• Vardiya Yönetim Bileşeni ile entegre çalışarak vardiya değişikliklerine bağlı 
+bildirimlerin oluşturulmasını sağlar.  
+• Kullanıcı Arayüzü Bileşeni üzerinden bildirimlerin görüntülenmesini ve raporların kullanıcıya sunulmasını sağlar.  
+• Güvenlik ve Kimlik Doğrulama Bileşeni ile etkileşerek bildirim ve raporların yalnızca yetkili kullanıcılar tarafından görüntülenmesini sağlar.  
+• Veri Erişim Bileşeni ile iletişim kurarak bildirim ve rapor verilerinin veri tabanında saklanmasını ve getirilmesini sağlar.  
+• Hata Yönetimi ve Loglama Bileşeni ile birlikte çalışarak sistem hataları ve önemli olaylar sonucunda bildirim oluşturulmasına katkı sağlar.  
+19 3.8 Harita ve Konum İzleme Bileşeni  
+3.8.1 Amaç  
+Bu bileşenin amacı, maden sahası içerisindeki personel ve ekipmanların gerçek zamanlı 
+konumlarını harita üzerinde görselleştirmek ve saha personeline güvenli yolbul desteği 
+sağlamaktır.  
+3.8.2 İşlevler  
+• Aktif vardiyadaki personel ve ekipmanları, harita üzerinde görüntüler.  
+• Takip cihazlarından gelen sinyalleri işleyerek varlıkların X ve Y koordinatlarını 
+günceller.  
+• Saha personelinin maden sahası içerisindeki hareketlerini düzenlemek için rota 
+planlaması yapar.  
+• Sahada oluşan vakaların konumunu işaretleyerek müdahale ekiplerini yönlendirir.  
+3.8.3 Veri Yapıları  
+Bu bileşen aşağıdaki temel veri yapılarını kullanır:  
+• KonumKaydı  
+o konumID: int  
+o enlem / xKoordinat: double  
+o boylam / yKoordinat: double  
+o zamanDamgası: DateTime  
+o varlıkTipi: string (Personel / Ekipman) 
+o varlıkID: int  
+• Harita  
+o haritaID: int  
+o sahaAdı: string 
+o boyutBilgisi: string  
+o güncellemeTarihi: DateTime  
+• TakipCihazı  
+o cihazID: int  
+o cihazTipi: string (RFID, GPS vb.)  
+o bağlıVarlıkID: int  
+o sonKonum: KonumKaydı  
+Bu bileşenin kullanacağı veri yapıları Ek A’da ( Şekil A2 ve Şekil A 4) gösterilmiştir.  
+3.8.4 Arayüzler  
+• Harita Görüntüleme Arayüzü: Kullanıcının etkileşime girdiği ana harita ekranı.  
+• Donanım API Arayüzü: GPS ve RFID cihazlarından gelen TCP/IP tabanlı verilerin sisteme giriş yaptığı yazılım arayüzü.  
+• Veri Tabanı Arayüzü: Konum verilerinin kaydedilmesi ve sorgulanması için kullanılan SQL Server/EF Core arayüzü. 
+20 3.8.5 Diğer Bileşenlerle Etkileşim  
+• 3.3 Kullanıcı Arayüzü Bileşeni ile birlikte  çalışarak harita verilerinin masaüstü ve 
+mobil arayüzlerde gösterilmesini sağlayacaktır.  
+• 3.4 Veri Erişim Bileşeni ile iletişim kurarak konum kayıtlarının saklanması ve 
+okunmasını gerçekleştirecektir.  
+• 3.5 Uygulama Katmanı üzerinden konum verilerinin işlenmesi, filtrelenmesi ve uygun kullanıcıya sunulması sağlanacaktır.  
+• 3.6 Vardiya Yönetim Bileşeni ile ilişki kurarak belirli vardiyaya ait personel ve ekipmanların konum bazlı izlenmesine katkı sağlayacaktır.  
+• 3.9 Donanım ve Sensör Entegrasyon Bileşeni ile entegre çalışarak GPS, RFID ve 
+benzeri takip aygıtlarından gelen verilerin sisteme alınmasını sağlayacaktır. 
+• 3.10 Hata Yönetimi ve Loglama Bileşeni ile birlikte çalışarak konum verisi alma, güncelleme ve gösterim sırasında oluşabilecek hata durumlarının kayıt altına 
+alınmasına katkı sağlayacaktır.  
+• 3.7 Bildirim / Raporlama Bileşeni ile dolaylı olarak ilişki kurarak harita ve konum temelli olayların bildirim veya rapor içeriklerinde kullanılmasına temel 
+oluşturacaktır.  
+3.9 Donanım ve Sensör Entegrasyon Bileşeni  
+3.9.1 Amaç  
+Bu bileşenin amacı, gereksinim izleme matrisinde tanımlanan PER -3 numaralı gereksinimi 
+karşılamaktır. Bu bileşen gaz sensörleri, GPS modülleri ve RFID okuyucular gibi fiziksel 
+donanımlardan gelen verilerin sistem tarafından işlenmesini, dijital veriye dönü ştürülmesini ve 
+merkezi sunucuya aktarılmasını sağlamakla sorumludur.  
+3.9.2 İşlevler  
+• Sahadaki sensörlerden gelen ham verileri okur ve bunları standart birimlere 
+dönüştürür.  
+• TCP/IP protokolü üzerinden donanımlarla bağlantı kurarak veri alışverişi işlemlerini yürütür.  
+• Sensörlerden gelen verileri en geç 6 saniye içinde işleyerek sistem arayüzüne yansıtır.  
+• Okunan verileri, Sensor varlığında tanımlanan eşik değerleriyle kıyaslar.  
+• Kritik eşik aşımları tespit edildiğinde otomatik olarak bir vaka oluşturur.  
+3.9.3 Veri Yapıları  
+Bu bileşende kullanılan temel veri yapıları şunlardır:  
+• Sensör: Sistem tarafından desteklenen sensör türünü temsil eder (gaz, sıcaklık, vb.).  
+• SensörVerisi: Sensörden alınan ölçüm değeri ve zaman bilgisini içerir.  
+• TakipCihazı: Personel veya ekipmana bağlı RFID/GPS cihazını temsil eder.  
+• KonumKaydı: Takip cihazlarından elde edilen konum bilgisini içerir.  
+• Ekipman: Sensör bağlı olabilecek veya izlenen fiziksel varlığı temsil eder. 
+• Personel: Takip cihazı taşıyan kullanıcıyı temsil eder.  
+• Vaka: Sensör verisine bağlı olarak oluşabilecek olay kaydını temsil eder.  
+21 Bu veri yapıları UML sınıf diyagramında tanımlanan yapılarla uyumludur ve Ek A’da 
+(Şekil A2 ve Şekil A 4) gösterilmiştir.  
+3.9.4 Arayüzler  
+Bu bileşen, sensör ve takip cihazlarından gelen verilerin backend’e API üzerinden 
+iletilmesini sağlar. Sensör verileri için POST /api/sensor -data, konum verileri için POST 
+/api/location gibi servisler kullanılacaktır. Bu servisler aracılığıyla sensör ölçümleri, cihaz 
+bilgisi, zaman ve konum verisi sisteme aktarılır. Donanım tarafında veri iletimi Wi -Fi (HTTP) 
+veya seri haberleşme üzerinden gerçekleştirilecektir. Backend tarafında ise bu veriler ilgili 
+servisler tarafından işlenerek diğer bileşenlere aktarılır.  
+• Donanım Haberleşme Arayüzü (Low -Level Interface): Sensörlerin fiziksel bağlantı 
+noktalarıyla (COM port, Network Socket) doğrudan iletişim kuran katman. 
+• Risk İzleme Arayüzü (UI): İşlenen sensör verilerinin (Basınç, Sıcaklık, CO) 
+kullanıcıya tablo ve grafiklerle sunulduğu ekran.  
+• Vaka Yönetimi Entegrasyon Arayüzü: Kritik verilerin Vaka bileşenine aktarılmasını sağlayan dahili yazılım arayüzü.  
+3.9.5 Diğer Bileşenlerle Etkileşim  
+• Takip cihazlarından okunan ham lokasyon paketlerini Harita ve Konum İzleme 
+Bileşenine aktarır.  
+• Donanım bağlantısı koptuğunda veya veri okuma hatası oluştuğunda hata detaylarını loglanması için Hata Yönetimi ve Loglama Bileşenine iletir.  
+• Sensörlerin ve donanım servislerinin çalışma durumunu ERS -05 gereksinimi 
+kapsamında Sistem İzleme ve Bakım Bileşenine raporlar.  
+3.10 Hata Yönetimi ve Loglama Bileşeni  
+3.10.1 Amaç  
+Bu bileşenin amacı, gereksinim izleme matrisinde tanımlanan ERS -03, ERS -04 ve GUV -
+06 numaralı gereksinimleri karşılamaktır. Bu bileşen veri tabanı veya sunucu bağlantı 
+hatalarında kullanıcıya belirlenen sürelerde geri bildirim verilmesini sağlamak, yanlış kullanıcı 
+giriş denemelerini kayıt altına almak ve sistem genelinde oluşan olayların izlenebilirliğini yönetmekle sorumludur.  
+3.10.2 İşlevler  
+• Veri tabanı veya sunucu bağlantı hatalarını anlık olarak yakalar ve 5 ila 10 saniye içinde hata mesajları döndürür.  
+• Başarısız kimlik doğrulama girişimlerini ve yetkisiz erişim çabalarını kaydeder.  
+• Kullanıcıların giriş -çıkış zamanlarını, yaptıkları veri değişikliklerini ve API 
+isteklerini takip eder.  
+• Sistem İzleme ve Bakım Bileşeninden gelen sağlık kontrolü sonuçlarını arşivler.  
+• Kritik düzeydeki sistem hatalarında yöneticileri uyarmak için bildirim servisini 
+tetikler.  
+22 3.10.3 Veri Yapıları  
+• LogKaydi : Olay zamanı, işlem türü, mesaj, modül adı ve işlemi yapan kullanıcı 
+bilgisini içeren ana yapı .  
+• LogKaydı  
+o logID: int  
+o zaman: DateTime  
+o kullaniciID: int  
+o islemTuru: string  
+o mesaj: string  
+o modul: string  
+Bu bileşende kullanılan veri yapıları Ek A’da ( Şekil A2 ve Şekil A 4) gösterilmiştir.  
+3.10.4 Arayüzler  
+Bu bileşen, sistemde oluşan olayların backend üzerinden kaydedilmesini sağlayan 
+servisleri içerir. Örnek olarak POST /api/logs ve POST /api/errors gibi servisler 
+üzerinden log ve hata kayıtları sisteme iletilebilir. Bu servisler, uygulama katmanındaki diğer 
+bileşenler tarafından kullanılır.  
+• Log İzleme Ekranı: Sistem yöneticisinin logları filtreleyip inceleyebildiği arayüz.  
+• Merkezi Hata Yakalayıcı: Uygulama katmanındaki tüm hataları tek bir noktadan 
+yakalayan yazılım arayüzü. 
+• Veri Erişim Arayüzü: Log kayıtlarının performans kaybı yaratmadan veri tabanına yazılmasını sağlayan katman.  
+3.10.5 Diğer Bileşenlerle Etkileşim  
+• Başarısız giriş denemelerini ve yetki ihlallerini Güvenlik ve Kimlik Doğrulama Bileşeninden alarak güvenlik günlüğüne kaydeder. 
+• Veri tabanı bağlantı kopukluklarını tespit eder ve hata mesajı üretim sürecini başlatır. Ayrıca tüm log kayıtlarını kalıcı olarak saklamak için Veri Erişim 
+Bileşenini kullanır.  
+• Kullanıcı Arayüzü Bileşeni ile entegre çalışarak yakalanan sistem hatalarını, kullanıcının anlayabileceği sade hata bildirimleri olarak arayüz katmanına iletir.  
+• Sistemdeki tüm modüller, çalışma anında oluşan istisnaları ve önemli işlem adımlarını kayıt altına alınması için Hata Yönetimi ve Loglama Bileşenine 
+gönderir.  
+4. Kullanıcı Arayüzü Tasarımı  
+4.1 Kullanıcı Arayüzünün Tanımı  
+Minemation , kullanıcıların maden sahasındaki operasyonları etkin ve düzenli bir biçimde 
+yönetebilmesi amacıyla grafiksel kullanıcı arayüzleri ile tasarlanacaktır. Kullanıcı arayüzleri hem masaüstü hem de mobil platformlarda çalışacak şekilde geliştirilecek olup fark lı kullanıcı 
+rollerine göre özelleştirilecektir.  
+23 Minemation, rol tabanlı erişim denetimi (RBAC) tasarımını benimseyecek olup, 
+kullanıcıların erişebileceği modüller ve gerçekleştirebileceği işlemler sahip oldukları rolün 
+yetkisine göre belirlenecektir.  
+Kullanıcı arayüzü tasarımında aşağıdaki temel prensipler dikkate alınacaktır:  
+• Kullanılabilirlik (Usability): Arayüzler sade, anlaşılır ve kullanıcı dostu olacak 
+şekilde tasarlanacaktır.  
+• Tutarlılık (Consistency): Tüm modüllerde benzer tasarım yapısı ve gezinme 
+mantığı kullanılacaktır.  
+• Erişilebilirlik (Accessibility): Kullanıcıların sistem fonksiyonlarına hızlı erişebilmesi sağlanacaktır.  
+• Modülerlik (Modularity): Sistem modülleri, gezinme çubuğu üzerinden erişilebilir 
+olacak şekilde düzenlenecektir.  
+4.1.1 Kullanıcı Rolleri ve Arayüz Yapısı  
+Minemation, farklı kullanıcı türleri için özelleştirilmiş arayüzler sunacaktır.  
+4.1.1.1 Sistem Yöneticisi ve Üst Yönetim  
+Tüm modüllere erişim yetkisine sahip olacaktır. Personel, ekipman, vardiya, vaka, 
+raporlama ve harita modüllerini yönetebilecektir.  
+4.1.1.2 Teknik Personel  
+Uzmanlık alanına bağlı olarak belirli modüllere erişim sağlayacaktır. Varsayılan olarak 
+kendi sorumlu olduğu vardiya kapsamında işlem yapabilecektir.  
+4.1.1.3 Güvenlik ve Sağlık Personeli  
+Sağlık verileri ve ilgili modüllere erişim sağlayacaktır.  
+4.1.1.4 İşletme Dışı (Geçici) Personel  
+Kısıtlı süreli ve rol bazlı erişim haklarına sahip olacaktır.  
+4.1.1.5 Saha Personeli  
+Yönetimsel işlemlerden ziyade bilgilendirme amaçlı sadeleştirilmiş bir arayüz 
+kullanacaktır. Vardiya bilgileri, vakalar, raporlar ve harita verilerine erişebilecektir.  
+4.1.2 Gezinme Yapısı (Navigation)  
+Sistem arayüzü, kullanıcıların modüller arasında kolayca geçiş yapabilmesi için bir 
+gezinme çubuğu üzerine kurulacaktır. Kullanıcılar, sahip oldukları yetkilere bağlı olarak 
+aşağıdaki modüllere erişebilecektir:  
+• Personel ve Ekipman Takip Modülü  
+• Vardiya Tanzim Modülü  
+• Vaka Yönetim Modülü  
+• Aksiyon Gerçekleştirim Modülü  
+• Raporlama Modülü  
+• Harita Modülü  
+24 4.1.3 Giriş ve Kimlik Doğrulama Arayüzü  
+Sistem, tüm kullanıcılar için ortak bir giriş ekranı sunacaktır. Kullanıcılar sisteme kimlik 
+numarası ve şifre bilgileri ile giriş yapacaktır. Başarılı giriş sonrasında kullanıcı, rolüne uygun 
+arayüze yönlendirilecektir.  
+Yeni kullanıcılar ilk girişlerinde şifre belirlemek zorunda olacak ve bu işlem 
+tamamlanmadan sisteme erişim sağlanamayacaktır.  
+4.1.4 Ekran Görüntüleri  
+ 
+Şekil 1 . Kullanıcı Giriş Ekranı 
+
+25  
+Şekil 2 . Sistem Yöneticisi Arayüzü  
+ 
+Şekil 3 . Sağlık Alt Modülünde Bulunan Bilgiler  
+
+26  
+Şekil 4 . Saha Personeli Arayüzü  
+ 
+Şekil 5 . Personel Yönetim Arayüzü  
+
+27  
+Şekil 6 . Personel Kayıt Ekranı 
+ 
+Şekil 7 . Ekipman Yönetim Arayüzü  
+
+28  
+Şekil 8 . Ekipman Kayıt Ekranı 
+ 
+Şekil 9 . Vardiya Planı Arayüzü  
+
+29  
+Şekil 10. Vardiya Yönetim Arayüzü  
+ 
+Şekil 11 . Vardiya Ekleme Ekranı 
+
+30  
+Şekil 12. Saha Personeli Vardiyalar Arayüzü  
+ 
+Şekil 13. Vaka Yönetim Arayüzü  
+
+31  
+Şekil 14. Vaka Bilgileri Ekranı 
+ 
+Şekil 15. Saha Personeli Vakalar Arayüzü  
+
+32  
+Şekil 16. Üretim Raporları Arayüzü  
+ 
+Şekil 17. Vaka Raporları Arayüzü  
+
+33  
+Şekil 18. Ekipman Raporları Arayüzü 
+ 
+Şekil 19. Personel Raporları Arayüzü  
+
+34  
+Şekil 20. Rapor Oluşturma Ekranı 
+ 
+Şekil 21. Saha Personeli Raporlar Arayüzü  
+
+35  
+Şekil 22. Risk İzleme Arayüzü  
+4.1.5 Nesneler ve İşlemler  
+Sistem arayüzü, kullanıcı rollerine bağlı olarak iki temel yapı üzerinden tasarlanmıştır.  
+Birinci yapı, saha personeline yönelik olup yalnızca bilgilendirme ve izleme amaçlıdır. Bu 
+arayüzde kullanıcılar sistem verilerini görüntüleyebilmekte ancak veri üzerinde değişiklik 
+yapamamaktadır.  
+İkinci yapı ise iş sağlığı ve güvenliği personeli, teknik personel ve üst yönetim gibi yetkili 
+kullanıcılar için tasarlanmıştır. Bu arayüzde kullanıcılar, sahip oldukları rol ve yetkilere bağlı olarak sistem modüllerine erişebilmekte, veri ekleme, güncelleme ve silme işlemlerini 
+gerçekleştirebilmektedir.  
+4.1.5.1 Giriş Ekranı  
+Nesneler  
+• Logo Alanı: Sistem kimliğini temsil eden görsel bileşendir ve ekranın üst 
+bölümünde yer almaktadır.  
+• Bilgilendirme Metni: Kullanıcıya giriş yapması gerektiğini belirten açıklayıcı metin alanıdır.  
+• T.C. Kimlik Numarası Giriş Alanı: Kullanıcının sisteme giriş yapmak için kimlik 
+numarasını girdiği metin kutusudur.  
+• Şifre Giriş Alanı: Kullanıcının sisteme giriş için kullandığı şifreyi girdiği, gizli 
+(maskelenmiş) veri alanıdır.  
+
+36 • Giriş Butonu: Kullanıcı tarafından girilen bilgilerin doğrulanmasını başlatan 
+etkileşimli butondur.  
+• Hata Mesajı Alanı: Hatalı giriş durumunda kullanıcıya bilgilendirme yapılmasını 
+sağlayan dinamik mesaj alanıdır.  
+İşlemler  
+• Kimlik Bilgilerinin Girilmesi: Kullanıcı, T.C. kimlik numarası ve şifre bilgilerini ilgili alanlara girer.  
+• Giriş Doğrulama İşleminin Başlatılması: Kullanıcı “Giriş” butonuna bastığında sistem, girilen bilgileri doğrulamak üzere işlem başlatır.  
+• Bilgilerin Doğrulanması: Sistem, girilen kimlik numarası ve şifreyi kayıtlı kullanıcı bilgileri ile karşılaştırır.  
+• Hatalı Giriş Durumunun Yönetimi: Girilen bilgiler hatalı ise kullanıcıya hata mesajı gösterilir ve giriş işlemi reddedilir.  
+• Başarılı Giriş Durumu: Bilgiler doğru ise kullanıcı sisteme giriş yapar ve rolüne uygun ana arayüze yönlendirilir.  
+4.1.5.2 Personel Yönetim Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki farklı modüllere (Personel, Vardiya, Ekipman, Vakalar, Raporlar, Risk İzleme, Harita) erişimini sağlayan üst menü bileşenidir.  
+• Kullanıcı Bilgi Alanı: Sisteme giriş yapmış kullanıcının bilgilerini ve oturum 
+durumunu gösteren alandır.  
+• Personel Türü Seçimi (İdari Personel / Saha Personeli): Görüntülenecek personel 
+türünü belirlemek için kullanılan sekmeli yapıdaki seçim bileşenidir.  
+• Personel Listeleme Tablosu: Sistemde kayıtlı personellerin listelendiği tablo bileşenidir. Tablo aşağıdaki sütunları içerir:  
+o No 
+o Ad 
+o Soyad 
+o Uzmanlık  
+o Vardiya  
+o Durum  
+o Konum  
+• Sıralama Kontrolleri: Tablo sütunlarına göre artan/azalan sıralama yapılmasını sağlayan kontrol mekanizmasıdır.  
+• Filtreleme Alanı: Personel listesinin belirli kriterlere göre filtrelenmesini sağlayan giriş alanıdır.  
+• Yenile Butonu: Liste verilerinin güncel hâlinin yeniden yüklenmesini sağlayan butondur.  
+• Ekle Butonu: Yeni personel kayıt ekranını açan tetikleyici butondur. 
+37 • Düzenleme Butonu: Seçilen personel kaydının düzenlenmesini sağlayan aksiyon 
+butonudur.  
+Personel Kayıt Formu  
+Yeni personel ekleme veya mevcut personel bilgilerini güncelleme amacıyla kullanılan 
+form bileşenidir.  
+• Kişisel Bilgi Alanları:  
+o Personel No  
+o T.C. Kimlik Numarası  
+o Ad 
+o Soyad 
+o Doğum Tarihi  
+o Cinsiyet  
+o Kan Grubu 
+• İletişim Bilgileri Alanları: 
+o Cep Telefonu  
+o İkinci Telefon  
+o E-posta  
+o Adres  
+• İş Bilgileri Alanları:  
+o İşe Giriş Tarihi  
+o Çalışan Tipi  
+o Departman  
+o Uzmanlık  
+o Çalışma Konumu 
+• Sistem Bilgileri Alanları:  
+o Kullanıcı Rolü  
+o RFID Kart Numarası  
+• Ekipman Yetkinliği Alanı: Personelin çalışabileceği ekipman türlerinin ve ilgili 
+sertifikaların tanımlandığı alan.  
+• Acil Durum İletişim Bilgileri Alanı: Acil durumlarda aranacak kişilerin (birden 
+fazla olacak şekilde) ad, soyad, yakınlık ve telefon bilgilerinin girildiği alan. 
+• Sağlık Bilgileri Alanı: Personelin sağlık durumuna ilişkin bilgilerin tutulduğu alan.  
+• Fotoğraf Alanı: Personelin görsel bilgisinin yüklendiği alan.  
+• Oluştur Butonu: Girilen bilgilerin sisteme kaydedilmesini sağlayan butondur. 
+İşlemler  
+• Personel Listeleme: Sistem, kayıtlı personel verilerini tablo formatında kullanıcıya 
+sunar.  
+• Personel Türüne Göre Görüntüleme: Kullanıcı, idari veya saha personeli arasında seçim yaparak listeyi filtreleyebilir.  
+• Sıralama İşlemi: Kullanıcı, tablo sütunlarına göre personel listesini sıralayabilir.  
+• Filtreleme İşlemi: Kullanıcı, belirli kriterlere göre personel verisini daraltabilir.  
+38 • Liste Yenileme: Kullanıcı, “Yenile” butonu ile güncel verileri tekrar yükleyebilir.  
+• Yeni Personel Ekleme: Kullanıcı, “Ekle” butonuna basarak personel kayıt formunu 
+açar ve yeni kayıt oluşturur. 
+• Personel Bilgisi Güncelleme: Kullanıcı, mevcut bir personel kaydını seçerek düzenleme ekranı üzerinden bilgileri güncelleyebilir.  
+• Form Veri Girişi: Kullanıcı, personel kayıt formundaki tüm alanlara gerekli bilgileri girer.  
+• Ekipman Yetkinliği Tanımlama: Kullanıcı, personele atanabilecek ekipman türlerini ve sertifikaları belirler.  
+• Acil Durum Bilgisi Girme: Kullanıcı, birden fazla acil durum iletişim kişisi tanımlayabilir.  
+• Sağlık Bilgisi Girme: Kullanıcı, personelin sağlık durumuna ilişkin bilgileri sisteme ekler.  
+• Veri Doğrulama: Sistem, girilen bilgilerin doğruluğunu ve zorunlu alanları kontrol eder.  
+• Kayıt Oluşturma: Kullanıcı “Oluştur” butonuna bastığında, bilgiler doğrulanır ve sistem veri tabanına kaydedilir.  
+4.1.5.3 Vardiya Yönetim Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki modüller arasında geçiş yapmasını sağlayan üst menü bileşenidir.  
+• Alt Menü (Vardiya Planı / Vardiya Yönetimi): Kullanıcının vardiya planlama ve 
+mevcut vardiya yönetimi ekranları arasında geçiş yapmasını sağlayan sekmeli yapı.  
+Vardiya Planlama Görünümü Nesneleri  
+• İdari Personel Vardiya Alanı: İdari personelin vardiya planlarının görüntülendiği 
+paneldir.  
+• Uzmanlık Bazlı Vardiya Tablosu: Personellerin uzmanlıklarına göre 
+gruplandırılarak vardiyalara atanmasını gösteren tablo bileşeni.  
+Vardiya Oluşturma Formu Nesneleri  
+• Vardiya Bilgi Alanları:  
+o Vardiya No  
+o Vardiya Adı  
+o Vardiya Tipi  
+o Vardiya Tarihi (anlık seçim yapılabilir)  
+o Başlangıç Saati  
+o Bitiş Saati  
+o Toplam Vardiya Süresi  
+o Vardiya Durumu 
+• Konum ve Operasyon Bilgileri:  
+o Konum  
+39 o Çalışma Bölgesi  
+o Operasyon Tipi  
+o Risk Seviyesi  
+• Sorumlu Personel Alanları:  
+o Vardiya Sorumlusu  
+o İş Sağlığı ve Güvenliği (İSG) Sorumlusu  
+o Teknik Sorumlu (Birden fazla seçim yapılabilecek şekilde tasarlanmıştır.)  
+• Ekip Yönetimi Alanı:  
+o Personel No  
+o Ad-Soyad 
+o Görev  
+o Ekip listesi (ekleme/çıkarma yapılabilen dinamik liste)  
+• Ekip Bilgileri:  
+o Ekip No 
+o Ekip Üye Sayısı  
+• Ekipman Atama Alanı:  
+o Ekipman No  
+o Ekipman Adı  
+o Operatör  (Liste yapısı ile birden fazla ekipman atanabilir.)  
+• Vardiya Notları Alanı: Opsiyonel olarak vardiya ile ilgili açıklamaların girildiği 
+metin alanı.  
+Vardiya Listeleme (Yönetim) Görünümü Nesneleri  
+• Vardiya Listeleme Tablosu: Mevcut vardiyaların listelendiği tablo bileşenidir.  Tablo 
+aşağıdaki sütunları içerir:  
+o No 
+o Vardiya Adı  
+o Tarih  
+o Başlangıç Saati  
+o Bitiş Saati  
+o Ekip  
+o Süpervizör (SY)  
+o Personel Sayısı  
+o Ekipman Sayısı  
+o Konum  
+o Durum  
+• Sıralama Kontrolleri: Tablo sütunlarına göre sıralama yapılmasını sağlayan kontrol 
+mekanizması.  
+• Filtreleme Alanı: Vardiya kayıtlarının belirli kriterlere göre filtrelenmesini sağlar.  
+• Yenile Butonu: Güncel verilerin tekrar yüklenmesini sağlar.  
+• Ekle Butonu: Yeni vardiya oluşturma ekranını açar.  
+• Düzenleme Butonu: Seçilen vardiyanın düzenlenmesini sağlar.  
+İşlemler  
+40 • Vardiya Planı Görüntüleme: Kullanıcı, personellerin vardiya dağılımını planlama 
+ekranı üzerinden görüntüler.  
+• Vardiya Oluşturma: Kullanıcı, vardiya oluşturma formunu doldurarak yeni bir 
+vardiya kaydı oluşturur.  
+• Tarih ve Saat Seçimi: Kullanıcı, vardiya tarihini ve başlangıç/bitiş saatlerini belirler.  
+• Toplam Süre Hesaplama: Sistem, başlangıç ve bitiş saatine göre vardiya süresini otomatik hesaplar.  
+• Personel Atama: Kullanıcı, vardiyaya dahil edilecek personelleri seçer ve görev ataması yapar.  
+• Ekip Oluşturma: Kullanıcı, vardiya için ekip oluşturur ve ekip üyelerini belirler.  
+• Ekipman Atama: Kullanıcı, vardiyada kullanılacak ekipmanları ve operatörleri 
+tanımlar.  
+• Sorumlu Atama: Kullanıcı, vardiya sorumlusu, İSG sorumlusu ve teknik 
+sorumluları belirler.  
+• Risk ve Operasyon Tanımlama: Kullanıcı, vardiyaya ait operasyon tipi ve risk seviyesini girer.  
+• Not Ekleme: Kullanıcı, vardiya ile ilgili ek açıklamalar ekleyebilir.  
+• Vardiya Listeleme: Sistem, oluşturulmuş vardiyaları tablo halinde kullanıcıya sunar.  
+• Vardiya Güncelleme: Kullanıcı, mevcut vardiya kayıtlarını düzenleyebilir.  
+• Sıralama ve Filtreleme: Kullanıcı, vardiya kayıtlarını farklı kriterlere göre sıralayıp filtreleyebilir.  
+• Veri Doğrulama: Sistem, girilen bilgilerin doğruluğunu ve zorunlu alanları kontrol 
+eder.  
+4.1.5.4 Ekipman Yönetim Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem modülleri arasında geçiş yapmasını 
+sağlayan üst menü bileşenidir.  
+• Alt Menü (Ekipman Türleri Sekmeleri): Kullanıcının ekipman türlerine göre 
+(örneğin: Kepçeler, Kırıcılar, Hafriyat Ekipmanları vb.) filtrelenmiş liste görüntülemesini sağlayan sekmeli yapı. 
+Ekipman Listeleme Görünümü Nesneleri  
+• Ekipman Listeleme Tablosu: Sistemde kayıtlı ekipmanların listelendiği tablo bileşenidir. Tablo aşağıdaki sütunları içerir:  
+o No 
+o Ekipman Adı  
+o Marka  
+o Model  
+o Plaka  
+o Durum  
+o Konum  
+41 o Son Bakım Tarihi  
+o Gelecek Bakım Tarihi  
+• Sıralama Kontrolleri: Kullanıcının tabloyu sütun bazlı sıralamasını sağlar.  
+• Filtreleme Alanı: Kullanıcının ekipmanları belirli kriterlere göre filtrelemesini 
+sağlar.  
+• Yenile Butonu: Güncel ekipman verilerini yeniden yükler.  
+• Ekle Butonu: Yeni ekipman ekleme formunu açar. 
+• Düzenleme Butonu: Seçilen ekipman kaydının düzenlenmesini sağlar.  
+Ekipman Ekleme / Düzenleme Formu Nesneleri  
+• Temel Bilgi Alanları  
+o Ekipman No  
+o Seri Numarası  
+o RFID Etiketi 
+o Ekipman Adı  
+o Ekipman Türü (İş makinesi, sensör, takip cihazı vb.)  
+• Alt Tür (Kategori) Seçimi (Seçilen ekipman türüne bağlı olarak)  
+o Kazı makinesi  
+o Ekskavatör  
+o vb. alt kategoriler  
+• Üretim ve Tedarik Bilgileri  
+o Marka  
+o Model  
+o Üretici Firma  
+o Tedarikçi Firma  
+o Üretim Yılı  
+• Teknik Özellikler  
+o Güç Kaynağı  
+o Gerilim Değeri  
+o Güç Tüketimi  
+o Haberleşme Tipi  
+o Bağlantı Arayüzü 
+o Desteklenen Protokoller  
+o Ölçüm Aralığı 
+o Hassasiyet  
+o Çalışma Sıcaklık Aralığı  
+o Nem Toleransı  
+o Boyut ve Ağırlık  
+• Satın Alma ve Garanti Bilgileri  
+o Satın Alma Tarihi  
+o Garanti Başlangıç Tarihi  
+o Garanti Bitiş Tarihi  
+• Sensör Bilgileri (Opsiyonel / Sensör seçildiğinde aktif)  
+42 o Sensör Tipi  
+o Ölçülen Değer Türü 
+o Ölçüm Değeri  
+o Eşik Değerleri  
+o Alarm Eşikleri  
+• Doküman Yükleme Alanı  
+o Teknik Doküman  
+o Kullanım Kılavuzu  
+o Garanti Belgesi  
+o Bakım Formu 
+o Satın Alma Belgesi  
+o (Bu alanlar dosya yükleme bileşenleri içerir.)  
+İşlemler  
+• Ekipman Listeleme: Sistem, kayıtlı ekipmanları tablo halinde kullanıcıya sunar.  
+• Ekipman Türüne Göre Filtreleme: Kullanıcı, ekipmanları türlerine göre 
+filtreleyebilir.  
+• Ekipman Ekleme: Kullanıcı, ekipman formunu doldurarak yeni ekipman kaydı oluşturur.  
+• Ekipman Güncelleme: Kullanıcı, mevcut ekipman bilgilerini düzenleyebilir.  
+• Alt Tür Dinamik Güncelleme: Sistem, seçilen ekipman türüne göre alt kategori 
+seçeneklerini dinamik olarak günceller.  
+• Sensör Alanlarını Aktifleştirme: Sensör tipi ekipman seçildiğinde ilgili sensör 
+alanları aktif hale gelir.  
+• Garanti Süresi Takibi: Sistem, garanti başlangıç ve bitiş tarihlerini kaydeder ve izler.  
+• Doküman Yükleme: Kullanıcı, ekipmana ait teknik ve idari belgeleri sisteme yükleyebilir.  
+• Bakım Takibi: Sistem, ekipmanın bakım tarihlerini takip eder.  
+• Sıralama ve Filtreleme: Kullanıcı, ekipmanları farklı kriterlere göre sıralayabilir ve 
+filtreleyebilir.  
+• Veri Doğrulama: Sistem, girilen bilgilerin doğruluğunu ve zorunlu alanları kontrol 
+eder.  
+4.1.5.5 Vaka Yönetim Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem modülleri arasında geçiş yapmasını sağlar.  
+Vaka Listeleme Görünümü Nesneleri  
+• Vaka Listeleme Tablosu: Sistemde kayıtlı vakaların özet bilgilerinin listelendiği tablo bileşenidir. Tablo aşağıdaki sütunları içerir:  
+o No 
+43 o Vaka Türü 
+o Ciddiyet Seviyesi  
+o Durum  
+o Konum  
+o İlgili Ekipman  
+o Raporlayan  
+o Çözüm Ekibi  
+o Tarih  
+o Saat 
+• Sıralama Kontrolleri: Kullanıcının vakaları sütunlara göre sıralamasını sağlar.  
+• Filtreleme Alanı: Kullanıcının vakaları belirli kriterlere göre filtrelemesini sağlar.  
+• Yenile Butonu:  Güncel vaka verilerini yeniden yükler.  
+• Düzenleme / Detay Görüntüleme Butonu:  Seçilen vakanın detay ekranını açar.  
+Vaka Detay Görünümü Nesneleri  
+• Temel Vaka Bilgileri  
+o Vaka No 
+o Vaka Adı  
+o Vaka Türü 
+o Oluşturulma Tarihi  
+o Oluşturan Kullanıcı  
+o Gerçekleşme Tarihi ve Saati  
+o Sisteme Kaydedilme Zamanı  
+o Müdahale Başlangıç ve Bitiş Zamanı  
+o Konum  
+o Ciddiyet Seviyesi  
+o Durum  
+• Sensör Kaynaklı Veri (Opsiyonel)  
+o Sensör No 
+o Sensör Türü 
+o Ölçülen Değer  
+o Alarm Eşiği  
+o Ölçüm Zamanı  
+• Vaka Açıklama Alanları  
+o Detaylı Vaka Açıklaması  
+o Tanık İfadeleri  
+o Gözlem Notları  
+o Fotoğraf ve Video Ekleri  
+• Müdahale Bilgileri  
+o Müdahale Açıklaması  
+o Müdahale Ekibi  
+o Müdahale Türü 
+o Uygulanan Çözüm  
+• Sorumluluk ve Analiz  
+44 o Sorumlu Birim  
+o Olay Nedeni  
+o Sorumlular  
+• Durum Yönetimi  
+o Vaka Durumu 
+o Çözüm Açıklaması  
+o Kapanış Onayı  
+o Kapanış Tarihi  
+İlişkili Listeler  
+• Etkilenen Personel Listesi: Vaka ile ilişkili personellerin listelendiği bileşendir. 
+(Personel No, Ad- Soyad, Durum)  
+• İlgili Ekipman Listesi: Vaka ile ilişkili ekipmanların listelendiği bileşendir. 
+(Ekipman No, Ekipman Adı, Durum)  
+İşlemler  
+• Vaka Listeleme: Sistem, kayıtlı vakaları tablo halinde kullanıcıya sunar.  
+• Vaka Filtreleme ve Sıralama: Kullanıcı, vakaları ciddiyet, durum, tarih vb. 
+kriterlere göre filtreleyebilir ve sıralayabilir.  
+• Vaka Detayı Görüntüleme: Kullanıcı, seçilen vakanın tüm detaylarını inceleyebilir.  
+• Vaka Oluşturma: Kullanıcı, yeni vaka kaydı oluşturabilir.  
+• Vaka Güncelleme: Kullanıcı, mevcut vaka bilgilerini düzenleyebilir.  
+• Sensör Verisi Entegrasyonu: Sistem, sensörlerden gelen verilerle otomatik vaka oluşturabilir veya mevcut vakaya veri ekleyebilir.  
+• Medya Ekleme: Kullanıcı, vaka kaydına fotoğraf ve video ekleyebilir.  
+• Personel ve Ekipman Atama: Kullanıcı, vaka ile ilişkili personel ve ekipmanları belirleyebilir.  
+• Müdahale Yönetimi: Sistem, müdahale sürecine ait bilgilerin girilmesini ve 
+güncellenmesini sağlar.  
+• Durum Güncelleme: Kullanıcı, vakanın durumunu (açık, devam ediyor, kapalı vb.) 
+güncelleyebilir.  
+• Kapanış Süreci: Vaka çözümü tamamlandığında kapanış onayı ve kapanış tarihi kaydedilir.  
+• Veri Doğrulama: Sistem, girilen bilgilerin doğruluğunu ve zorunlu alanları kontrol eder.  
+4.1.5.6 Raporlama Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem modülleri arasında geçiş yapmasını sağlar.  
+• Rapor Türü Sekmeleri: Kullanıcıya farklı rapor türleri arasında geçiş imkânı sunar:  
+o Üretim Raporları  
+o Vaka Raporları  
+45 o Ekipman Raporları  
+o Personel Raporları  
+Rapor Listeleme Görünümü Nesneleri  
+• Ortak Bileşenler  
+o Rapor Tablosu: Seçilen rapor türüne ait kayıtların listelendiği tablo 
+bileşenidir.  
+o Sıralama Kontrolleri: Rapor verilerinin sütunlara göre sıralanmasını sağlar.  
+o Filtreleme Alanı: Kullanıcının belirli kriterlere göre raporları filtrelemesini 
+sağlar.  
+o Yenile Butonu: Güncel verilerin yeniden yüklenmesini sağlar. 
+o Rapor Detay Butonu: Seçilen raporun detayını görüntülemek için kullanılır. 
+o Rapor Oluştur Butonu: Yeni rapor oluşturma ekranını açar.  
+Rapor Türlerine Göre Tablo Alanları  
+• Üretim Raporları  
+o No 
+o Tarih  
+o Vardiya  
+o Konum  
+o Ekipman  
+o Çıkarılan Maden 
+o Verimlilik  
+o Saat 
+o Oluşturan  
+• Vaka Raporları  
+o No 
+o Vaka Türü 
+o Ciddiyet Seviyesi  
+o Konum  
+o Raporlayan  
+o Durum  
+o Çözüm Süresi  
+o Tarih  
+o Saat 
+o Oluşturan  
+• Ekipman Raporları  
+o No 
+o Ekipman Türü 
+o Tarih  
+o Saat 
+o Arıza Sayısı  
+o Oluşturan  
+• Personel Raporları  
+46 o No 
+o Uzmanlık  
+o Tarih  
+o Saat 
+o Personel Sayısı  
+o Oluşturan  
+Rapor Oluşturma Görünümü Nesneleri  
+• Rapor Bilgi Alanları:  
+o Rapor No 
+o Rapor Adı  
+o Rapor Türü 
+• Zaman Aralığı Seçimi:  
+o Günlük 
+o Haftalık  
+o Aylık  
+o Vardiya Bazlı  
+o Özel Tarih Aralığı  
+İşlemler  
+• Rapor Listeleme: Sistem, seçilen rapor türüne ait verileri tablo halinde kullanıcıya 
+sunar.  
+• Rapor Filtreleme ve Sıralama: Kullanıcı, raporları tarih, tür ve diğer kriterlere göre filtreleyebilir ve sıralayabilir.  
+• Rapor Detayı Görüntüleme: Kullanıcı, seçilen raporun detaylarını inceleyebilir.  
+• Rapor Oluşturma: Kullanıcı, belirli kriterlere göre yeni rapor oluşturabilir. 
+• Zaman Aralığına Göre Raporlama: Sistem, seçilen zaman aralığına göre veri analizini gerçekleştirir.  
+• Veri Toplama ve Analiz: Sistem, ilgili modüllerden (personel, ekipman, vaka, 
+vardiya) veri çekerek rapor oluşturur. 
+• Rapor Güncelleme: Kullanıcı, mevcut rapor bilgilerini düzenleyebilir.  
+• Rapor Silme: Kullanıcı, yetkisi dahilinde raporları silebilir.  
+• Veri Doğrulama: Sistem, rapor oluşturma sırasında girilen bilgilerin doğruluğunu kontrol eder.  
+4.1.5.7 Risk İzleme Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem modülleri arasında geçiş yapmasını 
+sağlar.  
+Risk İzleme Paneli Nesneleri  
+• Öncelikli Durumlar Paneli  
+o Kritik risk durumlarının anlık olarak görüntülendiği ana paneldir.  
+47 o Yüksek öncelikli alarmlar ve acil müdahale gerektiren durumlar bu alanda 
+gösterilir.  
+• Gaz (CO vb.) Verileri Paneli: Ortamdaki gaz sensörlerinden elde edilen verileri 
+listeler. Aşağıdaki bilgileri içerir:  
+o Durum (normal / kritik)  
+o Sensör Kimliği  
+o Konum  
+o Görsel göstergeler (renk/ikon) ile risk seviyesi belirtilir.  
+• Basınç Verileri Paneli  
+o Basınç sensörlerinden alınan verileri gösterir.  
+o Anormal basınç değişimleri bu panel üzerinden izlenir.  
+• Sıcaklık Verileri Paneli  
+o Ortam sıcaklığına ait sensör verilerini görüntüler.  
+o Kritik eşik değerleri aşıldığında uyarı oluşturulur.  
+• Ekipman Verileri Paneli  
+o Ekipmanlardan gelen durum verilerini gösterir.  
+o Ekipman arızaları veya anormal çalışma durumları bu panelde izlenir.  
+Durum Göstergeleri  
+• Uyarı Göstergeleri: Sensör verilerine göre sistem tarafından oluşturulan risk 
+durumlarını görsel olarak ifade eder.  
+o Normal durum  
+o Uyarı seviyesi  
+o Kritik durum 
+İşlemler  
+• Gerçek Zamanlı Veri İzleme: Sistem, sensörlerden gelen verileri belirli aralıklarla alarak arayüzde günceller.  
+• Risk Analizi: Sensör verileri, tanımlı eşik değerlerle karşılaştırılarak risk durumu belirlenir.  
+• Alarm Üretimi: Kritik eşik değerleri aşıldığında sistem otomatik olarak alarm 
+oluşturur.  
+• Önceliklendirme: Oluşan riskler önem derecesine göre sınıflandırılır ve öncelikli 
+durumlar panelinde gösterilir.  
+• Veri Görselleştirme: Sensör verileri kullanıcıya anlaşılır şekilde (renk, ikon, liste vb.) sunulur.  
+• Otomatik Vaka Oluşturma: Kritik seviyedeki risk durumları için sistem otomatik olarak vaka kaydı oluşturabilir.  
+• Veri Güncelleme: Kullanıcı, güncel sensör verilerini manuel olarak yenileyebilir.  
+• Eşik Değer Kontrolü: Sistem, her sensör için tanımlanmış eşik değerleri sürekli 
+kontrol eder.  
+• Durum Takibi: Kullanıcı, risk durumlarının zaman içindeki değişimini izleyebilir.  
+Sistem Davranışı (Teknik Not) 
+48 • Sensör verileri backend üzerinden periyodik olarak çekilir.  
+• Her veri, sistemde tanımlı eşik değerlerle karşılaştırılır.  
+• Eşik aşımı durumunda:  
+o Risk durumu güncellenir . 
+o Kullanıcı arayüzünde uyarı gösterilir . 
+o Gerekirse otomatik vaka oluşturulur . 
+4.1.5.8 Saha Personeli Gösterge Paneli Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki temel modüllere 
+(Vardiyalarım, Vakalarım, Raporlar, Harita, Sağlık vb.) erişimini sağlar.  
+Gösterge Paneli Bileşenleri  
+• Aktif Vardiya Bilgileri Paneli : Kullanıcının o an aktif olan vardiyasına ait bilgileri 
+gösterir. Aşağıdaki verileri içerir:  
+o Tarih  
+o Saat 
+o Atanmış ekipman  
+o Çalışma konumu 
+o Panel yalnızca görüntüleme amaçlıdır, düzenleme yapılamaz.  
+• Harita Paneli  
+o Kullanıcının bulunduğu çalışma alanını görsel olarak gösterir. 
+o Kullanıcının konumu ve ilgili saha bilgileri bu alanda sunulur.  
+o Harita, sistemden gelen konum verileri ile dinamik olarak güncellenir.  
+• Vakalarım Paneli  
+o Kullanıcının dahil olduğu veya sorumlu olduğu vakaların özet listesini gösterir.  
+o Aktif ve geçmiş vakalara hızlı erişim sağlar.  
+İşlemler  
+• Veri Görüntüleme: Kullanıcı, kendisine atanmış vardiya, ekipman ve vaka 
+bilgilerini görüntüler.  
+• Gerçek Zamanlı Güncelleme:  Dashboard üzerindeki bilgiler sistemden periyodik 
+olarak güncellenir.  
+• Harita Üzerinden Takip:  Kullanıcı, bulunduğu konumu ve saha durumunu harita 
+üzerinden izler.  
+• Vaka Bilgisine Erişim:  Kullanıcı, “Vakalarım” paneli üzerinden ilgili vaka 
+detaylarına geçiş yapabilir.  
+Kısıtlar  
+• Saha personeli bu arayüz üzerinden veri ekleme, silme veya güncelleme işlemi gerçekleştiremez.  
+• Arayüz yalnızca bilgilendirme ve takip amaçlıdır.  
+49 Sistem Davranışı (Teknik Not) 
+• Kullanıcıya gösterilen veriler, kimlik doğrulama sonrası kullanıcıya atanmış 
+kayıtlar üzerinden filtrelenir.  
+• Harita ve vardiya bilgileri backend servislerinden periyodik olarak çekilir. 
+• Veri güncellemeleri kullanıcı müdahalesi olmadan otomatik gerçekleşir.  
+4.1.5.9 Saha Personeli Vardiya lar Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki diğer modüllere geçiş 
+yapmasını sağlar.  
+Vardiya Listesi Tablosu  
+• Kullanıcıya atanmış vardiyaların listelendiği ana bileşendir.  
+• Tablo sütunları:  
+o Vardiya No  
+o Vardiya Adı  
+o Tarih  
+o Başlangıç Saati  
+o Bitiş Saati  
+o Süpervizör (SY)  
+o Personel Sayısı  
+o Konum  
+o Durum  
+• Her satır, kullanıcıya atanmış bir vardiyayı temsil eder.  
+Detay Görüntüleme Butonu 
+• Her vardiya satırında bulunan aksiyon butonudur.  
+• Seçilen vardiyanın detay ekranına geçiş sağlar.  
+İşlemler  
+• Vardiya Listeleme: Kullanıcıya atanmış vardiyalar sistemden çekilerek tabloda 
+listelenir.  
+• Vardiya Detayına Erişim: Kullanıcı, ilgili satırdaki aksiyon butonu aracılığıyla vardiya detaylarını görüntüler.  
+• Sıralama (Sorting ): Tablo sütun başlıkları üzerinden veriler sıralanabilir.  
+Kısıtlar  
+• Kullanıcı bu ekran üzerinden vardiya oluşturamaz, düzenleyemez veya silemez.  
+• Kullanıcı yalnızca kendisine atanmış vardiyaları görüntüleyebilir.  
+Sistem Davranışı (Teknik Not) 
+• Vardiya verileri, kullanıcı kimliğine göre filtrelenerek backend servislerinden alınır.  
+• Listeleme işlemi sayfalama (pagination) destekleyecek şekilde tasarlanabilir.  
+• Detay ekranına geçişte ilgili vardiya ID’si kullanılarak detay verisi çağrılır.  
+50 4.1.5.10 Saha Personeli Vakalar Arayüzü  
+Nesneler  
+• Navigasyon Menüsü:  Kullanıcının sistem içerisindeki diğer modüllere erişimini 
+sağlar.  
+Vaka Listesi Tablosu  
+• Kullanıcının dahil olduğu veya ilişkilendirildiği vakaların listelendiği ana 
+bileşendir.  
+• Tablo sütunları:  
+o Vaka No 
+o Vaka Türü 
+o Ciddiyet Seviyesi  
+o Durum  
+o Konum  
+o İlgili Ekipman  
+o Raporlayan  
+o Çözüm Ekibi  
+o Tarih  
+o Saat 
+• Her satır sistemde kayıtlı bir vakayı temsil eder.  
+Detay Görüntüleme Butonu 
+• Her vaka satırında bulunan aksiyon butonudur.  
+• Seçilen vakanın detay ekranına erişim sağlar.  
+İşlemler  
+• Vaka Listeleme: Kullanıcı ile ilişkili vakalar sistemden çekilerek listelenir.  
+• Vaka Detayına Erişim: Kullanıcı, ilgili vakanın detay bilgilerini görüntüleyebilir.  
+• Sıralama (Sorting): Tablo sütun başlıkları üzerinden veriler sıralanabilir.  
+Kısıtlar  
+• Kullanıcı bu arayüz üzerinden vaka oluşturamaz, güncelleyemez veya silemez.  
+• Kullanıcı yalnızca kendisiyle ilişkili vakaları görüntüleyebilir. 
+Sistem Davranışı (Teknik Not) 
+• Vaka verileri, kullanıcı kimliğine göre filtrelenerek backend servislerinden alınır.  
+• Vaka listesi gerçek zamanlı güncellenebilecek şekilde tasarlanabilir (özellikle aktif vakalar için). 
+• Detay ekranına geçişte vaka ID’si kullanılarak detaylı veri çekilir.  
+Not (Alan Açıklaması)  
+• Ciddiyet Seviyesi: Vakanın öncelik derecesini belirtir (düşük, orta, yüksek vb.)  
+• Durum: Vakanın mevcut durumunu gösterir (aktif, çözülüyor, kapalı vb.)  
+• Çözüm Ekibi: Vaka çözümünden sorumlu ekip veya personel  
+51 4.1.5.11 Saha Personeli Raporlar Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki diğer modüllere erişimini 
+sağlar.  
+Rapor Listesi Tablosu  
+• Kullanıcının erişimine açık olan raporların listelendiği ana bileşendir.  
+• Tablo sütunları:  
+o Rapor No 
+o Rapor Türü 
+o Tarih  
+o Saat 
+o Oluşturan  
+• Her satır sistemde oluşturulmuş bir raporu temsil eder.  
+Detay Görüntüleme Butonu 
+• Her rapor satırında bulunan aksiyon butonudur.  
+• Seçilen raporun detayına erişim sağlar.  
+İşlemler  
+• Rapor Listeleme: Kullanıcıya erişim izni verilen raporlar sistemden çekilerek listelenir.  
+• Rapor Detayına Erişim: Kullanıcı, ilgili raporun detaylarını görüntüleyebilir.  
+• Sıralama (Sorting): Tablo sütun başlıkları üzerinden raporlar sıralanabilir.  
+Kısıtlar  
+• Saha personeli bu arayüz üzerinden rapor oluşturamaz, düzenleyemez veya silemez.  
+• Kullanıcı yalnızca yetkisi dahilindeki raporları görüntüleyebilir. 
+Sistem Davranışı (Teknik Not) 
+• Rapor verileri rol tabanlı erişim kontrolü (RBAC) ile filtrelenir.  
+• Listeleme işlemi backend servislerinden sağlanır.  
+• Rapor detayına erişimde ilgili rapor ID’si kullanılır.  
+Not 
+• Rapor türleri; üretim, vaka, ekipman veya personel bazlı olabilir.  
+• Kullanıcıya gösterilen raporlar, rolüne ve yetkilerine göre sınırlandırılır.  
+4.1.5.12 Saha Personeli Sağlık Bilgileri  Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki diğer modüllere erişimini 
+sağlar.  
+52 Personel Sağlık Bilgileri Paneli  
+• Kullanıcının kendisine ait sağlık ve acil durum bilgilerinin görüntülendiği ana 
+bileşendir.  
+• Gösterilen bilgiler:  
+o Personel No  
+o Ad 
+o Soyad 
+o Uzmanlık  
+o Sağlık Durumu 
+Acil Durum Bilgileri  
+• Acil durumlarda kullanılmak üzere sistemde kayıtlı bilgiler:  
+o Acil Durum Kişileri:  Kullanıcının acil durumda iletişime geçilecek 
+kişi/kişileri (birden fazla olabilir)  
+o Acil Durum Sağlık Bilgisi: Kan grubu gibi kritik sağlık verileri  
+Sağlık Detay Bilgileri  
+• Kronik hastalıklar  
+• Alerjiler  
+Çalışma Kısıtları Bilgisi  
+• Kullanıcının sağlık durumuna bağlı olarak belirlenen çalışma kısıtlarını içerir  
+• Örnek:  
+o Yüksek sıcaklığa maruz kalamaz  
+o Ağır yük kaldıramaz  
+o Belirli ortamlarda çalışamaz  
+İşlemler  
+• Bilgi Görüntüleme: Kullanıcı kendi sağlık ve acil durum bilgilerini görüntüler.  
+• Acil Durum Bilgisine Hızlı Erişim: Kritik bilgiler sistem tarafından hızlı erişilebilir şekilde sunulur.  
+Kısıtlar  
+• Kullanıcı bu arayüz üzerinden sağlık bilgilerini değiştiremez.  
+• Sağlık verileri yalnızca yetkili personel (ör. İSG birimi) tarafından güncellenebilir.  
+Sistem Davranışı (Teknik Not) 
+• Sağlık verileri yüksek hassasiyetli veri olarak değerlendirilir ve rol tabanlı erişim kontrolü ile korunur.  
+• Kullanıcıya yalnızca kendi sağlık bilgileri gösterilir.  
+• Bu veriler acil durum senaryolarında hızlı erişim için optimize edilmiştir.  
+Not (Güvenlik ve Sistem Önemi)  
+• Bu modül, iş sağlığı ve güvenliği süreçlerini desteklemek amacıyla tasarlanmıştır.  
+53 • Sistem, sağlık verilerini operasyonel karar mekanizmalarında (ör. vardiya atama, 
+riskli görevler) kullanabilir.  
+4.1.5.13 Saha Personeli Kişisel Bilgiler Arayüzü  
+Nesneler  
+• Navigasyon Menüsü: Kullanıcının sistem içerisindeki diğer modüllere erişimini 
+sağlar.  
+Kişisel Bilgiler Paneli  
+• Kullanıcının sistemde kayıtlı temel kimlik ve iletişim bilgilerinin görüntülendiği bileşendir.  
+• Gösterilen bilgiler:  
+o Personel No  
+o Ad 
+o Soyad 
+o T.C. Kimlik Numarası  
+o Doğum Tarihi  
+o Cinsiyet  
+o Telefon Numarası  
+o Adres  
+o SGK Numarası  
+o İşe Giriş Tarihi  
+o Çalışma Türü (tam zamanlı, yarı zamanlı, geçici vb.)  
+o Uzmanlık  
+Kurumsal Bilgiler Paneli  
+• Departman  
+• Sertifikalar / Lisanslar  
+İşlemler  
+• Bilgi Görüntüleme: Kullanıcı, kendi kişisel ve kurumsal bilgilerini görüntüler.  
+Kısıtlar  
+• Kullanıcı bu arayüz üzerinden kişisel bilgilerini değiştiremez.  
+• Bilgiler yalnızca yetkili personel (İK veya yönetim) tarafından güncellenebilir.  
+Sistem Davranışı (Teknik Not) 
+• Kullanıcıya yalnızca kendi kayıtları gösterilir.  
+• Veriler kimlik doğrulama sonrası kullanıcı ID’sine göre backend’den çekilir.  
+• Kişisel veriler KVKK kapsamında korunur ve yetkisiz erişime kapalıdır.  
+Not 
+• Sertifika ve lisans bilgileri, personelin görev uygunluğunu belirlemek amacıyla sistem tarafından kullanılabilir.  
+54 • Bu bilgiler, vardiya atama ve görev dağılımı süreçlerinde referans alınabilir.  
+5. Kaynakça 
+[1] SAP, "API Nedir?," SAP, [Çevrimiçi]. Erişim: 
+https://www.sap.com/turkey/products/technology -platform/integration -suite/what -is-
+api.html  [Erişim tarihi: 07 Nisan 2026]. 
+[2] Direnc.net, "GPS Nedir? Yapısı ve Kullanım Alanları," Direnc.net Blog, [Çevrimiçi]. 
+Erişim: https://blog.direnc.net/gps -nedir -yapisi -ve-kullanim -alanlari/ [Erişim tarihi: 07 
+Nisan  2026]. 
+[3] Data Market, "Hash Nedir?," Data Market, [Çevrimiçi]. Erişim: 
+https://www.datamarket.com.tr/sozluk/hash/ [Erişim tarihi: 07 Nisan 2026]. 
+[4] Bulutistan, "Log Nedir?," Bulutistan, [Çevrimiçi]. Erişim: https://bulutistan.com/blog/log/  
+[Erişim tarihi: 07 Nisan 2026]. 
+[5] RFID Türkiye, "RFID Nedir?," RFID Türkiye, [Çevrimiçi]. Erişim: https://rfid -
+turkiye.com/RFID -Nedir  [Erişim tarihi: 07 Nisan 2026]. 
+[6] Kron Teknoloji, "Rol Tabanlı Erişim Kontrolü (RBAC) Nedir?," KronTech, [Çevrimiçi]. 
+Erişim: https://krontech.com/tr/rol -tabanli -erisim- kontrolu- rbac-nedir  [Erişim tarihi: 07 
+Nisan  2026]. 
+6. Ek Materyaller  
+Ek A: Diyagramlar  
+ 
+Şekil A 1. Sistem Bağlam Diyagramı  Sistem Yöneticisi
+Üst Yönetim
+Teknik Personel
+İSG Personeli
+Geçici Personel
+Saha PersoneliMINEMATION
+Maden Sahası Yönetim SistemiSensörler
+Gaz / Sıcaklık / Toz / Titreşim
+Takip Sistemleri
+GPS / RFIDWeb  API
+(ASP.NET Core)Veri Tabanı
+(Microsoft SQL Server)
+55  
+Şekil A 2. UML Sınıf Diyagramı (Yüksek Çözünürlük İçin: 
+https://drive.google.com/file/d/1TUgLR7V9VP9NxCx_z7Tvm7TCWDJX8DGR/view?usp=drive_link
+) Personel Vardiya VakaBildirim
+VardiyaAtama
+RaporRol
+YetkiSaglikKaydi Ekipma n
+EkipmanDurumuHaritaTakipCihazı
+KonumKaydiSensor SensorVerisi RiskKaydi LogKaydi
+sahiptir
+sahiptirsahiptirAcilDurumIletisimKisisi
+Ekip
+Ekskavator
+HafriyatKamyonuKepce
+Kirici
+ElAletiAksiyon
+PersonelRaporu VakaRaporu EkipmanRaporu1 1
+sahiptir1 1..*10..*
+içerir
+0..*1
+0..*1
+11..*vardiyaSorumlusu
+vardiyaIsgSorumlusu
+vardiyaTeknikSorumlusu3 1 1 0..*0..* 0..*0..1
+10..1
+11 0..*logUretir
+0..* 0..*
+10..*tetikleyebilir0..*
+0..*
+1
+0..*1
+1
+1
+1..*1
+1sahiptir1
+11
+0..*0..*0..1
+0..*0..1alir0..*
+1üretir
+0..*
+0..1tetikler
+0..1tetikler
+0..1
+0..*1
+0..*0..10..1
+0..*10..*
+1 10..* 0..*
+gösterir gösterir gösterir
+bilgi sağlar bilgi sağlar- personelID: int
++ girisYap(sifreHash: String): bool- vardiyaID: int
++ vardiyaOlustur(): void- vakaID: int
++ vakaOlustur(): void
+- aksiyonID: int
++ aksiyonBaslat(): void- bildirimID: int
++ bildirimGonder(): void
+- vardiyaAtamaID: int
++ atamaOlustur(): void
+- raporID: int
++ raporOlustur(): void- rolID: int
++ yetkiEkle(yetki: Yetki): void
+- yetkiID: int+ saglikKaydiGuncelle(): void- ekipmanID: int
++ ekipmanEkle(): void
+- ekipmanDurumuID: int
++ ekipmanDurumuGuncelle(): void- haritaID: int
++ haritaYukle(): void- takipCihaziID: int
++ takipCihaziAta(): void
+- konumKaydiID: int
++ konumGuncelle(): void+ sensorEkle(): void- sensorVerisiID: int
++ sensorVerisiniKaydet(): void- riskKaydiID: int
++ riskEkle(): void- logKaydiID: int
++ logEkle(): void
+- personelAdi: String
+- personelSoyadi: String
+- tckn: String
+- calisanTipi: String- telefonNo: String
+- eposta: String
+- sifreHash: String- dogumTarihi: DateTime
+- iseGirisTarihi: DateTime
+- departman: String
+- aktifMi: bool
+- sonGirisTarihi: DateTime
++ cikisYap(): void
++ sifreDogrula(sifreHash: String): bool
++ sifreGuncelle(yeniSifre: String): void
++ bilgileriGuncelle(): void
++ rolAta(rol: Rol): void
++ bildirimleriListele(): List<Bildirim>
+- rolAdi: String
+- rolAciklama: String
++ yetkiKaldir(yetki: Yetki): void
++ yetkileriListele(): List<Yetki>
+- yetkiAdi: String
+- yetkiAciklama: String- kanGrubu: String
+- alerjiler: List<String>- kronikHastaliklar: List<String>
+- acilDurumNotu: String
+- sonMuayeneTarihi: DateTime
++ acilDurumBilgisiGetir(): String- vardiyaAdi: String
+- vardiyaBaslangicTarihi: DateTime
+- vardiyaBitisTarihi: DateTime
+- vardiyaOlusturmaTarihi: DateTime
+- vardiyaDurumu: String- vardiyaTanimi: String
++ vardiyaGuncelle(): void
++ vardiyaIptalEt(): void
+- atamaTarihi: DateTime
+- gorevTanimi: String
+- vardiyaDurumu: String
+- vardiyaNotu: String
++ atamaGuncelle(): void
++ atamaIptalEt(): void- takipCihaziTuru: String- takipCihazıSeriNo: String
+- takipCihaziDurumu: String
+- takipCihaziSonBaglantiZamani: DateTime
++ takipCihaziDurumuGuncelle(): void
++ takipCihaziBaglantisiKontrolEt(): bool
+- islemTipi: String
+- logKaydiAciklamasi: String
+- logKaydiTarihi: DateTime
+- ipAdresi: String
+- önemSeviyesi: String
++ logFiltrele(önemSeviyesi: String): List<LogKaydi>- sensorTipi: String
+- sensorDurumu: String
++ sensorGuncelle(): void
++ sensorDurumuKontrolEt(): bool
++ veriOku(): SensorVerisi- deger: double
+- birim: String
+- olcumTarihi: DateTime
+- esikDegerAsildiMi: bool
++ esikDegerKontrolEt(minEsikDeger: double, 
+maxEsikDeger: double): bool- minEsikDeger: double
+- maxEsikDeger: double
+- vakaAciklamasi: String- vakaTuru: String
+- vakaCiddiyetSeviyesi: String
+- vakaDurumu: String
+- vakaOlusmaTarihi: DateTime
++ vakaGuncelle(): void
++ vakaSonlandir(): void
+- aksiyonAciklamasi: String- aksiyonAdi: String
+- aksiyonBaslangicTarihi: DateTime
+- aksiyonBitisTarihi: DateTime
+- aksiyonDurumu: String
++ aksiyonGuncelle(): void
++ aksiyonTamamla(): void- ekipmanAdi: String
+- ekipmanTuru: String- ekipmanSeriNo: String- ekipmanMarkasi: String
+- ekipmanModeli: String
+- ekipmanSatinAlmaTarihi: DateTime
++ ekipmanGuncelle(): void
++ ekipmaniBakimaGonder(): void+ ekipmanSil(): void
+- ekipmanDurumuAdi: String
+- ekipmanDurumuAciklamasi: String
+- ekipmanDurumuGuncellemeTarihi: 
+DateTime
++ ekipmanArizaliMi(): bool- riskTuru: String
+- riskSeviyesi: String
+- riskTespitTarihi: DateTime- riskAciklamasi: String
+- riskDurumu: String
++ riskGuncelle(): void
++ riskKapat(): void
+- x: double
+- y: double
+- z: double
+- zamanDamgasi: DateTime
++ mesafeHesapla(digerKonum: Konum): double- dosyaYolu: String
+- olcek: double- bildirimBasligi: String
+- bildirimMesaji: String
+- bildirimTuru: String
+- bildirimGonderimTarihi: DateTime
+- bildirimOkunduMu: bool
++ bildirimOkunduIsaretle(): void
++ bildirimSil(): void
+- raporAdi: String
+- raporTuru: String
+- raporOlusturmaTarihi: DateTime
+- raporAciklamasi: String
+- raporDosyaYolu: String
++ raporGoruntule(): void
++ pdfAktar(): void
++ excelAktar(): void- vardiyaIsgSorumlusu: String
+- vardiyaTeknikSorumlusu: String- uzmanlik: String
+- personelDurumu: String
+- cinsiyet: String
+- ikinciTelefonNo: String
+- adres: String
+- calisabildigiEkipmanTurleri: List<String>
+- rfidKartNumarasi: String
+- kullaniciRolu: String
+- calismaKonumu: String- saglikDurumu: String
+- saglikCalismaKisitlamalari: String
+- acilDurumKisiAdi: String
++ acilDurumIletisimBilgileriGuncelle(): void- acilDurumKisiYakinligi: String
+- acilDurumKisiTelefonNo: String- acilDurumKisiSoyad: String
++ acilDurumIletisimBilgisiGetir(): String- vardiyaSupervizoru: String
+- personelSayisi: int
+- ekipmanSayisi: int
+- ekipSayisi: int
+- vardiyaTipi: String
+- toplamVardiyaSuresi: int
+- vardiyaSorumlusu: String- calismaBolgesi: String
+- operasyonTipi: String
+- operasyonRiskSeviyesi: String
+- vardiyaNotlari: String
+- ekipID: int
++ uyeEkle(): void- ekipUyeSayisi: int
+- ekipDurumu: String
++ uyeCikar(): void- takipCihaziModeli: String
+- takipCihaziHaberlesmeProtokolu: String
+- sonBakimTarihi: DateTime
+- gelecekBakimTarihi: DateTime
+- rfidKartNumarasi: String
+- ureticiFirma: String
+- tedarikciFirma: String
+- uretimYili: String
+- garantiBaslangicTarihi: DateTime
+- garantiBitisTarihi: DateTime
+- teknikDosyalar: List<String>
+- plaka: String
+- kovaKapasitesi: decimal
+- motorGucu: decimal
+- maksimumKaziDerinligi: decimal
+- paletTipi: String
+- bomUzunlugu: decimal
+- plaka: String
+- damperHacmi: decimal
+- azamiYukAgirligi: decimal
+- dingilSayisi: int- plaka: String
+- yuklemeKapasitesi: decimal
+- kovaKapasitesi: decimal
+- bosaltmaYuksekligi: decimal
+- devrilmeYuku: decimal
+- darbeEnerjisi: decimal
+- dakikadakiDarbeSayisi: decimal
+- calismaBasinci: decimal
+- ucTipi: String
+- gerekenYagDebisi: String
+- gucKaynagiTipi: String
+- bataryaKapasitesi: decimal
+- kullanimAmaci: String- hassasiyet: double
+- baglantiProtokolu: String
+- haberlesmeTipi: String
+- raporlayan: String
+- vakaAdi: String
++ raporOlustur(): void
++ raporGoruntule(): void
++ pdfAktar(): void
++ excelAktar(): void+ raporOlustur(): void
++ raporGoruntule(): void
++ pdfAktar(): void
++ excelAktar(): void+ raporOlustur(): void
++ raporGoruntule(): void
++ pdfAktar(): void
++ excelAktar(): voidVaka Ekipman Personel
+Personel Vaka Ekipman
+56  
+Şekil A 3. Kullanım Senaryosu Diyagramları (Yüksek Çözünürlük İçin: 
+https://drive.google.com/file/d/1nxTv7kAnws4vr22WR9r9qf3xtW7mk339/view?usp=drive_link)  Saha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Personel Listele
+Personel EklePersonel Bilgileri 
+GüncellePersonel Konumu 
+İzle<<includes>> <<includes>> <<includes>>Ekipman Listele
+Ekipman EkleEkipman Bilgileri 
+GüncelleEkipman Konumu 
+İzle<<includes>> <<includes>> <<includes>>
+<<includes>>
+Vardiya Listele
+<<includes>> <<includes>>
+Vardiya OluşturVardiya Bilgileri 
+Güncelle<<includes>>
+<<includes>>
+Rapor Listele
+Rapor Oluştur<<includes>>
+Risk Verilerini İzle<<includes>>
+Harita Görüntüle<<includes>>Kullanıcı Hesabı 
+Oluştur<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>> <<includes>>
+Vaka Detayı 
+GörüntüleVaka Durumu 
+Güncelle
+Saha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Personel Listele
+Personel EklePersonel Bilgileri 
+GüncellePersonel Konumu 
+İzle<<includes>> <<includes>> <<includes>>Ekipman Listele
+Ekipman EkleEkipman Bilgileri 
+GüncelleEkipman Konumu 
+İzle<<includes>> <<includes>> <<includes>>
+<<includes>>
+Vardiya Listele
+<<includes>> <<includes>>
+Vardiya OluşturVardiya Bilgileri 
+Güncelle<<includes>><<includes>>
+Rapor Listele
+Rapor Oluştur<<includes>>
+Risk Verilerini İzle<<includes>>
+Harita Görüntüle<<includes>>Kullanıcı Hesabı 
+Oluştur<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>> <<includes>>
+Vaka Detayı 
+GörüntüleVaka Durumu 
+GüncelleSaha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Personel Listele
+Personel Konumu 
+İzle<<includes>>Ekipman Listele
+Ekipman Konumu 
+İzle<<includes>>
+<<includes>>
+Vardiya Listele<<includes>>
+<<includes>>
+Rapor Listele
+Risk Verilerini İzle<<includes>>
+Harita Görüntüle<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>> <<includes>>
+Vaka Detayı 
+GörüntüleVaka Durumu 
+GüncelleSaha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Personel Listele
+Personel EklePersonel Bilgileri 
+GüncellePersonel Konumu 
+İzle<<includes>> <<includes>> <<includes>>Ekipman Listele
+Ekipman EkleEkipman Bilgileri 
+GüncelleEkipman Konumu 
+İzle<<includes>> <<includes>> <<includes>>
+<<includes>>
+Vardiya Listele
+<<includes>> <<includes>>
+Vardiya OluşturVardiya Bilgileri 
+Güncelle<<includes>>
+<<includes>>
+Rapor Listele
+Rapor Oluştur<<includes>>
+Risk Verilerini İzle<<includes>>
+Harita Görüntüle<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>> <<includes>>
+Vaka Detayı 
+GörüntüleVaka Durumu 
+Güncelle
+Saha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Kişisel Bilgileri 
+GörüntüleSağlık Bilgileri 
+Görüntüle
+<<includes>>
+Vardiya Listele<<includes>>
+<<includes>>
+Rapor Listele
+Harita Görüntüle<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>>
+Vaka Detayı 
+GörüntüleSaha Personeli Geçici Personel Sistem Yöneticisi Üst Yönetim Teknik Personel İSG Personeli
+Yetki Denetimi
+<<includes>> <<includes>>
+Kişisel Bilgileri 
+GörüntüleSağlık Bilgileri 
+Görüntüle
+<<includes>>
+Vardiya Listele<<includes>>
+<<includes>>
+Rapor Listele
+Harita Görüntüle<<includes>>Sisteme Giriş Yap
+<<includes>>İlk Girişte Şifre 
+Belirle<<extends>>
+Vaka Listele
+<<includes>>
+Vaka Detayı 
+Görüntüle
+57  
+Şekil A 4. Varlık İlişki Diyagramı (Yüksek Çözünürlük İçin: 
+https://drive.google.com/file/d/1gKgV -d7dcKduyZjW7L2k7cujxs4U6J -u/view?usp=drive_link) 
+
+58 Ek B: Toplantı Notları  
+ 
+Şekil B 1. 08.04.2026, 15.04.2026, 19.04.2026 ve 22.04.2026 Tarihli Toplantı Notları  
+
+59  
+Şekil B 2. UML Sınıf Diyagramı Taslağı 
+
+60  
+Şekil B 3. Varlık İlişki Diyagramı Taslağı  
+
+=== END OF MINEMATION_SDD.pdf ===
+
+=== START OF MINEMATION_SPMP.pdf ===
+ Yazılım Proje Yönetim Planı  
+(Software Project Management Plan – SPMP)  
+ 
+ 
+MINEMATION  
+Maden Saha sı Yönetim Otomasyonu 
+  
+Ders: BM314 – Yazılım Mühendisliği  
+Öğretim Üyesi: Prof. Dr. Hacer Karacan  
+Bilgisayar Mühendisliği Bölümü  
+Mühendislik Fakültesi  
+Gazi Üniversitesi  
+  
+Hazırlayanlar  
+Berke Koyuncu ( 23118080012)  
+Büşra Arslan (22118080007)  
+Elif Nisa Okur (22118080077)  
+ 
+ 
+Dönem: 2025- 2026 Bahar  
+Teslim Tarihi: 11 Mart 2026
+ Revizyon Geçmişi  
+Versiyon  Tarih  Açıklama  Yazar  
+0.1 20.02.2026  İlk Taslak  Berke Koyuncu  
+0.2 22.02.2026  İlk İçerik Girişleri  Proje Ekibi  
+0.3  27.02.2026  Ek Materyaller Hariç 
+İçerik Girişleri  Proje Ekibi  
+1.0 08.03.2026  Teslime Hazır  Proje Ekibi  
+ 
+ İçindekiler  
+1. Giriş  ................................................................................................................................. 1 
+1.1 Proje Genel Bakış  ...................................................................................................... 1 
+1.2 Proje Teslimatları  ...................................................................................................... 1 
+1.3 Tanımlar, Kısaltmalar ve Terimler ............................................................................. 1 
+2. Proje Organizasyonu  ....................................................................................................... 2 
+2.1 Yazılım Süreç Modeli  ................................................................................................ 2 
+2.2 Roller ve Sorumluluklar  ............................................................................................ 2 
+2.3 Kullanılan Araç ve Teknikler  .................................................................................... 2 
+2.3.1 Geliştirme Platformu ve Dil  ............................................................................... 3 
+2.3.2 Backend .............................................................................................................. 3 
+2.3.3 Veri Tabanı  ......................................................................................................... 3 
+2.3.4 Windows Uygulaması  ........................................................................................ 3 
+2.3.5 Mobil Uygulama  ................................................................................................ 3 
+2.3.6 Sürüm Kontrolü ve İş Birliği  .............................................................................. 3 
+2.4 İletişim Planı  ............................................................................................................. 3 
+3. Proje Yönetim Planı  ........................................................................................................ 3 
+3.1 Görevler  ..................................................................................................................... 3 
+3.1.1 Proje Başlatma ve Planlama  ............................................................................... 3 
+3.1.2 Gereksinim Analizi  ............................................................................................. 4 
+3.1.3 Analiz Modelleme ve Alan Modeli  .................................................................... 4 
+3.1.4 Mimari ve Detay Tasarım  ................................................................................... 5 
+3.1.5 Gerçekleme ve Entegrasyon  ............................................................................... 5 
+3.1.6 Test ve Doğrulama  ............................................................................................. 6 
+3.1.7 Dokümantasyon, Sunum ve Proje Kapanışı  ....................................................... 6 
+3.2 Görev Atamaları  ........................................................................................................ 7 
+3.2.1 Faz Bazlı Sorumluluk Dağılımı  ......................................................................... 7 
+3.2.2 Teknik Bazlı Sorumluluk Dağılımı  .................................................................... 7 
+3.3 Zaman Çizelgesi  ........................................................................................................ 8 
+4. Kaynakça  ......................................................................................................................... 9 
+5. Ek Materyaller  ............................................................................................................... 10 
+Ek A: Toplantı Notları  ................................................................................................... 10 
+1 1. Giriş  
+1.1 Proje Genel Bakış  
+Bu proje, madencilik sahasındaki insan- ekipman koordinasyonundaki insan faktörünü 
+azaltmak için tasarlanmış bir otomasyon yazılımıdır. Sistem, maden sanayisinin saha 
+bölümünde organizasyona ihtiyaç duyan işletmelere hizmet edecek biçimde tasarlanacaktır. Bu 
+otomasyon ; Personel ve Ekipman Takip Modülü, Vardiya Tanzim Modülü, Vaka  Yönetim 
+Modülü, Aksiyon Gerçekleştirim Modülü, Raporlama Modül ü ve Harita Modülü olmak üzere 
+altı temel modülden oluşmaktadır.  Proje kapsamında, kullanıcıların Windows ve mobil 
+cihazlarda yazılımı kullanabilmesi hedeflenmektedir.  
+1.2 Proje Teslimatları  
+Proje kapsamında aşağıdaki belgeler ve çıktılar teslim edilecektir:  
+• SPMP dokümanı  
+• SRS dokümanı  
+• SDD dokümanı  
+• STD dokümanı  
+• Çalışan yazılım  
+• Sunum dosyası  
+• Kaynak kod 
+1.3 Tanımlar, Kısaltmalar ve Terimler  
+Terim  Açıklama  
+Backend  Arka uç Katmanı, Sunucu Katmanı  
+Branch  Repository içinde, ana geliştirme hattından (ör. main/master) ayrılarak 
+bağımsız geliştirme yapılmasını sağlayan paralel çalışma dalıdır.  
+Build  Kaynak kodun derlenmesi, bağlanması ve gerekli bağımlılıkların 
+entegre edilmesi sonucunda çalıştırılabilir bir yazılım çıktısının 
+(executable, package vb.) üretilmesi sürecidir.  
+Developer  Geliştirici  
+Frontend  Ön yüz Katmanı, Kullanıcı Katmanı  
+IDE (Integrated Development 
+Environment)  Kaynak kod editörü, derleyici/yorumlayıcı, hata ayıklayıcı (debugger) 
+ve çeşitli geliştirme araçlarını entegre biçimde sunan yazılım 
+geliştirme ortamıdır. Geliştirme sürecinin verimliliğini artırmayı 
+amaçlar.  
+Minimum Çalışan 
+Ürün (MVP)  Ürünün temel işlevlerini içeren, kullanıcıya değer sunabilecek en 
+basit ve erken sürümüdür. Amaç, minimum geliştirme maliyetiyle 
+gerçek kullanıcı geri bildirimi toplamaktır.  
+OOP  Object Oriented Programming (Nesne Tabanlı Programlama)  
+2 Repository (Repo)  Proje kaynak kodlarının, dokümanlarının ve ilgili tüm dosyaların 
+versiyon kontrol sistemi (ör. Git) üzerinde tutulduğu merkezi 
+depolama alanıdır.  
+SDD  Software Design Description (Yazılım Tasarım Tanımlaması)  
+SPMP  Software Project Management Plan (Yazılım Projesi Yönetim Planı)  
+SRS Software Requirements Specifications (Yazılım Gereksinim Belirtimi)  
+STD  Software Test Documentation (Yazılım Test Dokümanı)  
+Use Case  Kullanım Senaryosu  
+2. Proje Organizasyonu  
+2.1 Yazılım Süreç Modeli  
+Bu projede, artırımlı (incremental) yazılım geliştirme modeli kullanılacaktır. Sistem, 
+kademeli olarak geliştirilecek ve her ekleme sonunda çalışır bir sistem bileşeni ortaya konacaktır  [1]. 
+Modüler mimari yaklaşımı sonucunda, sistem, yukarıda belirtilen altı modüle ayrılmıştır. 
+Her modül ayrı bir artım kabul edilerek geliştirilip test edilecektir.  
+2.2 Roller ve Sorumluluklar  
+Ad Rol Sorumluluk  
+Berke Koyuncu  Frontend Developer  Windows (WPF) ve mobil (.NET MAUI) 
+kullanıcı arayüzlerinin geliştirilmesi,  istemci –
+sunucu entegrasyonunun sağlanması, kullanıcı akışlarının tasarlanması ve uygulama düzeyi 
+testlerin desteklenmesi , iş mantığının 
+uygulanması  
+Büşra Arslan  Backend Developer  Backend geliştirme sürecine katkı sağlanması, 
+Microsoft SQL Server şemasının oluşturulması ve yönetimi, veri erişim katmanının (EF Core) 
+yapılandırılmasının desteklenmesi ve API ile 
+veritabanı entegrasyonunun yürütülmesi , iş 
+mantığının uygulanması  
+Elif Nisa Okur  Backend Developer  ASP.NET Core Web API servislerinin 
+geliştirilmesi, iş mantığının uygulanması, 
+endpoint tasarımı ve doğrulama/hata yönetimi  
+ 
+2.3 Kullanılan Araç ve Teknikler  
+Projede aşağıda belirtilen araç ve teknolojiler kullanılacaktır:  
+3 2.3.1 Geliştirme Platformu ve Dil  
+• C# Programlama Dili  [2] 
+• .NET 8 (LTS)  [3] 
+2.3.2 Backend  
+• ASP.NET Core 8 (Web API)  [4] 
+• Entity Framework Core 8 [5]  
+• OpenAPI/Swagger  [6] 
+• JWT Bearer Authentication  [7] 
+2.3.3 Veri Tabanı  
+• Microsoft SQL Server 2022 Express  [8] 
+• SQL Server Management Studio [9] 
+2.3.4 Windows Uygulaması  
+• WPF (.NET 8 target)  [10]  
+• MVVM Toolkit (CommunityToolkit.Mvvm 8.x)  [11] 
+2.3.5 Mobil Uygulama  
+• .NET MAUI 8  [12]  
+2.3.6 Sürüm Kontrolü ve İş Birliği  
+• Git [13]  
+• GitHub  [14]  
+2.4 İletişim Planı 
+Proje sürecinde ekip içi iletişim düzenli ve sistemli biçimde yürütülecektir. Düzenli toplantı 
+günleri çarşamba ve pazar günleri olarak belirlenmiş olup ders durumlarına göre uygun 
+vakitlerde bu süre artırılıp azaltılabilir.  
+Projede hızlı ve efektif iletişim için WhatsApp grubu kullanılacaktır. Kod paylaşımı ve 
+sürüm kontrolü GitHub üzerinden yürütülecektir. Her toplantı sonunda kısa bir ilerleme özeti 
+hazırlanacak tır. Proje planlama ve doküman hazırlama sürecinde gerçekleştirilen toplantılara 
+ait notlar Ek A ’da sunulm uştur.  
+3. Proje Yönetim Planı  
+3.1 Görevler  
+3.1.1 Proje Başlatma ve Planlama  
+3.1.1.1 Açıklama  
+Bu görevde projenin genel çerçevesi oluşturulur. Projenin hedefi, kapsamı, paydaşları 
+belirlenir. Yazılım geliştirme süreç modeli, iletişim planı hazırlanır.  
+3.1.1.2 Teslimatlar ve Kilometre Taşları  
+Bu görev kapsamında Yazılım Projesi Yönetim Planı belgesi teslim edilecektir. Kilometre 
+taşı ise bu belgenin onaylanmasıdır.  
+4 3.1.1.3 Gerekli Kaynaklar  
+Bu görev kapsamında gerekli kaynaklar:  
+• Proje ekibi  
+• Belge editörü 
+3.1.1.4 Bağımlılıklar ve Kısıtlar  
+• Proje konusunun kesinleşmesi  
+• Akademik takvim  
+3.1.1.5 Riskler ve Alternatif Önlemler  
+• Yetersiz araştırma sonucu projenin yanlış tasarlanması / Daha derinlemesine 
+araştırma  
+• Yanlış araç ve teknoloji belirlenmesi / Teknolojilerin detaylı araştırılması  
+• Proje kapsamının genişlemesi / Projenin kontrollü ilerlemesi  
+3.1.2 Gereksinim Analizi  
+3.1.2.1 Açıklama  
+Madencilik saha yönetiminde ihtiyaç duyulan modüllerin belirlenip buna uygun bir 
+otomasyon sisteminin tasarlanması bu görev kapsamındadır.  
+3.1.2.2 Teslimatlar ve Kilometre Taşları  
+Bu görev dâhilinde, SRS belgesi ve Use Case diyagramı teslim edilecektir.  Kilometre taşı 
+ise SRS belgesinin ekip ve proje danışmanı tarafından onaylanmasıdır.  
+3.1.2.3 Gerekli Kaynaklar  
+• Diyagram çizim aracı (Visio)  
+• Ekip fikir birliği  
+3.1.2.4 Bağımlılıklar ve Kısıtlar  
+• SPMP belgesinin onaylanması  
+• Gereksinimlerin kesinleşmesi  
+3.1.2.5 Riskler ve Alternatif Önlemler  
+• Gereksinimlerin eksik veya fazla belirlenmesi / Doğru gereksinimlerin belirlenmesi  
+3.1.3 Analiz Modelleme ve Alan Modeli  
+3.1.3.1 Açıklama  
+Bu görev, gereksinimleri tasarıma hazırlayan analiz modellerini üretir.  Alan m odeli, varlık 
+örnekleri, aktivite diyagramı ve durum diyagramı tasarlanır.  
+3.1.3.2 Teslimatlar ve Kilometre Taşları  
+Görev kapsamında alan modeli, aktivite/durum diyagramı teslim edilecektir. Kilometre taşı 
+olarak analiz model setinin tamamlanması belirlenmiştir.  
+3.1.3.3 Gerekli Kaynaklar  
+• Diyagram çizim aracı (Visio)  
+5 • Ekip fikir birliği  
+3.1.3.4 Bağımlılıklar ve Kısıtlar  
+• SRS belgesinin onaylanması  
+3.1.3.5 Riskler ve Alternatif Önlemler  
+• Modelin çok girift olması / Yalnızca kritik ve önemli akışların modellenmesi  
+3.1.4 Mimari ve Detay Tasarım  
+3.1.4.1 Açıklama  
+Bu görevde, sistemin nasıl kurulacağı tanımlanır. Kullanılacak mimari ve modül 
+tasarımında önceki görevde yapılan işlemler detaylandırılarak projenin tüm yapısı ortaya 
+konulacaktır.  
+3.1.4.2 Teslimatlar ve Kilometre Taşları  
+Bu görev sonucunda SDD belgesi, katmanlı mimari diyagramı, detay sınıf diyagramı, 
+varlık ilişki diyagramı teslim edilecektir. Kilometre taşı olarak SDD belgesinin proje danışmanı tarafından onaylanması belirlenmiştir.  
+3.1.4.3 Gerekli Kaynaklar  
+• Diyagram çizim aracı (Visio)  
+3.1.4.4 Bağımlılıklar ve Kısıtlar  
+• Analiz modeli hazır olmalı  
+• Alan modeli hazır olmalı  
+3.1.4.5 Riskler ve Alternatif Önlemler  
+• Mimarinin hedeften sapması / Minimal ve dikkatli prototip tasarlanması  
+3.1.5 Gerçekleme ve Entegrasyon  
+3.1.5.1 Açıklama  
+Bu aşamada program, SDD’de açıklandığı gibi modüler olarak kodlanır ve entegre edilir. 
+OOP prensipleri uygulanır. Repo  ve branch stratejisi kullanılır. Temel iskelet yapısı kurulur ve 
+modül er geliştirme yapılır.  
+3.1.5.2 Teslimatlar ve Kilometre Taşları  
+Bu görev sonunda aşağıdaki çıktılar teslim edilecektir:  
+• Minimum çalışan ürün (MVP)  
+• Kaynak kod ve build çıktısı  
+• Sürüm notları  
+Kilometre taşı olarak tamamlanmış ve çalışan MVP kabul edilecektir.  
+3.1.5.3 Gerekli Kaynaklar  
+• Geliştirici ekip  
+• IDE (Integrated Development Environment)  
+• Veri tabanı  
+6 • Diğer tüm teknoloji gereksinimleri  
+3.1.5.4 Bağımlılıklar ve Kısıtlar  
+• Mimari ve detay tasarımın tamamlanmış olması  
+• Tasarımın stabil ve güvenilir olması  
+3.1.5.5 Riskler ve Alternatif Önlemler  
+• Kodlama ve entegrasyon sürecinde ortaya çıkabilecek hatalar / IDE’nin ve 
+literatürün önerdiği çözüm yöntemlerinin kullanılması  
+• Modüllerin belirlenen sürede tamamlanamaması / Önce MVP’nin tamamlanması ve ardından daha detaylı geliştirilmelerin yapılması  
+• Kullanılan teknolojilerin uyumsuzluğunun ortaya çıkması veya desteğinin olmaması / Gerekli değişikliklerin hızlıca yapılması  
+3.1.6 Test ve Doğrulama  
+3.1.6.1 Açıklama  
+Sistemin gereksinimleri karşılayıp karşılamadığı test edilir. Test planı, test senaryoları, 
+entegrasyon testleri ve kullanıcı kabul testleri gerçekleştirir.  
+3.1.6.2 Teslimatlar ve Kilometre Taşları  
+Bu görev sonunda STD belgesi, test sonuçları ve hata listesi teslim edilir. Kilometre taşı 
+olarak proje ekibinin proje test sonuçlarına göre yazılımı onaylaması ve STD belgesinin proje 
+danışmanı tarafından onaylanması belirlenmiştir.  
+3.1.6.3 Gerekli Kaynaklar  
+• Tamamen hazır program 
+• Çalıştırma ortamı  
+3.1.6.4 Bağımlılıklar ve Kısıtlar  
+• Otomasyon yazılımının hatasız ve stabil bir biçimde çalışıyor olması  
+3.1.6.5 Riskler ve Alternatif Önlemler  
+• Yazılımın beklenen biçimde hazır olmaması / Sürecin doğru yönetilmesi  
+• Test bölümündeki hataların çözülememesi / Test sürecinin verimli kullanılması  
+3.1.7 Dokümantasyon, Sunum ve Proje Kapanışı  
+3.1.7.1 Açıklama  
+Bu görev kapsamında sunum dosyası hazırlanır, belirlenen sunum vaktinde bir demo 
+yapılarak ortaya çıkan yazılımın sunumu yapılır.  
+3.1.7.2 Teslimatlar ve Kilometre Taşları  
+Bu görev sonucu teslim edilecek çıktılar aşağıdaki gibidir:  
+• Demo senaryosu 
+• Hazır ve tam bir otomasyon yazılımı  
+• Sunum dosyası  
+7 Kilometre taşı olarak proje sunumu ve kapanış belirlenmiştir.  
+3.1.7.3 Gerekli Kaynaklar  
+• Proje ekibi  
+• Sunum ortamı  
+3.1.7.4 Bağımlılıklar ve Kısıtlar  
+• Sunum dosyasının hazır olması  
+• Proje danışmanının sunum için hazır olması  
+3.1.7.5 Riskler ve Alternatif Önlemler  
+• Sunum becerisi eksikliği / Sunum öncesi alıştırma  
+3.2 Görev Atamaları  
+3.2.1 Faz Bazlı Sorumluluk Dağılımı  
+Görev  Sorumlu  Destek  
+Proje Başlatma ve Planlama  Proje Ekibi  - 
+Gereksinim Analizi  Proje Ekibi  - 
+Analiz Modelleme ve Alan 
+Modeli  Proje Ekibi  - 
+Mimari ve Detay Tasarım  Proje Ekibi  - 
+Gerçekleme ve Entegrasyon  Proje Ekibi  - 
+Test ve Doğrulama  Proje Ekibi  - 
+Dokümantasyon, Sunum ve 
+Proje Kapanışı  Proje Ekibi  - 
+3.2.2 Teknik Bazlı Sorumluluk Dağılımı  
+Teknik Alan  Birincil Sorumlu  Destek  
+Backend  (ASP.NET Core 
+Web API)  Elif Nisa Okur  Büşra Arslan  
+Veri Tabanı Tasarımı ve EF 
+Core  Büşra Arslan  Elif Nisa Okur  
+Frontend [Windows (WPF) 
+ve Mobil Uygulama (.NET 
+MAUI]  Berke Koyuncu  - 
+API-UI Entegrasyonu  Berke Koyuncu  Elif Nisa Okur  
+Test Senaryoları ve 
+Doğrulama  Proje Ekibi  - 
+8 Dokümantasyon  Proje Ekibi  - 
+ 
+Proje görev atamaları, ekip üyelerinin ortak anlaşması sonucu belirlenmiştir. Backend ve 
+frontend geliştirmeleri eş zamanlı olarak yürütülecektir.  
+3.3 Zaman Çizelgesi  
+Hafta  Tarih Aralığı  Faaliyet  Çıktı  
+Hafta 1 -3 11 Şubat – 28 Şubat  Proje Başlatma ve 
+Planlama  SPMP  
+Hafta 4 -6 2 Mart – 22 Mart  Gereksinim Analizi, 
+Mimari Tasarım  SRS 
+Hafta 7 -8 23 Mart – 3 Nisan  Ara Sınav Dönemi  - 
+Hafta 8 -11 3 Nisan – 22 Nisan  Mimari Tasarım, 
+Gerçekleme  SDD  
+Hafta 11-12 23 Nisan – 3 Mayıs  Gerçekleme  - 
+Hafta 13 -14 4 Mayıs – 13 Mayıs  Test ve Doğrulama  STD  
+ 
+Zaman çizelgesi, akademik takvim ve belge teslim tarihleri dikkate alınarak 
+düzenlenmiştir.  
+  
+9 4. Kaynakça 
+[1] H. Karacan, "Yazılım Süreç Modelleri," BM314 Yazılım Mühendisliği Ders Slaytları, Gazi 
+Üniversitesi, 2026. 
+[2] Microsoft, "C# - a modern, open- source programming language ," Microsoft .NET. 
+[Çevrimiçi]. Erişim: https://dotnet.microsoft.com/en -us/languages/csharp . [Erişim tarihi : 
+Mar. 11, 2026]. 
+[3] Microsoft, ".NET and .NET Core Support Policy ," Microsoft .NET. [Çevrimiçi]. Erişim: 
+https://dotnet.microsoft.com/en -us/platform/support/policy/dotnet -core. [Erişim tarihi: 11 
+Mart 2026].  
+[4] Microsoft, "ASP.NET API Development," Microsoft .NET. [Çevrimiçi].  Erişim: 
+https://dotnet.microsoft.com/en -us/apps/aspnet/apis. [Erişim tarihi: 11 Mart 2026].  
+[5] Microsoft, "Microsoft.EntityFrameworkCore 8.0.8," NuGet Package Repository. 
+[Çevrimiçi].  Erişim: 
+https://www.nuget.org/packages/Microsoft.EntityFrameworkCore/8.0.8. [Erişim tarihi: 11 
+Mart 2026].  
+[6] SmartBear Software, "OpenAPI Specification," Swagger.io. [Çevrimiçi]. Erişim: 
+https://swagger.io/specification/ . [Erişim tarihi: 11 Mart 2026].  
+[7] Microsoft, "Configure JWT Bearer Authentication in ASP.NET Core," Microsoft Learn. 
+[Çevrimiçi]. Erişim: https://learn.microsoft.com/en -
+us/aspnet/core/security/authentication/configure -jwt-bearer -
+authentication?view=aspnetcore -10.0. [Erişim tarihi: 11 Mart 2026]. 
+[8] Microsoft, "SQL Server 2022," Microsoft. [Çevrimiçi]. Erişim: 
+https://www.microsoft.com/tr -tr/sql- server/sql -server -2022. [Erişim tarihi: 11 Mart 2026].  
+[9] Microsoft, "SQL Server Management Studio Documentation," Microsoft Learn. 
+[Çevrimiçi]. Erişim: https://learn.microsoft.com/en -us/ssms/ . [Erişim tarihi: 11 Mart 2026].  
+[10] Microsoft, "Windows Presentation Foundation (WPF) Overview," Microsoft Learn. 
+[Çevrimiçi]. Erişim: https://learn.microsoft.com/tr -tr/dotnet/desktop/wpf/overview/.  
+[Erişim tarihi: 11 Mart 2026].  
+[11] Microsoft, ".NET Community Toolkit MVVM Documentation," Microsoft Learn. 
+[Çevrimiçi].  Erişim: https://learn.microsoft.com/en -us/dotnet/communitytoolkit/mvvm/. 
+[Erişim tarihi: 11 Mart 2026].  
+[12] Microsoft, ".NET MAUI'de Yenilikler (.NET 8)," Microsoft Learn. [Çevrimiçi]. Erişim: 
+https://learn.microsoft.com/tr -tr/dotnet/maui/whats -new/dotnet -8?view=net -maui -10.0. 
+[Erişim tarihi: 11 Mart 2026].  
+[13] Git, "Git – Distributed Version Control System," Git. [Çevrimiçi]. Erişim: https://git -
+scm.com/ . [Erişim tarihi: 11 Mart 2026]. 
+[14] GitHub, "GitHub: Let’s Build from Here," GitHub. [Çevrimiçi]. Erişim: 
+https://github.com/. [Erişim tarihi: 11 Mart 2026].  
+10 5. Ek Materyaller  
+Ek A: Toplantı Notları  
+Şekil A1. 11.02.2026 tarihli proje planlama toplantısı notları 
+ 
+
+11 Şekil A2. 18.02.2026 tarihli proje planlama toplantısı notları 
+ 
+
+12 Şekil A3. 22.02.2026 ve 27.02.2026 tarihli proje toplantısı notları  
+ 
+
+=== END OF MINEMATION_SPMP.pdf ===
+
+=== START OF MINEMATION_SRS.pdf ===
+ Yazılım Gereksinim Belirtimi 
+(Software Requirements Specifications  – SRS ) 
+ 
+ 
+MINEMATION  
+Maden Saha sı Yönetim Otomasyonu 
+  
+Ders: BM314 – Yazılım Mühendisliği  
+Öğretim Üyesi: Prof. Dr. Hacer Karacan  
+Bilgisayar Mühendisliği Bölümü  
+Mühendislik Fakültesi  
+Gazi Üniversitesi  
+  
+Hazırlayanlar  
+Berke Koyuncu ( 23118080012)  
+Büşra Arslan (22118080007)  
+Elif Nisa Okur (22118080077)  
+ 
+ 
+Dönem: 2025- 2026 Bahar  
+Teslim Tarihi: 08 Nisan  2026
+ Revizyon Geçmişi  
+Versiyon  Tarih  Açıklama  Yazar  
+0.1 11.03.2026  İlk Taslak  Proje Ekibi  
+0.2 15.03.2026  İçerik Girişleri  Proje Ekibi  
+0.3 19.03.2026  İçerik Girişleri  Proje Ekibi  
+1.0 24.03.2026  Teslime Hazır  Berke Koyuncu  
+ 
+ İçindekiler  
+1. Giriş  ................................................................................................................................. 1 
+1.1 Ürün Genel Bakışı  ..................................................................................................... 1 
+1.2 Tanımlar, Kısaltmalar ve Terimler ............................................................................. 1 
+2. Özel Gereksinimler  ......................................................................................................... 3 
+2.1 Dış Arayüz Gereksinimleri  ........................................................................................ 3 
+2.1.1 Kullanıcı Arayüzleri  ........................................................................................... 3 
+2.1.2 Donanım Arayüzleri  ........................................................................................... 5 
+2.1.3 Yazılım Arayüzleri  .............................................................................................. 5 
+2.1.4 İletişim Protokolleri  ........................................................................................... 6 
+2.2 Yazılım Ürün Özellikleri  ........................................................................................... 6 
+2.2.1 Personel ve Ekipman Takip Modülü .................................................................. 6 
+2.2.2 Vardiya Tanzim Modülü ..................................................................................... 7 
+2.2.3 Vaka Yönetim Modülü ....................................................................................... 7 
+2.2.4 Aksiyon Gerçekleştirim Modülü  ........................................................................ 8 
+2.2.5 Raporlama Modülü  ............................................................................................. 8 
+2.2.6 Harita Modülü  .................................................................................................... 8 
+2.3 Yazılım Sistem Özellikleri  ........................................................................................ 8 
+2.3.1 Güvenilirlik  ........................................................................................................ 8 
+2.3.2 Erişilebilirlik  ...................................................................................................... 9 
+2.3.3 Güvenlik  ............................................................................................................. 9 
+2.3.4 Sürdürülebilirlik  ............................................................................................... 10 
+2.3.5 Taşınabilirlik  ..................................................................................................... 10 
+2.3.6 Performans  ....................................................................................................... 10 
+2.4 Veri Tabanı Gereksinimleri  ..................................................................................... 11 
+3. Kaynakça  ....................................................................................................................... 11 
+4. Ek Materyaller  ............................................................................................................... 12 
+Ek A: Kullanıcı Arayüzleri  ............................................................................................ 12 
+Ek B: Toplantı Notları  ................................................................................................... 24 
+1 1. Giriş  
+1.1 Ürün  Genel Bakış ı 
+Minemation otomasyon yazılımı; maden sahasında personel, ekipman, vardiya, güvenlik, 
+risk analizi ve saha düzeni süreçlerinin yönetilmesini sağlayan bir otomasyon yazılımıdır. Bu 
+otomasyon; Personel ve Ekipman Takip Modülü, Vardiya Tanzim Modülü, Vaka Yönetim 
+Modülü, Aksiyon Gerçekleştirim Modülü, Raporlama Modülü ve Harita Modülü olmak üzere 
+altı temel modülden oluş acaktır . Bu yazılım, maden sahasında güvenlik ve saha düzenine 
+gereksinim duyan maden işletmeler ine hitap edecektir.  
+1.2 Tanımlar, Kısaltmalar ve Terimler  
+Terim  Açıklama  
+API (Application Programming Interface)  API'ler, iki farklı uygulamanın birbirleriyle iletişim kurmasına olanak 
+tanıyan bir aracı görevi görür. Bu iletişim veri göndermeyi ve almayı içerebilir veya farklı yazılım bileşenlerinin etkileşim kurmasına ve 
+görevleri gerçekleştirmesine izin verebilir. [1]  
+Backend  Arka uç Katmanı, Sunucu Katmanı  
+Branch  Repository içinde, ana geliştirme hattından (ör. main/master) ayrılarak 
+bağımsız geliştirme yapılmasını sağlayan paralel çalışma dalıdır.  
+Build  Kaynak kodun derlenmesi, bağlanması ve gerekli bağımlılıkların 
+entegre edilmesi sonucunda çalıştırılabilir bir yazılım çıktısının (executable, package vb.) üretilmesi sürecidir.  
+Developer  Geliştirici  
+Frontend  Ön yüz Katmanı, Kullanıcı Katmanı  
+GPS (Global 
+Positioning System)  Kullanıcıların dünyanın her yerinde, günün 24 saati, tüm hava 
+koşullarında tam konumlarını, hızlarını ve zamanlarını sağlamalarına olanak tanıyan uydu tabanlı bir navigasyon sistemidir. [ 2] 
+Güvenlik ve Sağlık 
+Personeli  İş güvenliği uzmanı, iş sağlığı doktoru ve herhangi bir sağlık 
+personelini temsil eden roldür.  
+Hash  Hash, belirli bir girdinin (mesela bir metin veya dosya) benzersiz bir 
+temsilini veren bir fonksiyondur. Genellikle şifreleme, veri 
+doğrulama, veri bütünlüğü ve özetleme gibi amaçlarla kullanılır. [3]  
+IDE (Integrated 
+Development 
+Environment)  Kaynak kod editörü, derleyici/yorumlayıcı, hata ayıklayıcı (debugger) 
+ve çeşitli geliştirme araçlarını entegre biçimde sunan yazılım 
+geliştirme ortamıdır. Geliştirme sürecinin verimliliğini artırmayı 
+amaçlar.  
+2 İşletme Dışı 
+(Geçici) Personel  Normal şartlar altında işletmede çalışmayıp lojistik, teslimat, ek 
+ihtiyaç gibi muhtelif sebeplerden belirli bir süre için işletmeye girmesi gereken personeli temsil eden roldür.  
+Log Bilgi işlemde log kaydı, bir bilgisayar sisteminde meydana gelen 
+olaylar hakkındaki bilgileri bir günlük dosyasında depolamak anlamına gelir. [4] 
+Minimum Çalışan 
+Ürün (MVP)  Ürünün temel işlevlerini içeren, kullanıcıya değer sunabilecek en 
+basit ve erken sürümüdür. Amaç, minimum geliştirme maliyetiyle gerçek kullanıcı geri bildirimi toplamaktır.  
+OOP  Object Oriented Programming (Nesne Tabanlı Programlama)  
+Repository (Repo)  Proje kaynak kodlarının, dokümanlarının ve ilgili tüm dosyaların 
+versiyon kontrol sistemi (ör. Git) üzerinde tutulduğu merkezi depolama alanıdır.  
+RFID (Radio 
+Frequency 
+Identification) RFID, üzerinde mikroişlemci ile donanmış etiket taşıyan bir nesnenin, 
+bu etikette taşıdığı kimlik yapısı ile hareketlerinin izlenebilmesine imkân  veren radyo frekansları ile çalışan teknolojiye verilen addır . [5] 
+Rol Tabanlı Erişim 
+Denetimi (RBAC)  Bir sistem  içerisindeki kullanıcı izinlerinin, çalışanların rollerine göre 
+atamasını mümkün kılan bir sistemdir. [ 6] 
+Saha Personeli  Makine operatörleri, teknisyenler, üretim ekibi üyeleri, destek 
+personeli vb. saha içinde görevli personeli temsil eden roldür.  
+SDD  Software Design Description (Yazılım Tasarım Tanımlaması)  
+Sistem Yöneticisi 
+(Administrator)  Sistem yöneticisi, en temel tanımıyla sistem üzerindeki tüm yetkilere 
+sahip kullanıcıdır.  
+SPMP  Software Project Management Plan (Yazılım Projesi Yönetim Planı)  
+SRS Software Requirements Specifications (Yazılım Gereksinim Belirtimi)  
+STD  Software Test Documentation (Yazılım Test Dokümanı)  
+TCP/IP Verinin bir uçtan diğer uca güvenilir ve yönlendirilebilir biçimde 
+taşınmasını sağlayan kurallar bütünüdür. 
+Teknik Personel  Baş mühendis, maden mühendisi, jeoloji mühendisi, üretim şefi, 
+vardiya amiri, saha koordinatörü gibi sahadaki teknik personeli temsil 
+eden roldür.  
+Use Case  Kullanım Senaryosu  
+Üst Yönetim  Genel müdür, işletme müdürü, maden sahası müdürü vb. işletmenin 
+en üst yönetim birimlerini temsil eden roldür.  
+3 Veri Tabanı 
+Yönetim Sistemi 
+(DBMS)  Veri tabanları oluşturmak ve yönetmek için bir sistem yazılımıdır.  
+2. Özel Gereksinimler  
+2.1 Dış Arayüz Gereksinimleri  
+2.1.1 Kullanıcı Arayüzleri  
+Bu yazılım , kullanıcıların maden sahasındaki operasyonları etkin bir biçimde 
+yönetebilmesi için bir grafiksel kullanıcı arayüzü sunacaktır. Kullanıcı arayüzleri, masaüstü ve 
+mobil aygıtlarda çalışacak biçimde tasarlanacaktır.  
+Arayüzler, anlaşılır ve kullanıcı dostu olarak tasarlanacaktır. Gezinme  yapısı ekseriyetle 
+gezinme çubuğu kullanılarak oluşturulacaktır.  
+2.1.1.1 Giriş Ekranı  
+Bu yazılımda her kullanıcı rolü için giriş ekranı tek tip  olacaktır . Bu, her kullanıcının  rolüne 
+bakmaksızın  tek ekrandan giriş yapmasını sağlayacak  ve dolayısıyla yazılımın karmaşıklığını 
+azalt acaktır . Giriş sırasında kullanıcıdan kimlik numarası ve şifre bilgisi isten ecek, başarılı giriş 
+sonucunda rolüne bağlı olarak ilgili arayüze yönlendirilecektir.  
+Bu ekranda bir kaydolma ibaresi bulunmaz zira kullanıcı oluşturma işlemleri yönetici ekibi 
+tarafından yapı lacaktır.  Yeni kullanıcı ların ilk girişleri kimlik numaralarıyla yapılacaktır ve 
+kullanıcı, derhâl kişisel bir şifre belirle me ekranına yönlendirilecektir . Şifre belirlemeyen 
+kullanıcıların sisteme erişmesi mümkün olmayacaktır.  
+Kullanıcı giriş ekranı nın bir taslağı Ek A’da (Şekil A1) gösterilmiştir.  
+2.1.1.2 Sistem Yöneticisi Arayüzü  
+Sistem yöneticisi,  tanımlandığı üzere sistemdeki tüm yetkilere sahip  olacaktır . Bu kullanıcı 
+tipinin erişimi olduğu modüller aşağıdaki gibi  olacaktır : 
+• Personel ve Ekipman Takip Modülü  
+• Vardiya Tanzim Modülü  
+• Vaka Yönetim Modülü  
+• Aksiyon Gerçekleştirim Modülü  
+• Raporlama Modülü  
+• Harita Modülü  
+Sistem yöneticisi arayüzünün bir taslağı Ek A’da (Şekil A2) gösterilmiştir.  Bahsi geçen 
+modüllerin tümü Bölüm 2.2’de açıklanmıştır.  
+2.1.1.3 Üst Yönetim Arayüzü  
+Üst yönetim, tanımlandığı üzere işletmedeki üst yönetim kadrosunu ifade eder. Bu kullanıcı 
+tipi, sistem yöneticisine benzer biçimde her modüle erişebilecektir:  
+• Personel ve Ekipman Takip Modülü  
+4 • Vardiya Tanzim Modülü  
+• Vaka Yönetim Modülü  
+• Aksiyon Gerçekleştirim Modülü  
+• Raporlama Modülü  
+• Harita Modülü  
+Üst yönetim arayüzünün bir taslağı Ek A’da (Şekil A2) gösterilmiştir.  
+2.1.1.4 Teknik Personel Arayüzü  
+Teknik personel, saha  personelinin ve ekipmanın muhtelif yönlerden tanzim edilmesiyle 
+sorumludur. Teknik personel genel bir kavram olduğundan alt dallarına ayrıldığında her teknik 
+personel türü için modül erişimleri  değişecektir. Üst yönetim ; eklenen her teknik personel için, 
+personelin uzmanlığın ı seçecektir ve sistem, kullanıcının uzmanlığına göre gerekli erişim 
+izinlerini atayacaktır . Varsayılan olarak her teknik personel, yalnızca kendi sorumlu olduğu 
+vardiya için tüm modülleri kullana caktır . 
+Teknik personel in tamamen farklı bir arayüzü olmayıp üst yönetim arayüzüne benzer bir 
+arayüz  kullanacak tır. Teknik personel arayüzü, Ek A’da (Şekil A2) gösterildiği biçimde bir 
+görüntüye sahip olup erişim izinlerine göre erişebildiği modüller uzmanlığına  bağlı olarak 
+değişecektir.  
+2.1.1.5 Güvenlik ve Sağlık Personeli Arayüzü  
+Güvenlik ve sağlık personeli, saha personelinin sağlık durumlarını takip eden modüle 
+erişecektir. Bu modülde saha personelinin sağlık bilgisi bulunacaktır. Personel ve Ekipman Takibi Modülünün altında bulunan bu alt modül, saha personeli için daha güvenli ve risksiz bir 
+çalışma ortamı sunacaktır.  
+Bahsi geçen modülde bulunacak sağlık bilgilerinin bir taslağı  Ek A’da (Şekil A3) 
+gösterilmiştir.  
+2.1.1.6 İşletme Dışı (Geçici ) Personel Arayüzü  
+Bu personel türü tanımlandığı üzere kısıtlı bir süre için işletmede bulunacak personeli ifade 
+eder. Bu rol, muhtelif modüllere erişim gerektirebileceğinden personel girişi yapılırken 
+personelin uzmanlığı seçilecek ve sistem, bu seçim sonucunda kullanıcıya gerekli erişim 
+izinlerini atayacaktır . Doğru seçimi yapmak , giriş kaydını yapan işletme personelinin 
+mesuliyetinde olacaktır.  
+Bu personel türünün kullanacağı arayüz, temel arayüzün aynısı olup, erişebileceği 
+modüllere göre değişiklik gösterecektir.  
+2.1.1.7 Saha Personeli Arayüzü  
+Saha personeli, şimdiye kadar tanımlanan rollerin kullanacağı arayüzden farklı bir arayüz 
+kullanacak olup bu arayüzün temel amacı, yönetimsel işlevlerden ziyade personelin iş sahasında bilgilendirilmesini sağlamak olacaktır.  Saha personeli temel olarak şu bilgileri 
+görüntüleye bilecektir:  
+• Aktif vardiya ve genel vardiya bilgileri  
+• Kendi vardiyasına etki eden vakaları  
+5 • Kendi vardiyasına etki eden raporları ve diğer gerekli raporları  
+• Maden sahası harita modülü 
+• Sağlık bilgileri  
+Bu personel türünün kullanacağı arayüz tipinin bir taslağı Ek A’da  (Şekil A4) gösterilmiştir.  
+2.1.2 Donanım Arayüzleri  
+Sistem, maden sahasında kullanılan muhtelif donanım bileşenlerinden elde edilen verileri 
+kullanabilecek bir biçimde tasarlanacaktır.  Bu donanımlar; sahadaki ekipmanların konumunu 
+ve durumunu izlemek, personelin konumunu ve durumunu gözlemek, sensörler aracılığı ile 
+maden sahasında oluşabilecek tehlike içeren durumları güvenlik amacıyla analiz etmek 
+suretiyle personelin güvenliğini artırmak ve operasyonel riskleri tespit et mek amacıyla 
+kullanılacaktır.  
+Sistem, aşağıdaki donanım türlerini destekleyecektir:  
+• Gaz sensörleri (CH 4, CO vb.)  
+• Sıcaklık ve nem sensörleri  
+• Titreşim ve sismik sensörler  
+• Toz yoğunluğu sensörleri  
+• GPS ve RFID tabanlı personel takip aygıtları  
+Lakin, donanımların geliştirilmesi ve implementasyonu sistem kapsamına alınmayacaktır.  
+İlgili donanımların sisteme implemente edilmesi maden sahası yönetim ekibinin tasarrufunda 
+olacaktır.  
+Sistem ; Modbus, UART, TCP/IP veya benzeri endüstriyel iletişim protokollerini kullanan 
+sensörlerden veri alabilecek şekilde tasarlanacaktır.  Aşağıdaki örnek modellerin desteklenmesi 
+hedeflenecektir:  
+• Gaz sensörü : Honeywell Sensepoint XCL  [7] 
+• Sıcaklık ve nem sensörü : Bosch BME280 [ 8] 
+• Titreşim ve sismik sensörü : ADXL345 Accelerometer  [9] 
+• Toz yoğunluğu sensörü:  Honeywell HPMA115S0 [ 10] 
+• RFID: ThingMagic M6E Nano [ 11] 
+• GPS: Teltonika FMB920 [ 12] 
+2.1.3 Yazılım Arayüzleri  
+Sistem; sunucu, istemci ve veri tabanı üçlüsü üzerinde iletişim kurarak çalışacaktır. Sunucu 
+ve istemci arasındaki iletişim bir API aracılığıyla gerçekleşecektir.  
+Kullanıcı sistemi masaüstü veya mobil bir arayüz üzerinden kullanacaktır. Bu arayüz ler 
+kullanıcıya ; kullanıcı girişi, personel ve ekipman yönetimi, vardiya yönetimi, vaka yönetimi, 
+sağlık bilgilerine erişim, harita modülüne erişim  ve raporlama modülüne erişim olmak üzere 
+sistemin tüm özelliklerine erişim imkânı sağlayacaktır.  
+Sunucu uygulaması, sistemin tüm verilerini saklamak amacıyla bir veri tabanı yönetim 
+sistemi ile iletişim kuracaktır. Bu veri tabanında, sistemde bulunan tüm modüllerin verileri 
+tutulacaktır.  
+6 Sistem, sahadaki sensörler ve personel takip aygıtlarından gelen bilgilerin okunması, 
+işlenmesi ve ilgili modüllere aktarılmasını sağlayacaktır.  
+Kimlik doğrulama ve yetkilendirme işlemleri sunucu tarafında yürütülecek ve 
+kullanıcıların erişim hakları rol bilgilerine göre belirlenecektir.  
+2.1.4 İletişim Protokolleri  
+Sistem bileşenleri arasında iletişim ağ yapısı üzerinden gerçekleştirilecektir. Tüm veri 
+iletimi TCP/IP tabanlı ağ altyapısı üzerinden gerçekleştirilecektir.  
+Kullanıcı arayüzleri ve sunucu uygulaması arasındaki haberleşme HTTP ve HTTPS ile 
+gerçekleştirilecektir. İstemci  ile sunucu iletişim kurarken RES T API ile haberleşecektir. 
+Kullanıcı tarafından arayüz üzerinde gerçekleştirilecek tüm işlemler sunucuya gönderilecek ve 
+sunucu istekleri işleyerek kullanıcıya geri iletilecektir.  
+Sahada bulunan sensörler ve aygıtlar benzer biçimde ağ üzerinden sistem ile kuracak ve 
+gerekli bilgileri iletecektir. Sistem, bu yorumladığı bilgilere göre sistem kullanıcılarına acil 
+durum vb. bilgileri iletebi lecektir.  
+Sistem ve çevre birimleri (kullanıcılar, sensörler, personel takip aygıtları, ekipmanlar vb.) 
+arasında kurulacak tüm iletişimde veri bütünlüğünün korunması ve güvenli iletim esas 
+alınacaktır.  
+2.2 Yazılım Ürün Özellikleri  
+Sistem  tasarlanırken  kullanıcıların düzenli ve kullanıcı dostu bir biçimde sistem 
+bileşenlerine erişmesi adına modüler tasarım kullan ılacaktır. Kullanıcı, rolüne bağlı olarak 
+ihtiyaç duyduğu tüm modüllere gezinme çubuğu üzerinden kolaylıkla erişebilecektir.  
+Sistemdeki modüllerin detaylı açıklaması aşağıda yapılacaktır.  
+2.2.1 Personel ve Ekipman Takip Modülü 
+Personel ve ekipman takip modülü tek bir modül olmasına karşın, personel yönetimi ve 
+ekipman yönetimi ayrık menülerden oluşacaktır.  
+2.2.1.1 Personel Yönetimi  
+Personel yönetim kısmında kullanıcının gerçekleştirebileceği işlemler aşağıdaki gibi 
+olacaktır:  
+• İdari ve saha personeli listeleme  
+• Personel listeleri üzerinde filtreleme ve sıralama yapma  
+• Kullanıcı erişim iznine bağlı olarak yeni personel kaydı yapma  
+• Var olan personel in bilgileri üzerinde düzenleme yapma  
+Personel yönetim arayüzünün bir taslağı Ek A’da  (Şekil A5) gösterilmiştir.  
+Yönetim ekibi kullanıcıları personel kaydı yapma yetkisine sahip olup personel kaydı 
+yaparken personel yönetimi altındaki ekleme butonu aracılığıyla personel kaydı yapabilece ktir. 
+Personel ekleme menüsünün bir taslağı Ek A’da (Şekil A6) gösterilmiştir.  
+7 2.2.1.2 Ekipman Yönetimi  
+Ekipman yönetim kısmında kullanıcının gerçekleştirebileceği işlemler aşağıdaki gibi 
+olacaktır:  
+• Ekipman türüne göre listeleme  
+• Ekipman listeleri üzerinde filtreleme ve sıralama yapma  
+• Kullanıcı erişim iznine bağlı olarak yeni ekipman kaydı yapma  
+• Var olan ekipmanın bilgileri üzerinde düzenleme yapma  
+Ekipman yönetim arayüzünün bir taslağı Ek A’da (Şekil A7) gösterilmiştir. 
+Yönetim ekibi kullanıcıları ekipman kaydı yapma yetkisine sahip olup ekipman kaydı 
+yaparken ekipman yönetimi altındaki ekleme butonu aracılığıyla ekipman kaydı yapabilecektir. 
+Ekipman ekleme menüsünün bir taslağı Ek A’da (Şekil A8) gösterilmiştir.  
+Yönetim ekibinden olmayan kullanıcılar bu modül aracılığıyla yalnızca kendilerini 
+ilgilendiren bilgileri görüntüleme yetkisine sahip olacaktır.  
+2.2.2 Vardiya Tanzim Modülü  
+Bu modülde yönetim ekibi  vardiya planı kısmından vardiyaların genel durumunu 
+izleyebilecek,  vardiya yönetimi kısmında ise aşağıdaki işlemleri gerçekleştirebilecektir:  
+• Vardiya  listeleme  
+• Vardiya listesi üzerinde filtreleme ve sıralama yapma  
+• Kullanıcı erişim iznine bağlı olarak yeni vardiya oluşturma  
+• Var olan vardiya bilgileri üzerinde düzenleme yapma  
+Vardiya planının  arayüzünün, vardiya yönetim arayüzünün ve vardiya ekleme menüsünün  
+birer taslakları sırasıyla  Ek A’da (Şekil A9, Şekil A10 ve Şekil A11 ) gösterilmiştir.  
+Yönetim ekibinden olmayan kullanıcılar bu modül aracılığıyla yalnızca kendilerini 
+ilgilendiren bilgileri görüntüleme yetkisine sahip olacaktır. Bu kullanıcıların kullanacağı 
+vardiya arayüzü nün bir taslağı Ek A’da (Şekil A12) gösterilmiştir.  
+2.2.3 Vaka Yönetim Modülü  
+Bu modülde yönetim ekibi saha içinde oluşabilecek riskli ve tehlikeli durumları 
+görüntüleyip yönetebilecektir. Bu arayüzden aşağıdaki işlemler gerçekleştirilebilecektir:  
+• Vaka listeleme  
+• Vaka listesi üzerinde filtreleme ve sıralama yapma  
+• Var olan vaka bilgileri üzerinde düzenleme yapma  
+Vaka yönetim arayüzünün ve vaka bilgileri ekranının birer taslakları sırasıyla Ek A’da 
+(Şekil A13  ve Şekil A14) gösterilmiştir.  
+Yönetim ekibinden olmayan kullanıcılar bu modül aracılığıyla yalnızca kendilerini 
+ilgilendiren bilgileri görüntüleme yetkisine sahip olacaktır. Bu kullanıcıların kullanacağı vaka arayüzünün bir taslağı Ek A’da (Şekil A15) gösterilmiştir.  
+8 Ayrıca yönetim ekibi risk izleme arayüzü üzerinden risk arz eden ve tehlike oluşturacak 
+verileri verimli bir biçimde görüntüleyebilecektir.  Risk izleme arayüzünün bir taslağı Ek A’da 
+(Şekil A22) gösterilmiştir.  
+2.2.4 Aksiyon Gerçekleştirim Modülü  
+Bu modül ün amacı, sistemde oluşacak vakalar için bir aksiyon gerçekleştirmektir. Sistem, 
+risk arz edecek durumlar (örneğin sensör verileri) için otomatik olarak aksiyon al acak ve 
+vaziyetin ciddiyetini analiz edip alınması gereken aksiyonu (örneğin tahliye) münferiden 
+uygula yacaktır . Personelin müdahale etmesi icap eden vakalar için sistem, gerekli personeli 
+aksiyon alması adına ikaz e decek  ve çözüm talimatları varsa bildirecektir . 
+2.2.5 Raporlama Modülü  
+Bu modülde yönetim ekibi; vaka, ekipman, personel gibi muhtelif alanlarda belirli bir 
+şablona göre rapor oluşturabilecektir. Bu arayüzden aşağıdaki işlemler gerçekleştirilebilecektir:  
+• Rapor türüne göre listeme  
+• Rapor listeleri üzerinde filtreleme ve sıralama yapma  
+• Rapor oluşturma  
+Raporlama arayüzünün muhtelif rapor türleri için arayüzleri ve rapor oluşturma ekranının 
+birer taslakları sırasıyla  Ek A’da (Şekil A 16, Şekil A17, Şekil A18, Şekil A19 ve Şekil A20)  
+gösterilmiştir.  
+Yönetim ekibinden olmayan kullanıcılar bu modül aracılığıyla yalnızca kendilerini 
+ilgilendiren raporları görüntüleme yetkisine sahip olacaktır. Bu kullanıcıların kullanacağı rapor 
+arayüzünün bir taslağı Ek A’da (Şekil A21) gösterilmiştir.  
+2.2.6 Harita Modülü  
+Bu modülde yönetim ekibi; sahanın ve sahada bulunan personel, ekipman, aygıt gibi takip 
+edilmesi gereken muhtelif varlıkları harita üzerinden görüntüleyebilecektir . 
+Saha personeli ise bu modül aracılığıyla maden sahası üzerindeki hareketlerini düzenli bir 
+biçimde gerçekleştirebilecek ve yolbul yapısı kullanabilecektir. 
+2.3 Yazılım Sistem Özellikleri  
+2.3.1 Güvenilirlik  
+Sistem, güvenilirlik ilkesi kapsamında hataların izlenebilmesi ve kayıt altına alınması 
+suretiyle bir hata yönetimi ve loglama sistemi kullanacaktır.  Aşağıdaki işlemler sistem 
+tarafından kayıt altına alınacaktır:  
+• Kullanıcı giriş ve çıkış işlemleri  
+• Başarısız kimlik doğrulama girişimleri  
+• API istekleri ve hata durumları  
+• Veri tabanı  erişim hataları 
+• Sistem içerisinde oluşan beklenmeyen istisnalar  
+Log kayıtları aşağıdaki bilgileri içerecektir:  
+9 • Olay zamanı  
+• İşlem gerçekleştiren kullanıcı kimliği 
+• Gerçekleştirilen işlem türü  
+• Hata mesajı veya sistem mesajı  
+• İlgili modül veya servis bilgisi  
+2.3.2 Erişilebilirlik  
+Sistem, maden sahasında gerçekleştirilen operasyonların kesintisiz izlenebilmesi gayesiyle  
+yüksek erişilebilirlik sağlayacak biçimde  tasarlanacaktır.  
+No. Gereksinim Açıklaması  
+ERS-01 Planlı sistem bakımları yılda en fazla 12 adet gerçekleştirilecektir.  
+ERS-02 Planlı bakım süreleri önceden kullanıcılara bildirilecek ve bakım işlemleri 
+mümkün olduğunca 00.00 – 06.00 saatleri arasında gerçekleştirilecektir.  
+ERS-03 Veri tabanı ile bir bağlantı hatası oluştuğunda sistem 5 saniye içerisinde hata mesajı 
+döndürecektir.  
+ERS-04 İstemci uygulamaları sunucu ile bağlantı kuramazsa 10 saniye içinde bağlantı 
+hatası bildirimi gösterecektir.  
+ERS-05 Sistem servislerinin çalışabilirlik durumu her 30 saniyede bir sağlık kontrolü 
+mekanizması ile kontrol edilecektir.  
+ 
+2.3.3 Güvenlik  
+Sistem; kullanıcı bilgilerinin, sağlık verilerinin, saha operasyon bilgilerinin yetkisiz 
+erişime ve değişime karşı korunması nı sağlayacak biçimde tasarlanacaktır.  
+Güvenlik gereksinimleri aşağıda belirtilen şekilde olacaktır:  
+No. Gereksinim Açıklaması  
+GUV -
+01 Sistem, kullanıcı ve sistem bilgilerinin korunması amacıyla rol tabanlı erişim 
+denetimi (RBAC) kullanacaktır.  
+GUV -
+02 Kullanıcılar, sisteme sadece kendi kimlik numarası ve şifre bilgisi ile girecektir.  
+GUV -
+03 Kullanıcı şifreleri düz metin olarak saklanmayacak olup veri tabanında şifrelenmiş 
+biçimde saklanacaktır.  
+GUV -
+04 Yeni kullanıcılar ilk girişlerinde şifrelerini değiştirmeye zorlanacak olup aksi 
+takdirde sisteme giriş yapamayacaklardır.  
+GUV -
+05 Kullanıcı şifreleri en az 8 karakter uzunluğunda olacak ve en az bir büyük harf, bir 
+küçük harf, bir rakam ve bir özel karakter içerecektir.  
+GUV -
+06 Yanlış kullanıcı bilgileri ile giriş yapılması hâlinde sistem loglarına 
+kaydedilecektir.  
+10 GUV -
+07 Sistem, kullanıcıların rollerine göre erişim sınırlandırması uygulayacaktır.  
+GUV -
+08 Saha personeli sadece  kendisine ait sağlık bilgilerini, vardiya bilgilerini ve kendi 
+vardiyasını etkileyen kayıtları görüntüleyebilecektir.  
+ 
+2.3.4 Sürdürülebilirlik  
+Sistem, yazılımın uzun vadede bakımının yapılabilmesi, yeni özelliklerin eklenebilmesi ve 
+hataların hızlı biçimde giderilebilmesi amacıyla sürdürülebilir ve modüler bir mimari ile 
+geliştirilecektir.  
+No. Gereksinim Açıklaması  
+SUR -1 Sistem bileşenleri, birbirinden bağımsız çalışabilecek modüller h âlinde 
+tasarlanacaktır. Bu sayede bir modülde yapılan değişiklik diğer modülleri 
+etkilemeyecektir.  
+SUR -2 Sistem mimarisi ve veri yapıları geliştirici dokümantasyonu ile saklanacak ve 
+gelecekteki bakım süreçleri ni kolaylaştıracaktır.  
+ 
+2.3.5 Taşınabilirlik  
+Sistem, farklı donanım ve yazılım ortamlarında çalışabilecek biçimde geliştirilecektir.  
+No. Gereksinim Açıklaması  
+TAS-1 Yazılım yalnızca tek bir bilgisayara veya tek bir maden sahasına bağlı 
+olmayacaktır. Gerekli kurulum yapıldığında sistem başka bilgisayarlarda veya 
+başka maden sahalarında da çalıştırılabilecektir.  
+TAS-2 Sistemin kullanıcı arayüzleri hem masaüstü hem de mobil cihazlardan 
+erişilebilecek biçimde tasarlanacaktır.  
+ 
+2.3.6 Performans  
+Sistem, aşağıda belirtilen performans isterlerini karşılayacak  bir biçimde  tasarlanacaktır.  
+No. Gereksinim Açıklaması  
+PER-1 Kullanıcı  işlemleri , sistem tarafından en fazla 3 saniye içinde yanıtlanacaktır.  
+PER-2 Sistem, en az 200 eş zamanlı  kullanıcıyı destekleyecektir.   
+PER-3 Sensör v e çevre aygıtlardan gelen veriler en fazla 6 saniye içinde sistem tarafından 
+işlenecek ve görüntülenebilecektir.  
+11 2.4 Veri Tabanı Gereksinimleri  
+Sistem, kullanıcı bilgilerini ve operasyonel bilgileri merkezî bir veri tabanı yapısı üzerinde 
+tutacaktır.  Veri tabanı yönetim sistemi olarak Microsoft SQL Server kullanılacaktır. Uygulama 
+katmanı ile veri tabanı arasındaki ilişki Entity Framework Core üzerinden sağlanacaktır.  
+• Personel, ekipman, vardiya, vaka, rapor gibi tüm operasyonel veriler ve kullanıcı 
+verileri veri tabanı üzerinde saklanacaktır.  
+• Personel -ekipman, ekipman- vardiya, personel -vardiya gibi ilişki içeren veriler, 
+veri tabanı üzerinde ilişkilere uygun biçimde saklanacaktır.  
+• Verilerin hatalı, eksik veya çelişkili olmamasını sağlamak amacıyla her tablo için 
+bir birincil anahtar kullanılacaktır. Tablolar arası ilişkiler yabancı anahtarlar yardımıyla tanımlanacaktır. Zorunlu alanların boş bırakılmasına izin 
+verilmeyecektir.  
+• Veri güvenliğini sağlamak amacıyla sistemdeki kimlik numarası ve şifre bilgileri açık metin olarak tutulmayıp hashlenerek saklanacaktır.  Yetkilendirme 
+mekanizması sayesinde yetkisiz kullanıcılar kritik verilere erişemeyecektir.  
+• Veri tabanından getirilecek veriler için sistemde sorgulama süresi 3 saniyeyi 
+aşmayacaktır.  
+• Veri tabanında eski kayıtlara erişim her zaman mümkün olacaktır  ve artan verilere 
+karşı ölçeklenebilir tasarlanacaktır.  
+3. Kaynakça 
+[1] SAP, "API Nedir?," SAP, [Çevrimiçi]. Erişim: 
+https://www.sap.com/turkey/products/technology -platform/integration -suite/what -is-
+api.html  [Erişim tarihi: 15 Mart 2026]. 
+[2] Direnc.net, "GPS Nedir? Yapısı ve Kullanım Alanları," Direnc.net Blog, [Çevrimiçi]. 
+Erişim: https://blog.direnc.net/gps -nedir -yapisi -ve-kullanim -alanlari/ [Erişim tarihi: 15 
+Mart 2026].  
+[3] Data Market, "Hash Nedir?," Data Market, [Çevrimiçi]. Erişim: 
+https://www.datamarket.com.tr/sozluk/hash/ [Erişim tarihi: 15 Mart 2026].  
+[4] Bulutistan, "Log Nedir?," Bulutistan, [Çevrimiçi]. Erişim: https://bulutistan.com/blog/log/  
+[Erişim tarihi: 15 Mart 2026]. 
+[5] RFID Türkiye, "RFID Nedir?," RFID Türkiye, [Çevrimiçi]. Erişim: https://rfid -
+turkiye.com/RFID -Nedir  [Erişim tarihi: 15 Mart 2026]. 
+[6] Kron Teknoloji, "Rol Tabanlı Erişim Kontrolü (RBAC) Nedir?," KronTech, [Çevrimiçi]. 
+Erişim: https://krontech.com/tr/rol -tabanli -erisim- kontrolu- rbac-nedir  [Erişim tarihi: 15 
+Mart 2026].  
+[7] Honeywell, "Sensepoint XCL Fixed Gas Detector," Honeywell Automation, [Çevrimiçi]. 
+Erişim: https://automation.honeywell.com/us/en/products/sensing- solutions/gas -and-
+flame -detection/fixed- gas-and-flame -detection/fixed -gas-detectors/sensepoint -xcl-gas-
+detector  [Erişim tarihi: 24 Mart 2026]. 
+[8] Bosch Sensortec, "BME280 Humidity Sensor," Bosch Sensortec, [Çevrimiçi]. Erişim: 
+https://www.bosch- sensortec.com/en/products/environmental -sensors/humidity -sensors -
+bme280 [Erişim tarihi: 24 Mart 2026]. 
+12 [9] Analog Devices, "ADXL345 3- Axis Digital Accelerometer," Analog Devices, [Çevrimiçi]. 
+Erişim: https://www.analog.com/en/products/adxl345.html  [Erişim tarihi: 24 Mart 2026]. 
+[10] Honeywell, "HPM Series Particulate Matter Sensor Datasheet," Honeywell Sensing and 
+IoT, 2020. [Çevrimiçi]. Erişim: https://prod -edam.honeywell.com/content/dam/honeywell -
+edam/sps/siot/en -us/products/sensors/particulate -matter -sensors- hpm-
+series/documents/sps- siot-particulate -hpm-series- datasheet -32322550- ciid-165855.pdf  
+[Erişim tarihi: 24 Mart 2026].  
+[11] JADAK, "ThingMagic M6e Nano UHF RAIN RFID Module," JADAK, [Çevrimiçi]. 
+Erişim: https://www.jadaktech.com/product/thingmagic -m6e-nano- uhf-rain-rfid/ [Erişim 
+tarihi: 24 Mart 2026].  
+[12] Teltonika, "FMB920 GPS Tracker Datasheet," Teltonika Telematics, 2019. [Çevrimiçi]. 
+Erişim: https://wiki.teltonika -gps.com/images/f/fd/Datasheet -FMB920.pdf  [Erişim tarihi: 
+24 Mart 2026]. 
+4. Ek Materyaller  
+Ek A: Kullanıcı Arayüzleri  
+ 
+Şekil A 1. Kullanıcı Giriş Ekranı 
+
+13  
+Şekil A 2. Sistem Yöneticisi Arayüzü  
+ 
+Şekil A 3. Sağlık Alt Modülünde Bulunan Bilgiler  
+
+14  
+Şekil A 4. Saha Personeli Arayüzü  
+ 
+Şekil A 5. Personel Yönetim Arayüzü  
+
+15  
+Şekil A 6. Personel Kayıt Ekranı 
+ 
+Şekil A 7. Ekipman Yönetim Arayüzü 
+
+16  
+Şekil A 8. Ekipman Kayıt Ekranı 
+ 
+Şekil A 9. Vardiya Planı Arayüzü  
+
+17  
+Şekil A 10. Vardiya Yönetim Arayüzü  
+ 
+Şekil A 11. Vardiya Ekleme Ekranı  
+
+18  
+Şekil A12. Saha Personeli Vardiyalar Arayüzü  
+ 
+Şekil A 13. Vaka Yönetim Arayüzü  
+
+19  
+Şekil A 14. Vaka Bilgileri Ekranı 
+ 
+Şekil A15. Saha Personeli Vakalar Arayüzü  
+
+20  
+Şekil A 16. Üretim Raporları Arayüzü  
+ 
+Şekil A 17. Vaka Raporları Arayüzü  
+
+21  
+Şekil A 18. Ekipman Raporları Arayüzü 
+ 
+Şekil A19. Personel Raporları Arayüzü  
+
+22  
+Şekil A 20. Rapor Oluşturma Ekranı 
+ 
+Şekil A 21. Saha Personeli Raporlar Arayüzü  
+
+23  
+Şekil A 22. Risk İzleme Arayüzü  
+
+24 Ek B: Toplantı Notları  
+ 
+Sayfa B1. 08.03.2026, 11.03.2026 ve 15.03.2026 Tarihli Toplantı Notları  
+ 
+Sayfa B 2. 19.03.2026 Tarihli Toplantı Notları 
+
+=== END OF MINEMATION_SRS.pdf ===
+

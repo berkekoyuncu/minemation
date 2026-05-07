@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Minemation.Api.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+55bc60da2a89d8ae16b9481410b9f626ed4e152e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8ac8306f17144846506835f0adb8b555d284867")]
 [assembly: System.Reflection.AssemblyProductAttribute("Minemation.Api.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Minemation.Api.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
