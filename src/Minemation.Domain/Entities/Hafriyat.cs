@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Minemation.Domain.Entities;
-
-public class Hafriyat
+namespace Minemation.Domain.Entities
 {
-    public string plaka { get; set; } = string.Empty;
+    public class Hafriyat
+    {
+        public int ekipmanId { get; set; }
 
-    public decimal damperHacmi { get; set; }
-    public decimal azamiYukAgirligi { get; set; }
 
-    public int dingilSayisi { get; set; }
+        public string plaka {  get; set; }
+        public decimal damperHacmi { get; set; }
+        public decimal azamiYukAgirligi { get; set; }
+        public int dingilSayisi {  get; set; }
 
-    // Foreign key
-    public int ekipmanId { get; set; }
-
-    public Ekipman Ekipman { get; set; } = null!;
+        public virtual Ekipman Ekipman { get; set; }
+    }
 }

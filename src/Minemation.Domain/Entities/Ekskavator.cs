@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 
-namespace Minemation.Domain.Entities;
-
-public class Ekskavator
+namespace Minemation.Domain.Entities
 {
-    public string plaka { get; set; } = string.Empty;
+    public class Ekskavator
+    {
+        public int ekipmanId { get; set; }
 
-    public decimal kovaKapasitesi { get; set; }
-    public decimal motorGucu { get; set; }
-    public decimal maksimumKaziDerinligi { get; set; }
+        public string plaka {  get; set; }
+        public decimal kovaKapasitesi { get; set; }
+        public decimal motorGucu {  get; set; }
+        public decimal maksimumKaziDerinligi { get; set; }
+        public string paletTipi {  get; set; }
+        public decimal bomUzunlugu  { get; set; }
 
-    public string paletTipi { get; set; } = string.Empty;
+        //foreign key belirtimi
 
-    public decimal bomUzunlugu { get; set; }
+        public virtual Ekipman Ekipman { get; set; }
 
-    // Foreign key
-    public int ekipmanId { get; set; }
-
-    public Ekipman Ekipman { get; set; } = null!;
+    }
 }

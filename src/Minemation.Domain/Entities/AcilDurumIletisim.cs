@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Minemation.Domain.Entities;
-
-public class AcilDurumIletisim
+namespace Minemation.Domain.Entities
 {
-    public int acilDurumKisisiId { get; set; }
+    public class AcilDurumIletisim
+    {
+        public int acilDurumKisisiId {  get; set; }
+        public string acilDurumKisileriAd {  get; set; }
+        public string acilDurumKisileriSoyad { get; set; }
+        public string acilDurumKisileriYakinlik { get; set; }
+        public string acilDurumKisileriTelNo { get; set; }
 
-    public string acilDurumKisileriAd { get; set; } = string.Empty;
-    public string acilDurumKisileriSoyad { get; set; } = string.Empty;
-    public string acilDurumKisileriYakinlik { get; set; } = string.Empty;
-    public string acilDurumKisileriTelNo { get; set; } = string.Empty;
-
-    public int personelId { get; set; }
-    public Personel Personel { get; set; } = null!;
+        //foreign key belirtimi 
+        public int personelId { get; set; }
+        public Personel Personel { get; set; }
+    }
 }
