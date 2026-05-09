@@ -29,6 +29,7 @@ public class Personel
     public string sifreHash { get; set; }
     public DateTime sonGirisTarihi { get; set; }    // er diyagramda yok
 
+
     // SAĞLIK BİLGİSİ: Bire-Bir (Zayıf Varlık)
     public virtual SaglikBilgileri SaglikBilgileri { get; set; }
 
@@ -40,4 +41,6 @@ public class Personel
     {
         AcilDurumKisileri = new HashSet<AcilDurumIletisim>();
     }
+
+
 }

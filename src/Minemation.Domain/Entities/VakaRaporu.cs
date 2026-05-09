@@ -3,21 +3,28 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 
-namespace Minemation.Domain.Entities;
-
-public class VakaRaporu
+namespace Minemation.Domain.Entities
 {
-    public string ciddiyetSeviyesi { get; set; }
+    public class VakaRaporu
+    {
+        // Shared Primary Key: Hem bu tablonun PK'sı hem de Rapor tablosuna giden FK.
+        public int raporId { get; set; }
 
-    public decimal cozumSuresi { get; set; }
+        public string ciddiyetSeviyesi { get; set; }
 
-    // Foreign key
-    public int raporId { get; set; }
+        public decimal cozumSuresi { get; set; }
 
-    public Rapor Rapor { get; set; }
+        // --- Raporlayan Tarafın Belirtilmesi ---
 
-    // Raporlayan personel
-    public int personelId { get; set; }
+        // Raporu hazırlayan personel (Opsiyonel)
+        public int? personelId { get; set; }
+        public virtual Personel Personel { get; set; }
 
-    public Personel Personel { get; set; }
+        // Rapor otomatik bir sensör vaka kaydından besleniyorsa (Opsiyonel)
+        public int? raporlayanEkipmanId { get; set; }
+        public virtual Ekipman RaporlayanEkipman { get; set; }
+
+        // Navigasyon Özelliği: Üst Rapor sınıfına erişim
+        public virtual Rapor Rapor { get; set; }
+    }
 }

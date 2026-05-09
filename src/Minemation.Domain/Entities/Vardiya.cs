@@ -6,7 +6,7 @@ namespace Minemation.Domain.Entities
 {
     public class Vardiya
     {
-        public int vardiyaId { get; set; }
+        public int vardiyaId {  get; set; }
         public string vardiyaAdi { get; set; }
 
         public string vardiyaTanimi { get; set; }
@@ -23,15 +23,24 @@ namespace Minemation.Domain.Entities
         public string calismaBolgesi { get; set; }
         public string operasyonTipi { get; set; }
         public string operasyonRiskSeviyesi { get; set; }
-        public string vardiyaNotlari { get; set; }
+        public string vardiyaNotlari {  get; set; }
         public string ekipmanOperatoru { get; set; }
 
-        public int vardiyaSorumlusu { get; set; }
-        public int vardiyaIsgSorumlusu { get; set; }
-        public int vardiyaTeknikSorumlusu { get; set; }
+        //foreign key belirtimi
+        // Vardiyada görevli ana ekipman (Örn: O vardiyada tahsis edilen ana delici/kamyon)
+        public int? ekipmanId { get; set; }
+        public virtual Ekipman Ekipman { get; set; }
 
+        // Sorumlu Personeller (Hepsi Personel tablosuna bağlı)
+        public int vardiyaSorumlusu { get; set; } // personelId tutar
         public virtual Personel VardiyaSorumlusuPersonel { get; set; }
+
+        public int vardiyaIsgSorumlusu { get; set; } // personelId tutar
         public virtual Personel IsgSorumlusuPersonel { get; set; }
+
+        public int vardiyaTeknikSorumlusu { get; set; } // personelId tutar
         public virtual Personel TeknikSorumlusuPersonel { get; set; }
     }
+
+    
 }

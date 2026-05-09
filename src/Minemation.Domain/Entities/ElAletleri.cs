@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 
-
-namespace Minemation.Domain.Entities;
-
-public class ElAletleri
+namespace Minemation.Domain.Entities
 {
-    public string gucKaynagiTipi { get; set; } = string.Empty;
+    public class ElAletleri
+    {
+        public int ekipmanId { get; set; }
 
-    public decimal bataryaKapasitesi { get; set; }
+        public string gucKaynagiTipi {  get; set; }
+        public decimal bataryaKapasitesi { get; set; }
+        public string kullanimAmaci {  get; set; }
 
-    public string kullanimAmaci { get; set; } = string.Empty;
 
-    // Foreign key
-    public int ekipmanId { get; set; }
 
-    public Ekipman Ekipman { get; set; } = null!;
+        public virtual Ekipman Ekipman { get; set; }
+    }
 }

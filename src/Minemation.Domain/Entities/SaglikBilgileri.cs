@@ -1,21 +1,27 @@
-﻿using System;
+﻿using System.Text;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Minemation.Domain.Entities;
-
-public class SaglikBilgileri
+namespace Minemation.Domain.Entities
 {
-    public string kanGrubu { get; set; } = string.Empty;
-    public string saglikDurumu { get; set; } = string.Empty;
+    public class SaglikBilgileri
+    {
+        // Hem PK hem de FK olarak kullanılacak
+        public int personelId { get; set; }
 
-    public List<string> kronikHastaliklar { get; set; } = new();
-    public List<string> alerjiler { get; set; } = new();
+        public string kanGrubu { get; set; }
+        public string saglikDurumu { get; set; }
 
-    public string saglikCalismaKisitlamalari { get; set; } = string.Empty;
-    public string acilDurumNotu { get; set; } = string.Empty;
-    public DateTime sonMuayeneTarihi { get; set; }
+        // Bu listeleri veritabanında string olarak saklayacağız
+        public List<string> kronikHastaliklar { get; set; } = new List<string>();
+        public List<string> alerjiler { get; set; } = new List<string>();
 
-    public int personelId { get; set; }
-    public Personel Personel { get; set; } = null!;
+        public string saglikCalismaKisitlamalari { get; set; }
+        public string acilDurumNotu { get; set; }
+        public DateTime sonMuayeneTarihi { get; set; }
+
+        // Navigasyon Özelliği
+        public virtual Personel Personel { get; set; }
+    }
 }

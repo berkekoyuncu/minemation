@@ -1,4 +1,13 @@
+using Microsoft.EntityFrameworkCore;
+using Minemation.Infrastructure.Persistence; // DbContext'in olduğu namespace
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services.AddDbContext<MinemationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

@@ -3,29 +3,26 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 
-namespace Minemation.Domain.Entities;
-
-public class TakipCihazi
+namespace Minemation.Domain.Entities
 {
-    public int takipCihaziId { get; set; }
+    public class TakipCihazi
+    {
+        public int takipCihaziId {  get; set; }
+        public string takipCihaziSeriNo { get; set; }
+        public string takipCihaziTuru {  get; set; }
+        public string takipCihaziModeli { get; set; }
+        public string takipCihaziDurumu {  get; set; }
+        public DateTime takipCihaziSonBaglantiZamani { get; set; }
+        public string takipCihaziHaberlesmeProtokolu { get; set; }
+        public decimal pilSeviyesi {  get; set; }
 
-    public string takipCihaziSeriNo { get; set; } = string.Empty;
-    public string takipCihaziTuru { get; set; } = string.Empty;
-    public string takipCihaziModeli { get; set; } = string.Empty;
-    public string takipCihaziDurumu { get; set; } = string.Empty;
+        // --- Foreign Key Bağlantıları ---
+        // personelin olabilir
+        public int? personelId { get; set; }
+        public virtual Personel Personel { get; set; }
 
-    public DateTime takipCihaziSonBaglantiZamani { get; set; }
-
-    public string takipCihaziHaberlesmeProtokolu { get; set; } = string.Empty;
-
-    public decimal pilSeviyesi { get; set; }
-
-    // Foreign key
-    public int personelId { get; set; }
-
-    public Personel Personel { get; set; } = null!;
-
-    public int ekipmanId { get; set; }
-
-    public Ekipman Ekipman { get; set; } = null!;
+        // ekipmanın olabilir 
+        public int? ekipmanId { get; set; }
+        public virtual Ekipman Ekipman { get; set; }
+    }
 }

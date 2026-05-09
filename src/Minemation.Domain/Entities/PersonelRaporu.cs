@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Text;
 using System;
 
-namespace Minemation.Domain.Entities;
-
-public class PersonelRaporu
+namespace Minemation.Domain.Entities
 {
-    public string uzmanlikAlani { get; set; }
+    public class PersonelRaporu
+    {
+        public int raporId { get; set; }
 
-    public int personelSayisi { get; set; }
+        public string uzmanlikAlani { get; set; }
 
-    public decimal calismaSuresi { get; set; }
+        public int personelSayisi { get; set; }
 
-    // Foreign key
-    public int raporId { get; set; }
+        public decimal calismaSuresi { get; set; }
 
-    public Rapor Rapor { get; set; }
+
+
+        public virtual Rapor Rapor { get; set; }
+    }
 }
