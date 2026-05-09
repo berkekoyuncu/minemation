@@ -27,6 +27,9 @@ builder.Services.AddScoped<IPersonelServisi, PersonelServisi>();
 
 // GERÇEK VERİTABANINA GEÇİNCE BUNU AÇ:
 builder.Services.AddScoped<IPersonelRepository, PersonelRepository>();
+builder.Services.AddScoped<IEkipmanRepository, EkipmanRepository>();
+builder.Services.AddScoped<IEkipmanServisi, EkipmanServisi>();
+builder.Services.AddScoped<IEkipmanRepository, EkipmanRepository>();
 
 var app = builder.Build();
 
