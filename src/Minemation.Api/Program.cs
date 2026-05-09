@@ -30,11 +30,13 @@ builder.Services.AddScoped<IPersonelRepository, PersonelRepository>();
 
 builder.Services.AddScoped<IEkipmanRepository, EkipmanRepository>();
 builder.Services.AddScoped<IEkipmanServisi, EkipmanServisi>();
-builder.Services.AddScoped<IEkipmanRepository, EkipmanRepository>();
 
 builder.Services.AddScoped<IVardiyaRepository, VardiyaRepository>();
 builder.Services.AddScoped<IVardiyaServisi, VardiyaServisi>();
-builder.Services.AddScoped<IVardiyaRepository, VardiyaRepository>();
+
+builder.Services.AddScoped<IVakaRepository, VakaRepository>();
+builder.Services.AddScoped<IVakaServisi, VakaServisi>();
+
 
 var app = builder.Build();
 
