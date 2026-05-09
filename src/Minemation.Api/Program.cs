@@ -23,10 +23,10 @@ builder.Services.AddScoped<IPersonelServisi, PersonelServisi>();
 
 // ŞİMDİLİK FAKE REPOSITORY KULLANIYORUZ.
 // Gerçek veritabanı ile test edeceğimiz zaman bu satırı kapatıp alttaki PersonelRepository satırını açacağız.
-builder.Services.AddScoped<IPersonelRepository, SahtePersonelRepository>();
+//builder.Services.AddScoped<IPersonelRepository, SahtePersonelRepository>();
 
 // GERÇEK VERİTABANINA GEÇİNCE BUNU AÇ:
-// builder.Services.AddScoped<IPersonelRepository, PersonelRepository>();
+builder.Services.AddScoped<IPersonelRepository, PersonelRepository>();
 
 var app = builder.Build();
 
