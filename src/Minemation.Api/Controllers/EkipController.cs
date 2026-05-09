@@ -5,27 +5,27 @@ using Minemation.Application.Interfaces;
 namespace Minemation.Api.Controllers;
 
 [ApiController]
-[Route("api/aksiyon")]
-public class AksiyonController : ControllerBase
+[Route("api/ekip")]
+public class EkipController : ControllerBase
 {
-    private readonly IAksiyonServisi _aksiyonServisi;
+    private readonly IEkipServisi _ekipServisi;
 
-    public AksiyonController(IAksiyonServisi aksiyonServisi)
+    public EkipController(IEkipServisi ekipServisi)
     {
-        _aksiyonServisi = aksiyonServisi;
+        _ekipServisi = ekipServisi;
     }
 
     [HttpGet]
-    public async Task<IActionResult> TumunuGetir([FromQuery] AksiyonSorguParametreleri sorgu)
+    public async Task<IActionResult> TumunuGetir([FromQuery] EkipSorguParametreleri sorgu)
     {
-        var sonuc = await _aksiyonServisi.TumunuGetirAsync(sorgu);
+        var sonuc = await _ekipServisi.TumunuGetirAsync(sorgu);
         return Ok(sonuc);
     }
 
     [HttpGet("{id:int}")]
     public async Task<IActionResult> IdIleGetir(int id)
     {
-        var sonuc = await _aksiyonServisi.IdIleGetirAsync(id);
+        var sonuc = await _ekipServisi.IdIleGetirAsync(id);
 
         if (!sonuc.Success)
             return NotFound(sonuc);
@@ -34,9 +34,9 @@ public class AksiyonController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Olustur([FromBody] AksiyonOlusturDto dto)
+    public async Task<IActionResult> Olustur([FromBody] EkipOlusturDto dto)
     {
-        var sonuc = await _aksiyonServisi.OlusturAsync(dto);
+        var sonuc = await _ekipServisi.OlusturAsync(dto);
 
         if (!sonuc.Success)
             return BadRequest(sonuc);
@@ -45,9 +45,9 @@ public class AksiyonController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> Guncelle(int id, [FromBody] AksiyonGuncelleDto dto)
+    public async Task<IActionResult> Guncelle(int id, [FromBody] EkipGuncelleDto dto)
     {
-        var sonuc = await _aksiyonServisi.GuncelleAsync(id, dto);
+        var sonuc = await _ekipServisi.GuncelleAsync(id, dto);
 
         if (!sonuc.Success)
             return BadRequest(sonuc);
@@ -58,7 +58,7 @@ public class AksiyonController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Sil(int id)
     {
-        var sonuc = await _aksiyonServisi.SilAsync(id);
+        var sonuc = await _ekipServisi.SilAsync(id);
 
         if (!sonuc.Success)
             return NotFound(sonuc);

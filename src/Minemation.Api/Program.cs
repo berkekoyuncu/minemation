@@ -37,6 +37,12 @@ builder.Services.AddScoped<IVardiyaServisi, VardiyaServisi>();
 builder.Services.AddScoped<IVakaRepository, VakaRepository>();
 builder.Services.AddScoped<IVakaServisi, VakaServisi>();
 
+builder.Services.AddScoped<IAksiyonServisi, AksiyonServisi>();
+builder.Services.AddScoped<IAksiyonRepository, AksiyonRepository>();
+
+builder.Services.AddScoped<IEkipServisi, EkipServisi>();
+builder.Services.AddScoped<IEkipRepository, EkipRepository>();
+
 
 var app = builder.Build();
 
