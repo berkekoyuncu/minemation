@@ -55,6 +55,21 @@ builder.Services.AddScoped<ITakipCihaziRepository, TakipCihaziRepository>();
 builder.Services.AddScoped<IRaporServisi, RaporServisi>();
 builder.Services.AddScoped<IRaporRepository, RaporRepository>();
 
+builder.Services.AddScoped<IVakaRaporuServisi, VakaRaporuServisi>();
+builder.Services.AddScoped<IVakaRaporuRepository, VakaRaporuRepository>();
+
+builder.Services.AddScoped<IPersonelRaporuServisi, PersonelRaporuServisi>();
+builder.Services.AddScoped<IPersonelRaporuRepository, PersonelRaporuRepository>();
+
+builder.Services.AddScoped<IEkipmanRaporuServisi, EkipmanRaporuServisi>();
+builder.Services.AddScoped<IEkipmanRaporuRepository, EkipmanRaporuRepository>();
+
+builder.Services.AddScoped<ILogKaydiServisi, LogKaydiServisi>();
+builder.Services.AddScoped<ILogKaydiRepository, LogKaydiRepository>();
+
+builder.Services.AddScoped<IHafriyatServisi, HafriyatServisi>();
+builder.Services.AddScoped<IHafriyatRepository, HafriyatRepository>();
+
 
 var app = builder.Build();
 
