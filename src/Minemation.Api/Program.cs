@@ -43,6 +43,18 @@ builder.Services.AddScoped<IAksiyonRepository, AksiyonRepository>();
 builder.Services.AddScoped<IEkipServisi, EkipServisi>();
 builder.Services.AddScoped<IEkipRepository, EkipRepository>();
 
+builder.Services.AddScoped<ISensorServisi, SensorServisi>();
+builder.Services.AddScoped<ISensorRepository, SensorRepository>();
+
+builder.Services.AddScoped<ISensorVerisiServisi, SensorVerisiServisi>();
+builder.Services.AddScoped<ISensorVerisiRepository, SensorVerisiRepository>();
+
+builder.Services.AddScoped<ITakipCihaziServisi, TakipCihaziServisi>();
+builder.Services.AddScoped<ITakipCihaziRepository, TakipCihaziRepository>();
+
+builder.Services.AddScoped<IRaporServisi, RaporServisi>();
+builder.Services.AddScoped<IRaporRepository, RaporRepository>();
+
 
 var app = builder.Build();
 
