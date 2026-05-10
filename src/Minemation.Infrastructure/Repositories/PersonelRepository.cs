@@ -62,5 +62,10 @@ public class PersonelRepository : IPersonelRepository
         return await _context.Personeller
             .FirstOrDefaultAsync(p => p.tckn == tckn);
     }
-
+        public async Task<Personel?> RfidIleGetirAsync(string rfidKartNumarasi)
+    {
+        return await _context.Personeller
+            .FirstOrDefaultAsync(p => p.rfidKartNumarasi == rfidKartNumarasi);
+    }
 }
+

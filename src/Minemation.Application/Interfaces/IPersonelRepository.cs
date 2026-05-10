@@ -16,4 +16,6 @@ public interface IPersonelRepository
     Task<Personel?> EpostaIleGetirAsync(string eposta);
 
     Task<Personel?> TcknIleGetirAsync(string tckn);
+
+    Task<Personel?> RfidIleGetirAsync(string rfidKartNumarasi);
 }

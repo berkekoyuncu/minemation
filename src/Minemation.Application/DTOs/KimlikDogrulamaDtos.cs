@@ -25,3 +25,16 @@ public class RfidGirisDto
 {
     public string RfidKartNumarasi { get; set; } = string.Empty;
 }
+
+public class SifreDegistirDto
+{
+    public int PersonelId { get; set; }
+    public string EskiSifre { get; set; } = string.Empty;
+    public string YeniSifre { get; set; } = string.Empty;
+}
+
+public class SifreBelirleDto
+{
+    public int PersonelId { get; set; }
+    public string YeniSifre { get; set; } = string.Empty;
+}

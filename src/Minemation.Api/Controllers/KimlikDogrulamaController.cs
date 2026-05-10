@@ -36,4 +36,26 @@ public class KimlikDogrulamaController : ControllerBase
 
         return Ok(sonuc);
     }
+
+    [HttpPost("sifre-degistir")]
+    public async Task<IActionResult> SifreDegistir([FromBody] SifreDegistirDto dto)
+    {
+        var sonuc = await _kimlikDogrulamaServisi.SifreDegistirAsync(dto);
+
+        if (!sonuc.Success)
+            return BadRequest(sonuc);
+
+        return Ok(sonuc);
+    }
+
+    [HttpPost("sifre-belirle")]
+    public async Task<IActionResult> SifreBelirle([FromBody] SifreBelirleDto dto)
+    {
+        var sonuc = await _kimlikDogrulamaServisi.SifreBelirleAsync(dto);
+
+        if (!sonuc.Success)
+            return BadRequest(sonuc);
+
+        return Ok(sonuc);
+    }
 }

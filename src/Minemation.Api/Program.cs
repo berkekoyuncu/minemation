@@ -88,7 +88,7 @@ builder.Services.AddScoped<ISaglikBilgileriRepository, SaglikBilgileriRepository
 builder.Services.AddScoped<IAcilDurumIletisimServisi, AcilDurumIletisimServisi>();
 builder.Services.AddScoped<IAcilDurumIletisimRepository, AcilDurumIletisimRepository>();
 
-
+builder.Services.AddScoped<IKimlikDogrulamaServisi, KimlikDogrulamaServisi>();
 
 var app = builder.Build();
 

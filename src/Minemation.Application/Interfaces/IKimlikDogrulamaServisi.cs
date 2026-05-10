@@ -11,4 +11,8 @@ public interface IKimlikDogrulamaServisi
     Task<ApiResponse<GirisSonucDto>> GirisYapAsync(GirisYapDto dto);
 
     Task<ApiResponse<GirisSonucDto>> RfidIleGirisYapAsync(RfidGirisDto dto);
+
+    Task<ApiResponse<bool>> SifreDegistirAsync(SifreDegistirDto dto);
+
+    Task<ApiResponse<bool>> SifreBelirleAsync(SifreBelirleDto dto);
 }
