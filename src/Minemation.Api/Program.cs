@@ -70,6 +70,25 @@ builder.Services.AddScoped<ILogKaydiRepository, LogKaydiRepository>();
 builder.Services.AddScoped<IHafriyatServisi, HafriyatServisi>();
 builder.Services.AddScoped<IHafriyatRepository, HafriyatRepository>();
 
+builder.Services.AddScoped<IEkskavatorServisi, EkskavatorServisi>();
+builder.Services.AddScoped<IEkskavatorRepository, EkskavatorRepository>();
+
+builder.Services.AddScoped<IKepceServisi, KepceServisi>();
+builder.Services.AddScoped<IKepceRepository, KepceRepository>();
+
+builder.Services.AddScoped<IKiriciServisi, KiriciServisi>();
+builder.Services.AddScoped<IKiriciRepository, KiriciRepository>();
+
+builder.Services.AddScoped<IElAletleriServisi, ElAletleriServisi>();
+builder.Services.AddScoped<IElAletleriRepository, ElAletleriRepository>();
+
+builder.Services.AddScoped<ISaglikBilgileriServisi, SaglikBilgileriServisi>();
+builder.Services.AddScoped<ISaglikBilgileriRepository, SaglikBilgileriRepository>();
+
+builder.Services.AddScoped<IAcilDurumIletisimServisi, AcilDurumIletisimServisi>();
+builder.Services.AddScoped<IAcilDurumIletisimRepository, AcilDurumIletisimRepository>();
+
+
 
 var app = builder.Build();
 

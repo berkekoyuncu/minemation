@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Minemation.Application.Common;
+using Minemation.Application.DTOs;
 
-namespace Minemation.Application.Interfaces
+namespace Minemation.Application.Interfaces;
+
+public interface IKimlikDogrulamaServisi
 {
-    internal class IKimlikDogrulamaServisi
-    {
-    }
+    Task<ApiResponse<GirisSonucDto>> GirisYapAsync(GirisYapDto dto);
+
+    Task<ApiResponse<GirisSonucDto>> RfidIleGirisYapAsync(RfidGirisDto dto);
 }
