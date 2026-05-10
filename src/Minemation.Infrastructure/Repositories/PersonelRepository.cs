@@ -50,4 +50,22 @@ public class PersonelRepository : IPersonelRepository
     {
         await _context.SaveChangesAsync();
     }
+
+    public async Task<Personel?> EpostaIleGetirAsync(string eposta)
+    {
+        return await _context.Personeller
+            .FirstOrDefaultAsync(p => p.eposta == eposta);
+    }
+
+    public async Task<Personel?> TcknIleGetirAsync(string tckn)
+    {
+        return await _context.Personeller
+            .FirstOrDefaultAsync(p => p.tckn == tckn);
+    }
+        public async Task<Personel?> RfidIleGetirAsync(string rfidKartNumarasi)
+    {
+        return await _context.Personeller
+            .FirstOrDefaultAsync(p => p.rfidKartNumarasi == rfidKartNumarasi);
+    }
 }
+

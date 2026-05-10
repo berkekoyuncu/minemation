@@ -12,4 +12,10 @@ public interface IPersonelRepository
     Task<bool> TcknVarMiAsync(string tckn, int? haricTutulacakId = null);
     Task EkleAsync(Personel personel);
     Task DegisiklikleriKaydetAsync();
+
+    Task<Personel?> EpostaIleGetirAsync(string eposta);
+
+    Task<Personel?> TcknIleGetirAsync(string tckn);
+
+    Task<Personel?> RfidIleGetirAsync(string rfidKartNumarasi);
 }
