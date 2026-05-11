@@ -1,34 +1,67 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Minemation.Desktop.Models;
 
 namespace Minemation.Desktop;
 
 public partial class PersonnelView : UserControl
 {
-    private List<PersonModel> _allPersonnel = new List<PersonModel>();
+    private readonly HttpClient _httpClient = new()
+    {
+        BaseAddress = new Uri("http://localhost:5289")
+    };
+
+    private List<PersonModel> _allPersonnel = new();
     private bool _isShowingAdmin = true;
 
     public PersonnelView()
     {
         InitializeComponent();
-        LoadMockData();
+        Loaded += PersonnelView_Loaded;
+    }
+
+    private async void PersonnelView_Loaded(object sender, RoutedEventArgs e)
+    {
+        await LoadPersonnelDataAsync();
         RefreshGrid();
     }
 
-    private void LoadMockData()
+    private async Task LoadPersonnelDataAsync()
     {
-        // İdari Personeller
-        _allPersonnel.Add(new PersonModel { Id = 1, Rfid = "RFID-001", Identity = "12345678901", FullName = "Ahmet Yılmaz", Phone = "0532 111 2233", BloodType = "A Rh+", Role = "Maden Mühendisi", Shift = "08:00 - 16:00", Status = "Aktif", IsAdmin = true });
-        _allPersonnel.Add(new PersonModel { Id = 2, Rfid = "RFID-002", Identity = "98765432102", FullName = "Ayşe Kaya", Phone = "0544 555 6677", BloodType = "0 Rh-", Role = "İSG Uzmanı", Shift = "08:00 - 16:00", Status = "Aktif", IsAdmin = true });
-        _allPersonnel.Add(new PersonModel { Id = 3, Rfid = "RFID-003", Identity = "45612378903", FullName = "Mehmet Demir", Phone = "0505 999 8877", BloodType = "B Rh+", Role = "İdari Amir", Shift = "09:00 - 17:00", Status = "İzinde", IsAdmin = true });
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResponse<PersonelListItemDto>>>(
+                "/api/personel");
 
-        // Saha Personelleri
-        _allPersonnel.Add(new PersonModel { Id = 101, Rfid = "RFID-101", Identity = "11122233344", FullName = "Caner Şahin", Phone = "0555 123 4567", BloodType = "AB Rh+", Role = "Ekskavatör Operatörü", Shift = "16:00 - 00:00", Status = "Aktif", IsAdmin = false });
-        _allPersonnel.Add(new PersonModel { Id = 102, Rfid = "RFID-102", Identity = "55566677788", FullName = "Mustafa Yıldız", Phone = "0542 987 6543", BloodType = "A Rh-", Role = "Kırıcı Operatörü", Shift = "16:00 - 00:00", Status = "Aktif", IsAdmin = false });
-        _allPersonnel.Add(new PersonModel { Id = 103, Rfid = "RFID-103", Identity = "99900011122", FullName = "Hasan Mert", Phone = "0533 000 1122", BloodType = "0 Rh+", Role = "Saha İşçisi", Shift = "00:00 - 08:00", Status = "Aktif", IsAdmin = false });
+            if (response?.Success != true || response.Data is null)
+            {
+                MessageBox.Show(response?.Message ?? "Personel listesi alınamadı.");
+                return;
+            }
+
+            _allPersonnel = response.Data.Items.Select(x => new PersonModel
+            {
+                Id = x.PersonelId,
+                Rfid = string.Empty,
+                Identity = string.Empty,
+                FullName = x.AdSoyad,
+                Phone = string.Empty,
+                BloodType = string.Empty,
+                Role = x.Uzmanlik,
+                Shift = string.Empty,
+                Status = x.PersonelDurumu,
+                IsAdmin = x.KullaniciRolu.Equals("Admin", StringComparison.OrdinalIgnoreCase)
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Personel verileri alınırken hata oluştu: {ex.Message}");
+        }
     }
 
     private void RefreshGrid()
@@ -36,13 +69,15 @@ public partial class PersonnelView : UserControl
         if (PersonnelGrid == null) return;
 
         var searchText = SearchBox.Text?.ToLower() ?? "";
+
         var filteredList = _allPersonnel
             .Where(p => p.IsAdmin == _isShowingAdmin)
-            .Where(p => string.IsNullOrEmpty(searchText) || 
-                        p.FullName.ToLower().Contains(searchText) || 
-                        p.Identity.Contains(searchText) || 
-                        p.Role.ToLower().Contains(searchText) ||
-                        p.Rfid.ToLower().Contains(searchText))
+            .Where(p =>
+                string.IsNullOrEmpty(searchText) ||
+                p.FullName.ToLower().Contains(searchText) ||
+                p.Identity.Contains(searchText) ||
+                p.Role.ToLower().Contains(searchText) ||
+                p.Rfid.ToLower().Contains(searchText))
             .ToList();
 
         PersonnelGrid.ItemsSource = filteredList;
@@ -91,16 +126,78 @@ public partial class PersonnelView : UserControl
 
     private void BtnAddNew_Click(object sender, RoutedEventArgs e)
     {
-        var title = this.FindName("FormTitle") as TextBlock;
-        if (title != null) title.Text = "Yeni Personel Kaydı";
+        var title = FindName("FormTitle") as TextBlock;
+        if (title != null)
+            title.Text = "Yeni Personel Kaydı";
     }
 
-    private void BtnEdit_Click(object sender, RoutedEventArgs e)
+    private async void BtnEdit_Click(object sender, RoutedEventArgs e)
     {
-        if (((Button)sender).DataContext is PersonModel selectedPerson)
+        if (((Button)sender).DataContext is not PersonModel selectedPerson)
+            return;
+
+        try
         {
-            var title = this.FindName("FormTitle") as TextBlock;
-            if (title != null) title.Text = $"Personel Düzenle: {selectedPerson.FullName}";
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PersonelDetailDto>>(
+                $"/api/personel/{selectedPerson.Id}");
+
+            if (response?.Success != true || response.Data is null)
+            {
+                MessageBox.Show(response?.Message ?? "Personel detayı alınamadı.");
+                return;
+            }
+
+            var title = FindName("FormTitle") as TextBlock;
+            if (title != null)
+                title.Text = $"Personel Düzenle: {response.Data.PersonelAdi} {response.Data.PersonelSoyadi}";
+
+            MessageBox.Show(
+                $"Personel Detayı\n\n" +
+                $"Ad Soyad: {response.Data.PersonelAdi} {response.Data.PersonelSoyadi}\n" +
+                $"TCKN: {response.Data.Tckn}\n" +
+                $"Telefon: {response.Data.TelNo}\n" +
+                $"E-posta: {response.Data.Eposta}\n" +
+                $"Rol: {response.Data.KullaniciRolu}\n" +
+                $"Durum: {response.Data.PersonelDurumu}");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Personel detayı alınırken hata oluştu: {ex.Message}");
+        }
+    }
+
+    private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+    {
+        if (((Button)sender).DataContext is not PersonModel selectedPerson)
+            return;
+
+        var confirm = MessageBox.Show(
+            $"{selectedPerson.FullName} adlı personeli silmek istiyor musunuz?",
+            "Personel Sil",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Warning);
+
+        if (confirm != MessageBoxResult.Yes)
+            return;
+
+        try
+        {
+            var response = await _httpClient.DeleteAsync($"/api/personel/{selectedPerson.Id}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                MessageBox.Show("Personel silinemedi.");
+                return;
+            }
+
+            await LoadPersonnelDataAsync();
+            RefreshGrid();
+
+            MessageBox.Show("Personel başarıyla silindi.");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Personel silinirken hata oluştu: {ex.Message}");
         }
     }
 }
@@ -117,4 +214,35 @@ public class PersonModel
     public string Shift { get; set; } = string.Empty;
     public string Status { get; set; } = string.Empty;
     public bool IsAdmin { get; set; }
+}
+
+public class PersonelListItemDto
+{
+    public int PersonelId { get; set; }
+    public string AdSoyad { get; set; } = string.Empty;
+    public string Uzmanlik { get; set; } = string.Empty;
+    public string Departman { get; set; } = string.Empty;
+    public string KullaniciRolu { get; set; } = string.Empty;
+    public string CalismaKonumu { get; set; } = string.Empty;
+    public string PersonelDurumu { get; set; } = string.Empty;
+}
+
+public class PersonelDetailDto
+{
+    public int PersonelId { get; set; }
+    public string Tckn { get; set; } = string.Empty;
+    public string PersonelAdi { get; set; } = string.Empty;
+    public string PersonelSoyadi { get; set; } = string.Empty;
+    public string Uzmanlik { get; set; } = string.Empty;
+    public string PersonelDurumu { get; set; } = string.Empty;
+    public string Cinsiyet { get; set; } = string.Empty;
+    public string TelNo { get; set; } = string.Empty;
+    public string IkinciTelNo { get; set; } = string.Empty;
+    public string Eposta { get; set; } = string.Empty;
+    public string Adres { get; set; } = string.Empty;
+    public string CalisanTipi { get; set; } = string.Empty;
+    public string RfidKartNumarasi { get; set; } = string.Empty;
+    public string KullaniciRolu { get; set; } = string.Empty;
+    public string Departman { get; set; } = string.Empty;
+    public string CalismaKonumu { get; set; } = string.Empty;
 }

@@ -156,7 +156,12 @@
                                     <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Click="BtnEdit_Click" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
                                         <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
                                     </Button>
-                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Margin="5,0,0,0">
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Margin="5,0,0,0"
+                                            Click="BtnDelete_Click">
                                         <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
                                     </Button>
                                 </StackPanel>
