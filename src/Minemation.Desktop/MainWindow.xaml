@@ -44,6 +44,7 @@
 <Button x:Name="NavRisk" Content="Risk İzleme" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Height="50" Margin="0,0,5,0" Click="NavRisk_Click" />
 
 <Button x:Name="NavMap" Content="Harita" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Height="50" Margin="0,0,5,0" Click="NavMap_Click" />
+                </StackPanel>
 
                 <!-- User Profile -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,20,0">

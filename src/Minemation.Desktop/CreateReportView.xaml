@@ -1,0 +1,65 @@
+<UserControl x:Class="Minemation.Desktop.CreateReportView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent">
+    
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Rapor Oluştur" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="24" FontWeight="Bold" Margin="0,0,0,30" />
+
+        <!-- Form Area -->
+        <Border Grid.Row="1" Background="{DynamicResource SurfaceBrush}" CornerRadius="12" Padding="30" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="400">
+            <StackPanel>
+                
+                <!-- Rapor No -->
+                <TextBox materialDesign:HintAssist.Hint="Rapor No" 
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}"
+                         FontSize="16" Margin="0,0,0,20" />
+                
+                <!-- Rapor Adı -->
+                <TextBox materialDesign:HintAssist.Hint="Rapor Adı" 
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}"
+                         FontSize="16" Margin="0,0,0,20" />
+                
+                <!-- Türü (Locked) -->
+                <TextBox x:Name="TxtReportType" 
+                         materialDesign:HintAssist.Hint="Türü" 
+                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                         Foreground="{DynamicResource TextSecondaryBrush}"
+                         BorderBrush="{DynamicResource BorderBrush}"
+                         FontSize="16" Margin="0,0,0,20" IsReadOnly="True" />
+                
+                <!-- Zaman Aralığı -->
+                <ComboBox materialDesign:HintAssist.Hint="Zaman Aralığı"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                          Foreground="{DynamicResource TextPrimaryBrush}"
+                          BorderBrush="{DynamicResource BorderBrush}"
+                          FontSize="16" Margin="0,0,0,20">
+                    <ComboBoxItem Content="Günlük" IsSelected="True" />
+                    <ComboBoxItem Content="Haftalık" />
+                    <ComboBoxItem Content="Aylık" />
+                    <ComboBoxItem Content="Vardiya Bazlı" />
+                    <ComboBoxItem Content="Özel Tarih Aralığı" />
+                </ComboBox>
+
+            </StackPanel>
+        </Border>
+
+        <!-- Bottom Actions -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="İptal" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0" Click="BtnCancel_Click" />
+            <Button Content="Kaydet" Style="{StaticResource MaterialDesignPaperButton}" Background="{DynamicResource PrimaryBrush}" Foreground="White" />
+        </StackPanel>
+    </Grid>
+</UserControl>
