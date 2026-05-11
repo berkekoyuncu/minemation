@@ -22,6 +22,66 @@ public partial class MainWindow : Window
         MainContent.Content = new ShiftView();
         UpdateNavStyles(NavShift);
     }
+
+    private void NavHome_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Genel Bakış",
+            "Dashboard ekranında personel, vardiya, vaka, sensör ve ekipman özetleri gösterilecek.",
+            PackIconKind.Home);
+    
+        UpdateNavStyles(NavHome);
+    }
+    
+    private void NavEquipment_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Ekipman Yönetimi",
+            "Ekipman, takip cihazı ve ekipman sağlık durumları bu ekranda yönetilecek.",
+            PackIconKind.Excavator);
+    
+        UpdateNavStyles(NavEquipment);
+    }
+    
+    private void NavIncidents_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Vaka Yönetimi",
+            "Sensör eşik aşımı veya manuel bildirimlerden oluşan vakalar bu ekranda takip edilecek.",
+            PackIconKind.AlertCircle);
+    
+        UpdateNavStyles(NavIncidents);
+    }
+    
+    private void NavReports_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Raporlar",
+            "Personel, ekipman, sensör, vardiya ve vaka raporları bu ekranda listelenecek.",
+            PackIconKind.FileChart);
+    
+        UpdateNavStyles(NavReports);
+    }
+    
+    private void NavRisk_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Risk İzleme",
+            "Sensör verileri, eşik değerleri ve risk uyarıları bu ekranda izlenecek.",
+            PackIconKind.Radar);
+    
+        UpdateNavStyles(NavRisk);
+    }
+    
+    private void NavMap_Click(object sender, RoutedEventArgs e)
+    {
+        MainContent.Content = new ModulePlaceholderView(
+            "Harita",
+            "Personel, ekipman ve takip cihazı konumları bu ekranda görüntülenecek.",
+            PackIconKind.MapMarkerRadius);
+    
+        UpdateNavStyles(NavMap);
+    }
     
     private void UpdateNavStyles(System.Windows.Controls.Button activeBtn)
     {
