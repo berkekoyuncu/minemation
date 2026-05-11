@@ -14,7 +14,7 @@ public class AuthService
     {
         _httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:5289")
+            BaseAddress = new Uri("http://localhost:5289")
         };
     }
 
