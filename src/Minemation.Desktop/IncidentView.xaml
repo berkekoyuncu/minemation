@@ -1,0 +1,328 @@
+﻿<UserControl x:Class="Minemation.Desktop.IncidentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent">
+
+    <materialDesign:DialogHost Identifier="IncidentDialog" CloseOnClickAway="True">
+
+        <materialDesign:DialogHost.DialogContent>
+            <Border Width="720" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
+                <StackPanel>
+                    <TextBlock x:Name="IncidentFormTitle"
+                               Text="Yeni Vaka Kaydı"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource PrimaryBrush}"
+                               Margin="0,0,0,20" />
+
+                    <TabControl Style="{StaticResource MaterialDesignTabControl}">
+                        <TabItem Header="Vaka Bilgileri">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="IncidentNameBox"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Vaka Adı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <ComboBox x:Name="IncidentTypeComboBox"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          materialDesign:HintAssist.Hint="Vaka Türü"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="İş Kazası" />
+                                    <ComboBoxItem Content="Ekipman Arızası" />
+                                    <ComboBoxItem Content="Sensör Uyarısı" />
+                                    <ComboBoxItem Content="Güvenlik İhlali" />
+                                    <ComboBoxItem Content="Acil Durum" />
+                                </ComboBox>
+
+                                <ComboBox x:Name="SeverityComboBox"
+                                          Grid.Row="1"
+                                          Grid.Column="0"
+                                          materialDesign:HintAssist.Hint="Ciddiyet Seviyesi"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Düşük" />
+                                    <ComboBoxItem Content="Orta" />
+                                    <ComboBoxItem Content="Yüksek" />
+                                    <ComboBoxItem Content="Kritik" />
+                                </ComboBox>
+
+                                <ComboBox x:Name="IncidentStatusComboBox"
+                                          Grid.Row="1"
+                                          Grid.Column="1"
+                                          materialDesign:HintAssist.Hint="Vaka Durumu"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Açık" />
+                                    <ComboBoxItem Content="İnceleniyor" />
+                                    <ComboBoxItem Content="Çözüldü" />
+                                    <ComboBoxItem Content="Kapalı" />
+                                </ComboBox>
+
+                                <DatePicker x:Name="IncidentDatePicker"
+                                            Grid.Row="2"
+                                            Grid.Column="0"
+                                            materialDesign:HintAssist.Hint="Oluşma Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="IncidentTimeBox"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Oluşma Saati örn: 14:30"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="CauseBox"
+                                         Grid.Row="3"
+                                         Grid.ColumnSpan="2"
+                                         materialDesign:HintAssist.Hint="Olay Nedeni"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Detaylar">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="PersonnelIdBox"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Personel ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ReporterEquipmentIdBox"
+                                         Grid.Row="0"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Raporlayan Ekipman ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="RelatedEquipmentIdBox"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="İlgili Ekipman ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="CloseDatePicker"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Kapanma Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="DescriptionBox"
+                                         Grid.Row="2"
+                                         Grid.ColumnSpan="2"
+                                         materialDesign:HintAssist.Hint="Vaka Açıklaması"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Height="100"
+                                         TextWrapping="Wrap"
+                                         VerticalContentAlignment="Top"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="İptal"
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                Margin="0,0,10,0"
+                                Foreground="{DynamicResource TextSecondaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}" />
+
+                        <Button Content="Kaydet"
+                                Background="{DynamicResource PrimaryBrush}"
+                                Foreground="White"
+                                Width="100"
+                                Click="BtnSave_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="VAKA YÖNETİMİ"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       Margin="0,0,0,20" />
+
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="350" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button x:Name="BtnOpenIncidents"
+                            Content="Açık Vakalar"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0,0,0,2"
+                            Click="BtnOpenIncidents_Click"
+                            Margin="0,0,10,0" />
+
+                    <Button x:Name="BtnAllIncidents"
+                            Content="Tüm Vakalar"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Click="BtnAllIncidents_Click"
+                            Margin="0,0,10,0" />
+                </StackPanel>
+
+                <TextBox Grid.Column="1"
+                         x:Name="IncidentSearchBox"
+                         materialDesign:HintAssist.Hint="Vaka Ara"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         Padding="10,8"
+                         TextChanged="IncidentSearchBox_TextChanged" />
+            </Grid>
+
+            <DataGrid Grid.Row="2"
+                      x:Name="IncidentGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      Background="{DynamicResource SurfaceBrush}"
+                      RowBackground="{DynamicResource SurfaceBrush}"
+                      AlternatingRowBackground="{DynamicResource CardBrush}"
+                      Foreground="{DynamicResource TextPrimaryBrush}"
+                      BorderBrush="{DynamicResource BorderBrush}"
+                      BorderThickness="1"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
+                      RowHeight="45">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                        <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Padding" Value="15,5" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                        <Setter Property="BorderThickness" Value="0,0,0,2" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="No." Width="60" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Vaka Adı" Width="*" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Tür" Width="130" Binding="{Binding Type}" />
+                    <DataGridTextColumn Header="Ciddiyet" Width="100" Binding="{Binding Severity}" />
+                    <DataGridTextColumn Header="Durum" Width="110" Binding="{Binding Status}" />
+                    <DataGridTextColumn Header="Oluşma Tarihi" Width="150" Binding="{Binding CreatedText}" />
+                    <DataGridTextColumn Header="Personel" Width="*" Binding="{Binding PersonnelName}" />
+                    <DataGridTextColumn Header="Neden" Width="*" Binding="{Binding Cause}" />
+
+                    <DataGridTemplateColumn Header="İşlemler" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Click="BtnEdit_Click"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
+                                    </Button>
+
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Margin="5,0,0,0"
+                                            Click="BtnDelete_Click">
+                                        <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="3" Margin="0,20,0,0">
+                <TextBlock x:Name="IncidentTotalText"
+                           Text="Toplam 0 Vaka"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Margin="0,0,10,0"
+                            Click="BtnRefresh_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Yenile" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="BtnAddNewIncident"
+                            Click="BtnAddNew_Click"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Content="+ Yeni Vaka"
+                            Style="{StaticResource MaterialDesignPaperButton}"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Foreground="White"
+                            Height="40"
+                            Padding="15,0"
+                            FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>
