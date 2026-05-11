@@ -1,0 +1,373 @@
+﻿<UserControl x:Class="Minemation.Desktop.EquipmentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Background="Transparent">
+
+    <materialDesign:DialogHost Identifier="EquipmentDialog" CloseOnClickAway="True">
+
+        <materialDesign:DialogHost.DialogContent>
+            <Border Width="760" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
+                <StackPanel>
+                    <TextBlock x:Name="EquipmentFormTitle"
+                               Text="Yeni Ekipman Kaydı"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource PrimaryBrush}"
+                               Margin="0,0,0,20" />
+
+                    <TabControl Style="{StaticResource MaterialDesignTabControl}">
+                        <TabItem Header="Temel Bilgiler">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="EquipmentNameBox"
+                                         Grid.Row="0" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Ekipman Adı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="BrandBox"
+                                         Grid.Row="0" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Marka"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ModelBox"
+                                         Grid.Row="1" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Model"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <ComboBox x:Name="StatusComboBox"
+                                          Grid.Row="1" Grid.Column="1"
+                                          materialDesign:HintAssist.Hint="Durum"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Aktif" />
+                                    <ComboBoxItem Content="Bakımda" />
+                                    <ComboBoxItem Content="Arızalı" />
+                                    <ComboBoxItem Content="Pasif" />
+                                </ComboBox>
+
+                                <TextBox x:Name="SerialNoBox"
+                                         Grid.Row="2" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Seri No"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="RfidTagBox"
+                                         Grid.Row="2" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="RFID Etiket"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="OperationTypeBox"
+                                         Grid.Row="3" Grid.ColumnSpan="2"
+                                         materialDesign:HintAssist.Hint="Operasyon Türü"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Bakım ve Tedarik">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <DatePicker x:Name="LastMaintenanceDatePicker"
+                                            Grid.Row="0" Grid.Column="0"
+                                            materialDesign:HintAssist.Hint="Son Bakım Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="NextMaintenanceDatePicker"
+                                            Grid.Row="0" Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Gelecek Bakım Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ManufacturerBox"
+                                         Grid.Row="1" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Üretici Firma"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="SupplierBox"
+                                         Grid.Row="1" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Tedarikçi Firma"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="ProductionYearPicker"
+                                            Grid.Row="2" Grid.Column="0"
+                                            materialDesign:HintAssist.Hint="Üretim Yılı"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="PurchaseDatePicker"
+                                            Grid.Row="2" Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Satın Alma Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="WarrantyStartDatePicker"
+                                            Grid.Row="3" Grid.ColumnSpan="2"
+                                            materialDesign:HintAssist.Hint="Garanti Başlangıç Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Teknik Bilgiler">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="SizeBox"
+                                         Grid.Row="0" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Boyut"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="WeightBox"
+                                         Grid.Row="0" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Ağırlık"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="TechnicalDocumentBox"
+                                         Grid.Row="1" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Teknik Doküman"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="UserManualBox"
+                                         Grid.Row="1" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Kullanım Kılavuzu"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="WarrantyDocumentBox"
+                                         Grid.Row="2" Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Garanti Belgesi"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="MaintenanceFormBox"
+                                         Grid.Row="2" Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Bakım Formu"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="İptal"
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                Margin="0,0,10,0"
+                                Foreground="{DynamicResource TextSecondaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}" />
+
+                        <Button Content="Kaydet"
+                                Background="{DynamicResource PrimaryBrush}"
+                                Foreground="White"
+                                Width="100"
+                                Click="BtnSave_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0"
+                       Text="EKİPMAN YÖNETİMİ"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       Margin="0,0,0,20" />
+
+            <Grid Grid.Row="1" Margin="0,0,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="350" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                    <Button x:Name="BtnActiveEquipment"
+                            Content="Aktif Ekipmanlar"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0,0,0,2"
+                            Click="BtnActiveEquipment_Click"
+                            Margin="0,0,10,0" />
+
+                    <Button x:Name="BtnAllEquipment"
+                            Content="Tüm Ekipmanlar"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Click="BtnAllEquipment_Click"
+                            Margin="0,0,10,0" />
+                </StackPanel>
+
+                <TextBox Grid.Column="1"
+                         x:Name="EquipmentSearchBox"
+                         materialDesign:HintAssist.Hint="Ekipman Ara"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         Padding="10,8"
+                         TextChanged="EquipmentSearchBox_TextChanged" />
+            </Grid>
+
+            <DataGrid Grid.Row="2"
+                      x:Name="EquipmentGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      Background="{DynamicResource SurfaceBrush}"
+                      RowBackground="{DynamicResource SurfaceBrush}"
+                      AlternatingRowBackground="{DynamicResource CardBrush}"
+                      Foreground="{DynamicResource TextPrimaryBrush}"
+                      BorderBrush="{DynamicResource BorderBrush}"
+                      BorderThickness="1"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
+                      RowHeight="45">
+
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
+                        <Setter Property="Background" Value="{DynamicResource CardBrush}" />
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                        <Setter Property="FontSize" Value="14" />
+                        <Setter Property="Padding" Value="15,5" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+                        <Setter Property="BorderThickness" Value="0,0,0,2" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="No." Width="60" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Ekipman Adı" Width="*" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Marka" Width="120" Binding="{Binding Brand}" />
+                    <DataGridTextColumn Header="Model" Width="120" Binding="{Binding Model}" />
+                    <DataGridTextColumn Header="Seri No" Width="130" Binding="{Binding SerialNo}" />
+                    <DataGridTextColumn Header="RFID" Width="130" Binding="{Binding RfidTag}" />
+                    <DataGridTextColumn Header="Operasyon" Width="*" Binding="{Binding OperationType}" />
+                    <DataGridTextColumn Header="Durum" Width="100" Binding="{Binding Status}" />
+
+                    <DataGridTemplateColumn Header="İşlemler" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Click="BtnEdit_Click"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
+                                    </Button>
+
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Margin="5,0,0,0"
+                                            Click="BtnDelete_Click">
+                                        <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="3" Margin="0,20,0,0">
+                <TextBlock x:Name="EquipmentTotalText"
+                           Text="Toplam 0 Ekipman"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" />
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Margin="0,0,10,0"
+                            Click="BtnRefresh_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Yenile" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="BtnAddNewEquipment"
+                            Click="BtnAddNew_Click"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Content="+ Yeni Ekipman"
+                            Style="{StaticResource MaterialDesignPaperButton}"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Foreground="White"
+                            Height="40"
+                            Padding="15,0"
+                            FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </materialDesign:DialogHost>
+</UserControl>

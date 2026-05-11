@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Yeni Profil",
+    "Projects": [
+      {
+        "Path": "src\\Minemation.Desktop\\Minemation.Desktop.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "src\\Minemation.Api\\Minemation.Api.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
