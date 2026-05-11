@@ -858,6 +858,178 @@ namespace Minemation.Infrastructure.Persistence
                 }
             );
 
+            // --- EK SEED VERİLERİ (TÜM TABLOLAR İÇİN) ---
+
+            // 9. Acil Durum İletişim Seed
+            modelBuilder.Entity<AcilDurumIletisim>().HasData(
+                new AcilDurumIletisim
+                {
+                    acilDurumKisisiId = 1,
+                    acilDurumKisileriAd = "Mehmet",
+                    acilDurumKisileriSoyad = "Arslan",
+                    acilDurumKisileriYakinlik = "Baba",
+                    acilDurumKisileriTelNo = "05320000001",
+                    personelId = 1
+                }
+            );
+
+            // 10. Sensör Verisi Seed (İlk Ölçüm)
+            modelBuilder.Entity<SensorVerisi>().HasData(
+                new SensorVerisi
+                {
+                    sensorVerisiId = 1,
+                    deger = 85.5m,
+                    birim = "°C",
+                    olcumTarihi = new DateTime(2026, 05, 09, 09, 10, 00),
+                    ekipmanId = 101, // CAT-395'e bağlı sensör
+                    vardiyaId = 1
+                }
+            );
+
+            // 11. Takip Cihazı Seed
+            modelBuilder.Entity<TakipCihazi>().HasData(
+                new TakipCihazi
+                {
+                    takipCihaziId = 1,
+                    takipCihaziSeriNo = "GPS-MINE-555",
+                    takipCihaziTuru = "Kişisel Takip",
+                    takipCihaziModeli = "MineTrack-V2",
+                    takipCihaziDurumu = "Aktif",
+                    takipCihaziSonBaglantiZamani = new DateTime(2026, 05, 11, 14, 00, 00), // DateTime.Now YERİNE SABİT TARİH
+                    takipCihaziHaberlesmeProtokolu = "LoRaWAN",
+                    pilSeviyesi = 92.5m,
+                    personelId = 1
+                }
+            );
+
+
+            // 12. Aksiyon (Müdahale) Seed
+            modelBuilder.Entity<Aksiyon>().HasData(
+                new Aksiyon
+                {
+                    mudahaleId = 1,
+                    mudahaleBaslangicSaati = new DateTime(2026, 05, 09, 09, 30, 00),
+                    mudahaleBitisSaati = new DateTime(2026, 05, 09, 10, 15, 00),
+                    mudahaleTuru = "Teknik Müdahale",
+                    uygulananCozum = "Motor soğutma fanı kontrol edildi ve temizlendi.",
+                    ekipId = 1,
+                    vakaId = 1
+                }
+            );
+
+            // 13. Log Kaydı Seed
+            modelBuilder.Entity<LogKaydi>().HasData(
+                new LogKaydi
+                {
+                    logKaydiID = 1,
+                    islemTipi = "Sistem Girişi",
+                    logKaydiAciklamasi = "Büşra Arslan sisteme başarılı bir şekilde giriş yaptı.",
+                    logKaydiTarihi = new DateTime(2026, 05, 09, 10, 00, 00),
+                    ipAdresi = "192.168.1.50",
+                    onemSeviyesi = "Bilgi",
+                    durum = "Aktif",
+                    personelId = 1
+                }
+            );
+
+            // 14. Ana Rapor Seed
+            modelBuilder.Entity<Rapor>().HasData(
+                new Rapor
+                {
+                    raporId = 500,
+                    raporAdi = "Mayıs 2026 Aylık Bakım Özeti",
+                    raporTuru = "Bakım Raporu",
+                    raporOlusturmaTarihi = new DateTime(2026, 05, 01),
+                    raporAciklamasi = "Tüm ağır makinelerin genel durum raporu.",
+                    raporDosyaYolu = "/reports/mayis_bakim.pdf",
+                    zamanAraligi = "Mayıs 2026",
+                    personelId = 1
+                }
+            );
+
+            // 15. Ekipman Raporu (Rapor tablosuna bağlı)
+            modelBuilder.Entity<EkipmanRaporu>().HasData(
+                new EkipmanRaporu
+                {
+                    raporId = 500, // Rapor tablosundaki PK ile eşleşmeli
+                    ekipmanTuru = "Ekskavatör",
+                    arizaSayisi = 2,
+                    calismaSuresi = 160
+                }
+            );
+
+            // 16. Personel Raporu
+            modelBuilder.Entity<PersonelRaporu>().HasData(
+                new PersonelRaporu
+                {
+                    raporId = 501, // Yeni bir rapor ID varsayıyoruz (Aşağıda Rapor tablosuna da eklenmeli)
+                    uzmanlikAlani = "Mühendislik",
+                    personelSayisi = 12,
+                    calismaSuresi = 2100.50m
+                }
+            );
+
+            // 16b. Personel Raporu için Ana Rapor Kaydı (Zorunlu alanlar eklendi)
+            modelBuilder.Entity<Rapor>().HasData(
+                new Rapor
+                {
+                    raporId = 501,
+                    raporAdi = "İK Performans Analizi",
+                    raporTuru = "İnsan Kaynakları",
+                    raporOlusturmaTarihi = new DateTime(2026, 05, 02),
+                    raporAciklamasi = "Personel çalışma süreleri ve uzmanlık dağılım analizi.", // Eksik olan zorunlu alan
+                    raporDosyaYolu = "/reports/ik_performans.pdf", // Genelde bu da zorunludur, ekledik
+                    zamanAraligi = "Nisan-Mayıs 2026", // Genelde bu da zorunludur, ekledik
+                    personelId = 1
+                }
+            );
+
+            // 17. Diğer Ekipman Türleri
+            modelBuilder.Entity<Ekipman>().HasData(
+                new Ekipman
+                {
+                    ekipmanId = 102,
+                    ekipmanAdi = "Volvo A60H Kamyon",
+                    ekipmanMarka = "Volvo",
+                    ekipmanModel = "A60H",
+                    durum = "Aktif",
+                    operasyonTuru = "Taşıma",
+                    seriNo = "SN-VOL-001",
+                    RFIDEtiket = "TAG-TRUCK-102",
+                    ureticiFirma = "Volvo CE",
+                    tedarikciFirma = "Ascendum Makina",
+                    uretimYili = new DateTime(2022, 1, 1),
+                    teknikDokuman = "/docs/volvo_a60h.pdf",
+                    kullanimKilavuzu = "/docs/volvo_manual.pdf",
+                    garantiBelgesi = "/docs/volvo_warranty.pdf",
+                    bakimFormu = "/docs/volvo_service.pdf", // Hata veren alan buydu
+                    satinAlmaBelgesi = "/docs/volvo_invoice.pdf",
+                    sonBakimTarihi = new DateTime(2026, 1, 1),
+                    gelecekBakimTarihi = new DateTime(2026, 12, 1)
+                },
+                new Ekipman
+                {
+                    ekipmanId = 103,
+                    ekipmanAdi = "Komatsu WA600",
+                    ekipmanMarka = "Komatsu",
+                    ekipmanModel = "WA600",
+                    durum = "Aktif",
+                    operasyonTuru = "Yükleme",
+                    seriNo = "SN-KOM-002",
+                    RFIDEtiket = "TAG-LOADER-103",
+                    ureticiFirma = "Komatsu Ltd.",
+                    tedarikciFirma = "Temsa İş Makinaları",
+                    uretimYili = new DateTime(2023, 5, 1),
+                    teknikDokuman = "/docs/komatsu_wa600.pdf",
+                    kullanimKilavuzu = "/docs/komatsu_manual.pdf",
+                    garantiBelgesi = "/docs/komatsu_warranty.pdf",
+                    bakimFormu = "/docs/komatsu_service.pdf", // Hata veren alan buydu
+                    satinAlmaBelgesi = "/docs/komatsu_invoice.pdf",
+                    sonBakimTarihi = new DateTime(2026, 2, 1),
+                    gelecekBakimTarihi = new DateTime(2026, 11, 1)
+                }
+            );
+
         }
     }
 }

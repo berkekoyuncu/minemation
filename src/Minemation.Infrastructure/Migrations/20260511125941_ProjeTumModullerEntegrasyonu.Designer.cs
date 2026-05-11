@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Minemation.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Minemation.Infrastructure.Persistence;
 namespace Minemation.Infrastructure.Migrations
 {
     [DbContext(typeof(MinemationDbContext))]
-    partial class MinemationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260511125941_ProjeTumModullerEntegrasyonu")]
+    partial class ProjeTumModullerEntegrasyonu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,17 +61,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("personelId");
 
                     b.ToTable("AcilDurumIletisim");
-
-                    b.HasData(
-                        new
-                        {
-                            acilDurumKisisiId = 1,
-                            acilDurumKisileriAd = "Mehmet",
-                            acilDurumKisileriSoyad = "Arslan",
-                            acilDurumKisileriTelNo = "05320000001",
-                            acilDurumKisileriYakinlik = "Baba",
-                            personelId = 1
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Aksiyon", b =>
@@ -107,18 +99,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("vakaId");
 
                     b.ToTable("Aksiyon");
-
-                    b.HasData(
-                        new
-                        {
-                            mudahaleId = 1,
-                            ekipId = 1,
-                            mudahaleBaslangicSaati = new DateTime(2026, 5, 9, 9, 30, 0, 0, DateTimeKind.Unspecified),
-                            mudahaleBitisSaati = new DateTime(2026, 5, 9, 10, 15, 0, 0, DateTimeKind.Unspecified),
-                            mudahaleTuru = "Teknik Müdahale",
-                            uygulananCozum = "Motor soğutma fanı kontrol edildi ve temizlendi.",
-                            vakaId = 1
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Ekip", b =>
@@ -297,56 +277,6 @@ namespace Minemation.Infrastructure.Migrations
                             teknikDokuman = "/docs/cat395.pdf",
                             ureticiFirma = "CAT Global",
                             uretimYili = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            ekipmanId = 102,
-                            RFIDEtiket = "TAG-TRUCK-102",
-                            agirlik = 0m,
-                            bakimFormu = "/docs/volvo_service.pdf",
-                            boyut = 0m,
-                            durum = "Aktif",
-                            ekipmanAdi = "Volvo A60H Kamyon",
-                            ekipmanMarka = "Volvo",
-                            ekipmanModel = "A60H",
-                            garantiBaslangicTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            garantiBelgesi = "/docs/volvo_warranty.pdf",
-                            gelecekBakimTarihi = new DateTime(2026, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            kullanimKilavuzu = "/docs/volvo_manual.pdf",
-                            operasyonTuru = "Taşıma",
-                            satinAlmaBelgesi = "/docs/volvo_invoice.pdf",
-                            satinAlmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            seriNo = "SN-VOL-001",
-                            sonBakimTarihi = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            tedarikciFirma = "Ascendum Makina",
-                            teknikDokuman = "/docs/volvo_a60h.pdf",
-                            ureticiFirma = "Volvo CE",
-                            uretimYili = new DateTime(2022, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        },
-                        new
-                        {
-                            ekipmanId = 103,
-                            RFIDEtiket = "TAG-LOADER-103",
-                            agirlik = 0m,
-                            bakimFormu = "/docs/komatsu_service.pdf",
-                            boyut = 0m,
-                            durum = "Aktif",
-                            ekipmanAdi = "Komatsu WA600",
-                            ekipmanMarka = "Komatsu",
-                            ekipmanModel = "WA600",
-                            garantiBaslangicTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            garantiBelgesi = "/docs/komatsu_warranty.pdf",
-                            gelecekBakimTarihi = new DateTime(2026, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            kullanimKilavuzu = "/docs/komatsu_manual.pdf",
-                            operasyonTuru = "Yükleme",
-                            satinAlmaBelgesi = "/docs/komatsu_invoice.pdf",
-                            satinAlmaTarihi = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            seriNo = "SN-KOM-002",
-                            sonBakimTarihi = new DateTime(2026, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            tedarikciFirma = "Temsa İş Makinaları",
-                            teknikDokuman = "/docs/komatsu_wa600.pdf",
-                            ureticiFirma = "Komatsu Ltd.",
-                            uretimYili = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
@@ -369,15 +299,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasKey("raporId");
 
                     b.ToTable("EkipmanRaporu");
-
-                    b.HasData(
-                        new
-                        {
-                            raporId = 500,
-                            arizaSayisi = 2,
-                            calismaSuresi = 160,
-                            ekipmanTuru = "Ekskavatör"
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Ekskavator", b =>
@@ -574,19 +495,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("personelId");
 
                     b.ToTable("LogKaydi");
-
-                    b.HasData(
-                        new
-                        {
-                            logKaydiID = 1,
-                            durum = "Aktif",
-                            ipAdresi = "192.168.1.50",
-                            islemTipi = "Sistem Girişi",
-                            logKaydiAciklamasi = "Büşra Arslan sisteme başarılı bir şekilde giriş yaptı.",
-                            logKaydiTarihi = new DateTime(2026, 5, 9, 10, 0, 0, 0, DateTimeKind.Unspecified),
-                            onemSeviyesi = "Bilgi",
-                            personelId = 1
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Personel", b =>
@@ -720,15 +628,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasKey("raporId");
 
                     b.ToTable("PersonelRaporu");
-
-                    b.HasData(
-                        new
-                        {
-                            raporId = 501,
-                            calismaSuresi = 2100.50m,
-                            personelSayisi = 12,
-                            uzmanlikAlani = "Mühendislik"
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Rapor", b =>
@@ -777,30 +676,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("personelId");
 
                     b.ToTable("Rapor");
-
-                    b.HasData(
-                        new
-                        {
-                            raporId = 500,
-                            personelId = 1,
-                            raporAciklamasi = "Tüm ağır makinelerin genel durum raporu.",
-                            raporAdi = "Mayıs 2026 Aylık Bakım Özeti",
-                            raporDosyaYolu = "/reports/mayis_bakim.pdf",
-                            raporOlusturmaTarihi = new DateTime(2026, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            raporTuru = "Bakım Raporu",
-                            zamanAraligi = "Mayıs 2026"
-                        },
-                        new
-                        {
-                            raporId = 501,
-                            personelId = 1,
-                            raporAciklamasi = "Personel çalışma süreleri ve uzmanlık dağılım analizi.",
-                            raporAdi = "İK Performans Analizi",
-                            raporDosyaYolu = "/reports/ik_performans.pdf",
-                            raporOlusturmaTarihi = new DateTime(2026, 5, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            raporTuru = "İnsan Kaynakları",
-                            zamanAraligi = "Nisan-Mayıs 2026"
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.SaglikBilgileri", b =>
@@ -937,17 +812,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("vardiyaId");
 
                     b.ToTable("SensorVerisi");
-
-                    b.HasData(
-                        new
-                        {
-                            sensorVerisiId = 1,
-                            birim = "°C",
-                            deger = 85.5m,
-                            ekipmanId = 101,
-                            olcumTarihi = new DateTime(2026, 5, 9, 9, 10, 0, 0, DateTimeKind.Unspecified),
-                            vardiyaId = 1
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.TakipCihazi", b =>
@@ -999,20 +863,6 @@ namespace Minemation.Infrastructure.Migrations
                     b.HasIndex("personelId");
 
                     b.ToTable("TakipCihazi");
-
-                    b.HasData(
-                        new
-                        {
-                            takipCihaziId = 1,
-                            personelId = 1,
-                            pilSeviyesi = 92.5m,
-                            takipCihaziDurumu = "Aktif",
-                            takipCihaziHaberlesmeProtokolu = "LoRaWAN",
-                            takipCihaziModeli = "MineTrack-V2",
-                            takipCihaziSeriNo = "GPS-MINE-555",
-                            takipCihaziSonBaglantiZamani = new DateTime(2026, 5, 11, 14, 0, 0, 0, DateTimeKind.Unspecified),
-                            takipCihaziTuru = "Kişisel Takip"
-                        });
                 });
 
             modelBuilder.Entity("Minemation.Domain.Entities.Vaka", b =>
