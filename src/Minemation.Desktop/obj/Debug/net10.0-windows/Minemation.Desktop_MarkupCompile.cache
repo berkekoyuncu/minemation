@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\minemation\src\Minemation.Desktop\obj\Debug\net10.0-windows\
+C:\Minemation\src\Minemation.Desktop\obj\Debug\net10.0-windows\
 Minemation.Desktop
 none
 false
-TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-D:\minemation\src\Minemation.Desktop\App.xaml
-6-30551388
-221705221552
-7-155319392
-211-816738769
-LoginView.xaml;MainWindow.xaml;PersonnelView.xaml;Resources\ColorsDark.xaml;Resources\ColorsLight.xaml;ShiftView.xaml;
+TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WİNDOWS7_0_OR_GREATER
+C:\Minemation\src\Minemation.Desktop\App.xaml
+13-1287869708
+221752825978
+161183830980
+220-677400826
+CreateReportView.xaml;EquipmentView.xaml;IncidentView.xaml;LoginView.xaml;MainWindow.xaml;MapView.xaml;ModulePlaceholderView.xaml;PersonnelView.xaml;ReportsView.xaml;Resources\ColorsDark.xaml;Resources\ColorsLight.xaml;RiskMonitoringView.xaml;ShiftView.xaml;
 
 False
 

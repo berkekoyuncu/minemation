@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\minemation\\src\\Minemation.Application\\Minemation.Application.csproj": {}
+    "C:\\Minemation\\src\\Minemation.Application\\Minemation.Application.csproj": {}
   },
   "projects": {
-    "D:\\minemation\\src\\Minemation.Application\\Minemation.Application.csproj": {
+    "C:\\Minemation\\src\\Minemation.Application\\Minemation.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\minemation\\src\\Minemation.Application\\Minemation.Application.csproj",
+        "projectUniqueName": "C:\\Minemation\\src\\Minemation.Application\\Minemation.Application.csproj",
         "projectName": "Minemation.Application",
-        "projectPath": "D:\\minemation\\src\\Minemation.Application\\Minemation.Application.csproj",
-        "packagesPath": "C:\\Users\\berke\\.nuget\\packages\\",
-        "outputPath": "D:\\minemation\\src\\Minemation.Application\\obj\\",
+        "projectPath": "C:\\Minemation\\src\\Minemation.Application\\Minemation.Application.csproj",
+        "packagesPath": "C:\\Users\\busbu\\.nuget\\packages\\",
+        "outputPath": "C:\\Minemation\\src\\Minemation.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\berke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\busbu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -31,10 +31,11 @@
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj": {
-                "projectPath": "D:\\minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj"
+              "C:\\Minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj": {
+                "projectPath": "C:\\Minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj"
               }
             }
           }
@@ -49,10 +50,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "imports": [
             "net461",
@@ -70,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -348,20 +350,20 @@
         }
       }
     },
-    "D:\\minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj": {
+    "C:\\Minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj",
+        "projectUniqueName": "C:\\Minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj",
         "projectName": "Minemation.Domain",
-        "projectPath": "D:\\minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj",
-        "packagesPath": "C:\\Users\\berke\\.nuget\\packages\\",
-        "outputPath": "D:\\minemation\\src\\Minemation.Domain\\obj\\",
+        "projectPath": "C:\\Minemation\\src\\Minemation.Domain\\Minemation.Domain.csproj",
+        "packagesPath": "C:\\Users\\busbu\\.nuget\\packages\\",
+        "outputPath": "C:\\Minemation\\src\\Minemation.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\berke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\busbu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -375,6 +377,7 @@
         },
         "frameworks": {
           "net10.0": {
+            "framework": "net10.0",
             "targetAlias": "net10.0",
             "projectReferences": {}
           }
@@ -389,10 +392,11 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.100"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net10.0": {
+          "framework": "net10.0",
           "targetAlias": "net10.0",
           "imports": [
             "net461",
@@ -410,7 +414,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

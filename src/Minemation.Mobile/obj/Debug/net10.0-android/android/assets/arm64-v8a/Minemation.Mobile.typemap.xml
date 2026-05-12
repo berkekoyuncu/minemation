@@ -1,10 +1,10 @@
-<api type="debug" assembly-name="Minemation.Mobile" mvid="5fc12fdfa1a9479b9e8bd35aade572ff">
+<api type="debug" assembly-name="Minemation.Mobile" mvid="decd5aed332f41cc8b58fe6686163ec0">
   <java-to-managed>
-    <entry java-name="crc645a2969ee8ed4078e/MainActivity" managed-name="Minemation.Mobile.MainActivity, Minemation.Mobile" managed-type-token-id="33554441" />
-    <entry java-name="crc645a2969ee8ed4078e/MainApplication" managed-name="Minemation.Mobile.MainApplication, Minemation.Mobile" managed-type-token-id="33554442" />
+    <entry java-name="crc645a2969ee8ed4078e/MainActivity" managed-name="Minemation.Mobile.MainActivity, Minemation.Mobile" managed-type-token-id="33554442" />
+    <entry java-name="crc645a2969ee8ed4078e/MainApplication" managed-name="Minemation.Mobile.MainApplication, Minemation.Mobile" managed-type-token-id="33554443" />
   </java-to-managed>
   <managed-to-java>
-    <entry java-name="crc645a2969ee8ed4078e/MainActivity" managed-name="Minemation.Mobile.MainActivity, Minemation.Mobile" managed-type-token-id="33554441" />
-    <entry java-name="crc645a2969ee8ed4078e/MainApplication" managed-name="Minemation.Mobile.MainApplication, Minemation.Mobile" managed-type-token-id="33554442" />
+    <entry java-name="crc645a2969ee8ed4078e/MainActivity" managed-name="Minemation.Mobile.MainActivity, Minemation.Mobile" managed-type-token-id="33554442" />
+    <entry java-name="crc645a2969ee8ed4078e/MainApplication" managed-name="Minemation.Mobile.MainApplication, Minemation.Mobile" managed-type-token-id="33554443" />
   </managed-to-java>
 </api>

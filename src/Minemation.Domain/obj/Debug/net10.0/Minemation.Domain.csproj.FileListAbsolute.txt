@@ -10,3 +10,15 @@ D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\refint\Minemation.Domain.d
 D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.pdb
 D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\ref\Minemation.Domain.dll
 D:\minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.sourcelink.json
+C:\Minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.deps.json
+C:\Minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.dll
+C:\Minemation\src\Minemation.Domain\bin\Debug\net10.0\Minemation.Domain.pdb
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.AssemblyInfoInputs.cache
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.AssemblyInfo.cs
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.csproj.CoreCompileInputs.cache
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.sourcelink.json
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.dll
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\refint\Minemation.Domain.dll
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\Minemation.Domain.pdb
+C:\Minemation\src\Minemation.Domain\obj\Debug\net10.0\ref\Minemation.Domain.dll
