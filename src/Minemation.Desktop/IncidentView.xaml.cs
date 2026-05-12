@@ -19,6 +19,10 @@ namespace Minemation.Desktop;
 
 public partial class IncidentView : UserControl
 {
+
+    private readonly bool _canManage;
+    private readonly int _currentPersonelId;
+
     private readonly HttpClient _httpClient = new()
     {
         BaseAddress = new Uri("http://localhost:5289")
@@ -28,14 +32,19 @@ public partial class IncidentView : UserControl
     private bool _showOnlyOpen = true;
     private int? _selectedIncidentId = null;
 
-    public IncidentView()
+    public IncidentView(bool canManage = true, int currentPersonelId = 0)
     {
+        _canManage = canManage;
+        _currentPersonelId = currentPersonelId;
+
         InitializeComponent();
         Loaded += IncidentView_Loaded;
     }
 
     private async void IncidentView_Loaded(object sender, RoutedEventArgs e)
     {
+        ApplyPermissions();
+
         await LoadIncidentDataAsync();
         RefreshGrid();
     }
@@ -85,19 +94,23 @@ public partial class IncidentView : UserControl
         var searchText = IncidentSearchBox.Text?.ToLower() ?? "";
 
         var filteredList = _allIncidents
-            .Where(i =>
-                !_showOnlyOpen ||
-                i.Status.Equals("Açık", StringComparison.OrdinalIgnoreCase) ||
-                i.Status.Equals("İnceleniyor", StringComparison.OrdinalIgnoreCase))
-            .Where(i =>
-                string.IsNullOrWhiteSpace(searchText) ||
-                i.Name.ToLower().Contains(searchText) ||
-                i.Type.ToLower().Contains(searchText) ||
-                i.Severity.ToLower().Contains(searchText) ||
-                i.Status.ToLower().Contains(searchText) ||
-                i.Cause.ToLower().Contains(searchText) ||
-                i.PersonnelName.ToLower().Contains(searchText))
-            .ToList();
+    .Where(i =>
+        _canManage ||
+        _currentPersonelId <= 0 ||
+        i.PersonelId == _currentPersonelId)
+    .Where(i =>
+        !_showOnlyOpen ||
+        i.Status.Equals("Açık", StringComparison.OrdinalIgnoreCase) ||
+        i.Status.Equals("İnceleniyor", StringComparison.OrdinalIgnoreCase))
+    .Where(i =>
+        string.IsNullOrWhiteSpace(searchText) ||
+        i.Name.ToLower().Contains(searchText) ||
+        i.Type.ToLower().Contains(searchText) ||
+        i.Severity.ToLower().Contains(searchText) ||
+        i.Status.ToLower().Contains(searchText) ||
+        i.Cause.ToLower().Contains(searchText) ||
+        i.PersonnelName.ToLower().Contains(searchText))
+    .ToList();
 
         IncidentGrid.ItemsSource = filteredList;
         IncidentTotalText.Text = $"Toplam {filteredList.Count} Vaka";
@@ -152,6 +165,9 @@ public partial class IncidentView : UserControl
 
     private void BtnAddNew_Click(object sender, RoutedEventArgs e)
     {
+
+        if (!_canManage)
+            return;
         _selectedIncidentId = null;
 
         IncidentFormTitle.Text = "Yeni Vaka Kaydı";
@@ -175,6 +191,9 @@ public partial class IncidentView : UserControl
 
     private async void BtnEdit_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (((Button)sender).DataContext is not IncidentModel selectedIncident)
             return;
 
@@ -219,6 +238,9 @@ public partial class IncidentView : UserControl
 
     private async void BtnDelete_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (((Button)sender).DataContext is not IncidentModel selectedIncident)
             return;
 
@@ -255,6 +277,9 @@ public partial class IncidentView : UserControl
 
     private async void BtnSave_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (string.IsNullOrWhiteSpace(IncidentNameBox.Text))
         {
             MessageBox.Show("Vaka adı zorunludur.");
@@ -399,6 +424,12 @@ public partial class IncidentView : UserControl
 
         comboBox.SelectedIndex = -1;
         comboBox.Text = value;
+    }
+
+    private void ApplyPermissions()
+    {
+        BtnAddNewIncident.Visibility = _canManage ? Visibility.Visible : Visibility.Collapsed;
+        IncidentActionsColumn.Visibility = _canManage ? Visibility.Visible : Visibility.Collapsed;
     }
 }
 

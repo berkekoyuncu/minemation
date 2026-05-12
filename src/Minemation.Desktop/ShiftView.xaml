@@ -356,7 +356,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="İşlemler" Width="100">
+                    <DataGridTemplateColumn x:Name="ShiftActionsColumn" Header="İşlemler" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

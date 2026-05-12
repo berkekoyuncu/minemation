@@ -7,10 +7,16 @@
     <materialDesign:DialogHost Identifier="PersonnelDialog" CloseOnClickAway="True">
         <!-- Add/Edit Form Dialog Content -->
         <materialDesign:DialogHost.DialogContent>
-            <Border Width="600" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
+
+            <Border Width="850" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
                 <StackPanel>
-                    <TextBlock x:Name="FormTitle" Text="Yeni Personel Kaydı" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,20" />
-                    
+                    <TextBlock x:Name="FormTitle"
+                       Text="Yeni Personel Kaydı"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       Margin="0,0,0,20" />
+
                     <TabControl Style="{StaticResource MaterialDesignTabControl}">
                         <TabItem Header="Kişisel Bilgiler">
                             <Grid Margin="0,20,0,0">
@@ -22,26 +28,76 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
-                                <TextBox Grid.Row="0" Grid.Column="0" materialDesign:HintAssist.Hint="Ad" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
-                                <TextBox Grid.Row="0" Grid.Column="1" materialDesign:HintAssist.Hint="Soyad" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
-                                <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="T.C. Kimlik No" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" MaxLength="11" />
-                                <DatePicker Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Doğum Tarihi" Style="{StaticResource MaterialDesignOutlinedDatePicker}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
-                                <ComboBox Grid.Row="2" Grid.Column="0" materialDesign:HintAssist.Hint="Cinsiyet" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                <TextBox x:Name="FirstNameBox"
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="Ad"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="LastNameBox"
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="Soyad"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="TcknBox"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="T.C. Kimlik No"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}"
+                                 MaxLength="11" />
+
+                                <DatePicker x:Name="BirthDatePicker"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    materialDesign:HintAssist.Hint="Doğum Tarihi"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="5"
+                                    Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <ComboBox x:Name="GenderComboBox"
+                                  Grid.Row="2"
+                                  Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Cinsiyet"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
                                     <ComboBoxItem Content="Erkek" />
                                     <ComboBoxItem Content="Kadın" />
                                 </ComboBox>
-                                <ComboBox Grid.Row="2" Grid.Column="1" materialDesign:HintAssist.Hint="Kan Grubu" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
-                                    <ComboBoxItem Content="0 Rh+" />
-                                    <ComboBoxItem Content="A Rh+" />
-                                    <ComboBoxItem Content="B Rh+" />
-                                    <ComboBoxItem Content="AB Rh+" />
+
+                                <ComboBox x:Name="StatusComboBox"
+                                  Grid.Row="2"
+                                  Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Personel Durumu"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Aktif" />
+                                    <ComboBoxItem Content="Pasif" />
+                                    <ComboBoxItem Content="İzinli" />
                                 </ComboBox>
+
+                                <DatePicker x:Name="HireDatePicker"
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    materialDesign:HintAssist.Hint="İşe Giriş Tarihi"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="5"
+                                    Foreground="{DynamicResource TextPrimaryBrush}" />
                             </Grid>
                         </TabItem>
-                        
-                        <TabItem Header="İş ve Sistem">
+
+                        <TabItem Header="İletişim">
                             <Grid Margin="0,20,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -53,30 +109,239 @@
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
-                                <ComboBox Grid.Row="0" Grid.Column="0" materialDesign:HintAssist.Hint="Uzmanlık" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+                                <TextBox x:Name="PhoneBox"
+                                 Grid.Row="0"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="Telefon"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="SecondPhoneBox"
+                                 Grid.Row="0"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="İkinci Telefon"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="EmailBox"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 materialDesign:HintAssist.Hint="E-posta"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="AddressBox"
+                                 Grid.Row="2"
+                                 Grid.ColumnSpan="2"
+                                 materialDesign:HintAssist.Hint="Adres"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalContentAlignment="Top" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="İş ve Sistem">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <ComboBox x:Name="ExpertiseComboBox"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Uzmanlık"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
                                     <ComboBoxItem Content="Maden Mühendisi" />
                                     <ComboBoxItem Content="Saha Operatörü" />
                                     <ComboBoxItem Content="İSG Uzmanı" />
                                     <ComboBoxItem Content="Tekniker" />
+                                    <ComboBoxItem Content="Mühendis" />
                                 </ComboBox>
-                                <ComboBox Grid.Row="0" Grid.Column="1" materialDesign:HintAssist.Hint="Çalışan Tipi" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+
+                                <ComboBox x:Name="EmployeeTypeComboBox"
+                                  Grid.Row="0"
+                                  Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Çalışan Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
                                     <ComboBoxItem Content="Tam Zamanlı" />
                                     <ComboBoxItem Content="Yarı Zamanlı" />
                                     <ComboBoxItem Content="Stajyer" />
                                 </ComboBox>
-                                <TextBox Grid.Row="1" Grid.Column="0" materialDesign:HintAssist.Hint="RFID Kart No" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" />
-                                <ComboBox Grid.Row="1" Grid.Column="1" materialDesign:HintAssist.Hint="Kullanıcı Rolü" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}">
+
+                                <TextBox x:Name="RfidBox"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="RFID Kart No"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <ComboBox x:Name="UserRoleComboBox"
+                                  Grid.Row="1"
+                                  Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Kullanıcı Rolü"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Admin" />
                                     <ComboBoxItem Content="Yönetici" />
                                     <ComboBoxItem Content="Saha Personeli" />
                                 </ComboBox>
-                                <TextBox Grid.Row="2" Grid.ColumnSpan="2" materialDesign:HintAssist.Hint="Adres" Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5" Foreground="{DynamicResource TextPrimaryBrush}" Height="80" TextWrapping="Wrap" VerticalContentAlignment="Top" />
+
+                                <TextBox x:Name="DepartmentBox"
+                                 Grid.Row="2"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="Departman"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="WorkLocationBox"
+                                 Grid.Row="2"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="Çalışma Konumu"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Sağlık Bilgileri">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <ComboBox x:Name="HealthBloodTypeComboBox"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Kan Grubu"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="0 Rh+" />
+                                    <ComboBoxItem Content="0 Rh-" />
+                                    <ComboBoxItem Content="A+" />
+                                    <ComboBoxItem Content="A Rh+" />
+                                    <ComboBoxItem Content="A-" />
+                                    <ComboBoxItem Content="B+" />
+                                    <ComboBoxItem Content="B Rh+" />
+                                    <ComboBoxItem Content="B-" />
+                                    <ComboBoxItem Content="AB+" />
+                                    <ComboBoxItem Content="AB Rh+" />
+                                    <ComboBoxItem Content="AB-" />
+                                </ComboBox>
+
+                                <ComboBox x:Name="HealthStatusComboBox"
+                                  Grid.Row="0"
+                                  Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Sağlık Durumu"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Çalışabilir" />
+                                    <ComboBoxItem Content="Kısıtlı Çalışabilir" />
+                                    <ComboBoxItem Content="Çalışamaz" />
+                                    <ComboBoxItem Content="Muayene Gerekli" />
+                                </ComboBox>
+
+                                <TextBox x:Name="ChronicDiseasesBox"
+                                 Grid.Row="1"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="Kronik Hastalıklar, virgülle ayır"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalContentAlignment="Top"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="AllergiesBox"
+                                 Grid.Row="1"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="Alerjiler, virgülle ayır"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Height="80"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalContentAlignment="Top"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="WorkRestrictionsBox"
+                                 Grid.Row="2"
+                                 Grid.Column="0"
+                                 materialDesign:HintAssist.Hint="Çalışma Kısıtlamaları"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Height="90"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalContentAlignment="Top"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="EmergencyNoteBox"
+                                 Grid.Row="2"
+                                 Grid.Column="1"
+                                 materialDesign:HintAssist.Hint="Acil Durum Notu"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                 Margin="5"
+                                 Height="90"
+                                 TextWrapping="Wrap"
+                                 AcceptsReturn="True"
+                                 VerticalContentAlignment="Top"
+                                 Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="LastExamDatePicker"
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    materialDesign:HintAssist.Hint="Son Muayene Tarihi"
+                                    Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                    Margin="5"
+                                    Foreground="{DynamicResource TextPrimaryBrush}" />
                             </Grid>
                         </TabItem>
                     </TabControl>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
-                        <Button Content="İptal" Style="{StaticResource MaterialDesignOutlinedButton}" Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}" Margin="0,0,10,0" Foreground="{DynamicResource TextSecondaryBrush}" BorderBrush="{DynamicResource BorderBrush}" />
-                        <Button Content="Kaydet" Background="{DynamicResource PrimaryBrush}" Foreground="White" Width="100" />
+                        <Button Content="İptal"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                        Margin="0,0,10,0"
+                        Foreground="{DynamicResource TextSecondaryBrush}"
+                        BorderBrush="{DynamicResource BorderBrush}" />
+
+                        <Button Content="Kaydet"
+                        Background="{DynamicResource PrimaryBrush}"
+                        Foreground="White"
+                        Width="100"
+                        Click="BtnSave_Click" />
                     </StackPanel>
                 </StackPanel>
             </Border>

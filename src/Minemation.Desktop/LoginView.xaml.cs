@@ -43,7 +43,16 @@ public partial class LoginView : Window
 
         var role = RolEsle(sonuc.Kullanici.KullaniciRolu);
 
-        MainWindow mainWindow = new MainWindow(role);
+        var displayName = $"{sonuc.Kullanici.PersonelAdi} {sonuc.Kullanici.PersonelSoyadi}".Trim();
+
+        if (string.IsNullOrWhiteSpace(displayName))
+            displayName = sonuc.Kullanici.Eposta;
+
+        MainWindow mainWindow = new MainWindow(
+            role,
+            displayName,
+            sonuc.Kullanici.PersonelId);
+
         mainWindow.Show();
         Close();
     }

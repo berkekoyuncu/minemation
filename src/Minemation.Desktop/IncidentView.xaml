@@ -266,7 +266,7 @@
                     <DataGridTextColumn Header="Personel" Width="*" Binding="{Binding PersonnelName}" />
                     <DataGridTextColumn Header="Neden" Width="*" Binding="{Binding Cause}" />
 
-                    <DataGridTemplateColumn Header="İşlemler" Width="100">
+                    <DataGridTemplateColumn x:Name="IncidentActionsColumn" Header="İşlemler" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

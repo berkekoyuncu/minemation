@@ -11,6 +11,8 @@ namespace Minemation.Desktop;
 
 public partial class ShiftView : UserControl
 {
+    private readonly bool _canManage;
+
     private readonly HttpClient _httpClient = new()
     {
         BaseAddress = new Uri("http://localhost:5289")
@@ -20,14 +22,18 @@ public partial class ShiftView : UserControl
     private bool _showOnlyActive = true;
     private int? _selectedShiftId = null;
 
-    public ShiftView()
+    public ShiftView(bool canManage = true)
     {
+        _canManage = canManage;
+
         InitializeComponent();
         Loaded += ShiftView_Loaded;
     }
 
     private async void ShiftView_Loaded(object sender, RoutedEventArgs e)
     {
+        ApplyPermissions();
+
         await LoadShiftDataAsync();
         RefreshGrid();
     }
@@ -142,6 +148,9 @@ public partial class ShiftView : UserControl
 
     private void BtnAddNew_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         _selectedShiftId = null;
 
         ShiftFormTitle.Text = "Yeni Vardiya Kaydı";
@@ -176,6 +185,9 @@ public partial class ShiftView : UserControl
 
     private async void BtnEdit_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (((Button)sender).DataContext is not ShiftModel selectedShift)
             return;
 
@@ -234,6 +246,9 @@ public partial class ShiftView : UserControl
 
     private async void BtnDelete_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (((Button)sender).DataContext is not ShiftModel selectedShift)
             return;
 
@@ -270,6 +285,9 @@ public partial class ShiftView : UserControl
 
     private async void BtnSave_Click(object sender, RoutedEventArgs e)
     {
+        if (!_canManage)
+            return;
+
         if (string.IsNullOrWhiteSpace(ShiftNameBox.Text))
         {
             MessageBox.Show("Vardiya adı zorunludur.");
@@ -438,6 +456,12 @@ public partial class ShiftView : UserControl
 
         comboBox.SelectedIndex = -1;
         comboBox.Text = value;
+    }
+
+    private void ApplyPermissions()
+    {
+        BtnAddNewShift.Visibility = _canManage ? Visibility.Visible : Visibility.Collapsed;
+        ShiftActionsColumn.Visibility = _canManage ? Visibility.Visible : Visibility.Collapsed;
     }
 }
 
