@@ -174,6 +174,13 @@ public partial class FieldHomeView : UserControl
             return false;
         }
     }
+
+    private void OpenMapButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (Window.GetWindow(this) is MainWindow mainWindow)
+            mainWindow.OpenMapPage();
+    }
+
 }
 
 public class FieldShiftDto

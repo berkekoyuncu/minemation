@@ -74,11 +74,12 @@ public partial class MainWindow : Window
 
     private void NavMap_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new ModulePlaceholderView(
-            "Harita",
-            "Personel, ekipman ve takip cihazı konumları bu ekranda görüntülenecek.",
-            PackIconKind.MapMarkerRadius);
-    
+        OpenMapPage();
+    }
+
+    public void OpenMapPage()
+    {
+        MainContent.Content = new MapView(_currentPersonelId, CanManage);
         UpdateNavStyles(NavMap);
     }
 

@@ -177,29 +177,117 @@
                         </Border>
 
                         <Grid Grid.Row="1">
-                            <Border Width="260"
-                                    Height="150"
-                                    Background="{DynamicResource CardBrush}"
-                                    BorderBrush="{DynamicResource BorderBrush}"
-                                    BorderThickness="1"
-                                    CornerRadius="6"
-                                    HorizontalAlignment="Left"
-                                    VerticalAlignment="Top"
-                                    Margin="20">
-                                <StackPanel HorizontalAlignment="Center"
-                                            VerticalAlignment="Center">
-                                    <materialDesign:PackIcon Kind="Map"
-                                                             Width="42"
-                                                             Height="42"
-                                                             Foreground="{DynamicResource TextSecondaryBrush}"
-                                                             HorizontalAlignment="Center"
-                                                             Margin="0,0,0,8" />
-                                    <TextBlock Text="Harita modülü burada gösterilecek"
-                                               Foreground="{DynamicResource TextSecondaryBrush}"
-                                               TextAlignment="Center" />
-                                </StackPanel>
-                            </Border>
+                            <Viewbox Stretch="UniformToFill"
+             ClipToBounds="True">
+                                <Grid Width="1000"
+              Height="650">
+
+                                    <Image Source="Resources/Images/MineMap.png"
+                   Width="1000"
+                   Height="650"
+                   Stretch="Fill"
+                   Opacity="1" />
+
+                                    <Rectangle Fill="#22000000"
+                       Width="1000"
+                       Height="650" />
+
+                                    <Canvas Width="1000"
+                    Height="650">
+
+                                        <!-- Ana giriş -->
+                                        <StackPanel Canvas.Left="115"
+                            Canvas.Top="135"
+                            Margin="-18,-38,0,0">
+                                            <materialDesign:PackIcon Kind="Gate"
+                                             Width="36"
+                                             Height="36"
+                                             Foreground="{DynamicResource TextSecondaryBrush}"
+                                             HorizontalAlignment="Center" />
+                                            <Border Background="{DynamicResource CardBrush}"
+                            CornerRadius="4"
+                            Padding="5,1"
+                            Margin="0,-6,0,0">
+                                                <TextBlock Text="Ana Giriş"
+                                   FontSize="10"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <!-- Ekipman -->
+                                        <StackPanel Canvas.Left="410"
+                            Canvas.Top="285"
+                            Margin="-15,-34,0,0">
+                                            <materialDesign:PackIcon Kind="Excavator"
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource PrimaryBrush}"
+                                             HorizontalAlignment="Center" />
+                                            <Border Background="{DynamicResource CardBrush}"
+                            CornerRadius="4"
+                            Padding="5,1"
+                            Margin="0,-5,0,0">
+                                                <TextBlock Text="Ekipman"
+                                   FontSize="10"
+                                   Foreground="{DynamicResource PrimaryBrush}"
+                                   FontWeight="Bold" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <!-- Personel / görev noktası -->
+                                        <StackPanel Canvas.Left="500"
+                            Canvas.Top="325"
+                            Margin="-15,-36,0,0">
+                                            <materialDesign:PackIcon Kind="AccountHardHat"
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource SuccessBrush}"
+                                             HorizontalAlignment="Center" />
+                                            <Border Background="{DynamicResource CardBrush}"
+                            CornerRadius="4"
+                            Padding="5,1"
+                            Margin="0,-5,0,0">
+                                                <TextBlock Text="Görev Yeri"
+                                   FontSize="10"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontWeight="SemiBold" />
+                                            </Border>
+                                        </StackPanel>
+
+                                        <!-- Riskli bölge -->
+                                        <StackPanel Canvas.Left="530"
+                            Canvas.Top="430"
+                            Margin="-16,-36,0,0">
+                                            <materialDesign:PackIcon Kind="Alert"
+                                             Width="34"
+                                             Height="34"
+                                             Foreground="{DynamicResource WarningBrush}"
+                                             HorizontalAlignment="Center" />
+                                            <Border Background="{DynamicResource CardBrush}"
+                            CornerRadius="4"
+                            Padding="5,1"
+                            Margin="0,-5,0,0">
+                                                <TextBlock Text="Riskli Bölge"
+                                   FontSize="10"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            </Border>
+                                        </StackPanel>
+                                    </Canvas>
+                                </Grid>
+                            </Viewbox>
+
+                            <Rectangle Fill="#22000000" />
+
+                            <Button Content="Haritayı Aç"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,0,18,18"
+                                    Padding="16,6"
+                                    Background="{DynamicResource PrimaryBrush}"
+                                    Foreground="White"
+                                    Click="OpenMapButton_Click" />  
                         </Grid>
+
                     </Grid>
                 </Border>
 

@@ -147,6 +147,12 @@ public partial class AdminHomeView : UserControl
 
         EquipmentSummaryText.Text = $"{response.Data.Items.Select(x => x.EkipmanId).Distinct().Count()} ekipmandan sensör verisi";
     }
+
+    private void OpenMapButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (Window.GetWindow(this) is MainWindow mainWindow)
+            mainWindow.OpenMapPage();
+    }
 }
 
 public class AdminPersonelListItemDto

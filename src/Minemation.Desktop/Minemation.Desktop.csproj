@@ -12,7 +12,14 @@
   <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="5.3.2" />
     <PackageReference Include="QuestPDF" Version="2026.5.0" />
+    <PackageReference Include="XAML.MapControl.WPF" Version="17.1.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<Content Include="Resources\Images\MineMap.png">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
