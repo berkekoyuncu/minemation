@@ -47,14 +47,10 @@ public partial class MainWindow : Window
 
     private void NavReports_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new ModulePlaceholderView(
-            "Raporlar",
-            "Personel, ekipman, sensör, vardiya ve vaka raporları bu ekranda listelenecek.",
-            PackIconKind.FileChart);
-    
+        MainContent.Content = new ReportView();
         UpdateNavStyles(NavReports);
     }
-    
+
     private void NavRisk_Click(object sender, RoutedEventArgs e)
     {
         MainContent.Content = new ModulePlaceholderView(
