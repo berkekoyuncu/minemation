@@ -36,6 +36,25 @@ public partial class LoginView : Window
 
         if (!sonuc.Success || sonuc.Kullanici is null)
         {
+            if (sonuc.Message == "İLK_GIRIS_SIFRE_OLUSTURULMALI")
+            {
+                var firstLoginWindow = new FirstLoginPasswordWindow(IdentityBox.Text.Trim())
+                {
+                    Owner = this
+                };
+
+                var result = firstLoginWindow.ShowDialog();
+
+                if (result == true)
+                {
+                    PasswordBox.Password = string.Empty;
+                    ErrorText.Text = "Şifreniz oluşturuldu. Yeni şifrenizle giriş yapabilirsiniz.";
+                    ErrorText.Visibility = Visibility.Visible;
+                }
+
+                return;
+            }
+
             ErrorText.Text = sonuc.Message;
             ErrorText.Visibility = Visibility.Visible;
             return;

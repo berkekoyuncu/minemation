@@ -1,3 +1,5 @@
+using Minemation.Application.DTOs;
+using Minemation.Desktop.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -5,13 +7,13 @@ using System.Net.Http.Json;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Minemation.Desktop.Models;
 
 namespace Minemation.Desktop;
 
 public partial class ShiftView : UserControl
 {
     private readonly bool _canManage;
+    private readonly int _currentPersonelId;
 
     private readonly HttpClient _httpClient = new()
     {
@@ -22,9 +24,10 @@ public partial class ShiftView : UserControl
     private bool _showOnlyActive = true;
     private int? _selectedShiftId = null;
 
-    public ShiftView(bool canManage = true)
+    public ShiftView(bool canManage = true, int currentPersonelId = 0)
     {
         _canManage = canManage;
+        _currentPersonelId = currentPersonelId;
 
         InitializeComponent();
         Loaded += ShiftView_Loaded;
@@ -50,7 +53,22 @@ public partial class ShiftView : UserControl
                 return;
             }
 
-            _allShifts = response.Data.Items.Select(x => new ShiftModel
+            var items = response.Data.Items.ToList();
+
+            if (!_canManage)
+            {
+                var relatedItems = new List<VardiyaListItemDto>();
+
+                foreach (var item in items)
+                {
+                    if (await IsShiftRelatedToCurrentPersonnelAsync(item.VardiyaId))
+                        relatedItems.Add(item);
+                }
+
+                items = relatedItems;
+            }
+
+            _allShifts = items.Select(x => new ShiftModel
             {
                 Id = x.VardiyaId,
                 Name = x.VardiyaAdi,
@@ -71,6 +89,34 @@ public partial class ShiftView : UserControl
         catch (Exception ex)
         {
             MessageBox.Show($"Vardiya verileri alınırken hata oluştu: {ex.Message}");
+        }
+    }
+
+    private async Task<bool> IsShiftRelatedToCurrentPersonnelAsync(int vardiyaId)
+    {
+        if (_canManage)
+            return true;
+
+        if (_currentPersonelId <= 0)
+            return false;
+
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<ShiftDetailDto>>(
+                $"/api/vardiya/{vardiyaId}");
+
+            if (response?.Success != true || response.Data is null)
+                return false;
+
+            var detail = response.Data;
+
+            return detail.VardiyaSorumlusu == _currentPersonelId ||
+                   detail.VardiyaIsgSorumlusu == _currentPersonelId ||
+                   detail.VardiyaTeknikSorumlusu == _currentPersonelId;
+        }
+        catch
+        {
+            return false;
         }
     }
 
@@ -586,4 +632,43 @@ public class VardiyaUpdateRequest
     public int VardiyaSorumlusu { get; set; }
     public int VardiyaIsgSorumlusu { get; set; }
     public int VardiyaTeknikSorumlusu { get; set; }
+}
+
+public class ShiftDetailDto
+{
+    public int VardiyaId { get; set; }
+    public string VardiyaAdi { get; set; } = string.Empty;
+    public string VardiyaTanimi { get; set; } = string.Empty;
+
+    public DateTime VardiyaBaslangicTarihi { get; set; }
+    public DateTime VardiyaBitisTarihi { get; set; }
+    public DateTime VardiyaOlusturmaTarihi { get; set; }
+
+    public string VardiyaSupervizoru { get; set; } = string.Empty;
+
+    public int PersonelSayisi { get; set; }
+    public int EkipmanSayisi { get; set; }
+    public int EkipSayisi { get; set; }
+
+    public string VardiyaDurumu { get; set; } = string.Empty;
+    public string VardiyaTipi { get; set; } = string.Empty;
+    public int ToplaVardiyaSuresi { get; set; }
+
+    public string CalismaBolgesi { get; set; } = string.Empty;
+    public string OperasyonTipi { get; set; } = string.Empty;
+    public string OperasyonRiskSeviyesi { get; set; } = string.Empty;
+    public string VardiyaNotlari { get; set; } = string.Empty;
+    public string EkipmanOperatoru { get; set; } = string.Empty;
+
+    public int? EkipmanId { get; set; }
+    public string? EkipmanAdi { get; set; }
+
+    public int VardiyaSorumlusu { get; set; }
+    public string? VardiyaSorumlusuAdSoyad { get; set; }
+
+    public int VardiyaIsgSorumlusu { get; set; }
+    public string? IsgSorumlusuAdSoyad { get; set; }
+
+    public int VardiyaTeknikSorumlusu { get; set; }
+    public string? TeknikSorumlusuAdSoyad { get; set; }
 }

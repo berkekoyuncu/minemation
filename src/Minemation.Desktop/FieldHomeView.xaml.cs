@@ -71,14 +71,32 @@ public partial class FieldHomeView : UserControl
             return;
         }
 
-        var activeShift = response.Data.Items
+        var items = response.Data.Items.ToList();
+
+        var relatedItems = new List<FieldShiftDto>();
+
+        foreach (var item in items)
+        {
+            if (await IsShiftRelatedToCurrentPersonnelAsync(item.VardiyaId))
+                relatedItems.Add(item);
+        }
+
+        items = relatedItems;
+
+        if (items.Count == 0)
+        {
+            ClearShiftInfo();
+            return;
+        }
+
+        var activeShift = items
             .Where(x =>
                 x.VardiyaDurumu.Equals("Aktif", StringComparison.OrdinalIgnoreCase) ||
                 x.VardiyaDurumu.Equals("Planlandı", StringComparison.OrdinalIgnoreCase))
             .OrderBy(x => x.VardiyaBaslangicTarihi)
             .FirstOrDefault();
 
-        activeShift ??= response.Data.Items
+        activeShift ??= items
             .OrderByDescending(x => x.VardiyaBaslangicTarihi)
             .FirstOrDefault();
 
@@ -130,6 +148,31 @@ public partial class FieldHomeView : UserControl
         EquipmentText.Text = "-";
         LocationText.Text = "-";
         ShiftStatusText.Text = "-";
+    }
+
+    private async Task<bool> IsShiftRelatedToCurrentPersonnelAsync(int vardiyaId)
+    {
+        if (_personelId <= 0)
+            return false;
+
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<ShiftDetailDto>>(
+                $"/api/vardiya/{vardiyaId}");
+
+            if (response?.Success != true || response.Data is null)
+                return false;
+
+            var detail = response.Data;
+
+            return detail.VardiyaSorumlusu == _personelId ||
+                   detail.VardiyaIsgSorumlusu == _personelId ||
+                   detail.VardiyaTeknikSorumlusu == _personelId;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
 

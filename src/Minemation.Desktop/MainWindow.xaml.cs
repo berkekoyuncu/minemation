@@ -8,6 +8,7 @@ public partial class MainWindow : Window
     private readonly string _currentUserName;
     private readonly int _currentPersonelId;
 
+
     private bool CanManage => _currentRole == "Admin";
 
     public MainWindow(string role = "Admin", string userName = "", int personelId = 0)
@@ -28,10 +29,10 @@ public partial class MainWindow : Window
     }
 
     private void NavShift_Click(object sender, RoutedEventArgs e)
-    {
-        MainContent.Content = new ShiftView(CanManage);
-        UpdateNavStyles(NavShift);
-    }
+{
+    MainContent.Content = new ShiftView(CanManage, _currentPersonelId);
+    UpdateNavStyles(NavShift);
+}
 
     private void NavHome_Click(object sender, RoutedEventArgs e)
     {
@@ -211,5 +212,24 @@ public partial class MainWindow : Window
         {
             themeIcon.Kind = _isDarkTheme ? MaterialDesignThemes.Wpf.PackIconKind.WeatherSunny : MaterialDesignThemes.Wpf.PackIconKind.WeatherNight;
         }
+    }
+
+    private void UserMenuButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (UserMenuButton.ContextMenu is null)
+            return;
+
+        UserMenuButton.ContextMenu.PlacementTarget = UserMenuButton;
+        UserMenuButton.ContextMenu.IsOpen = true;
+    }
+
+    private void LogoutMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        var loginView = new LoginView();
+
+        System.Windows.Application.Current.MainWindow = loginView;
+        loginView.Show();
+
+        Close();
     }
 }

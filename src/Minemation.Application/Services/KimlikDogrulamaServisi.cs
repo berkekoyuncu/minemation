@@ -59,6 +59,11 @@ public class KimlikDogrulamaServisi : IKimlikDogrulamaServisi
             return ApiResponse<GirisSonucDto>.Fail("Personel aktif değil.");
         }
 
+        if (string.IsNullOrWhiteSpace(personel.sifreHash))
+        {
+            return ApiResponse<GirisSonucDto>.Fail("İLK_GIRIS_SIFRE_OLUSTURULMALI");
+        }
+
         var sifreDogruMu = SifreDogruMu(personel.sifreHash, dto.Sifre);
 
         if (!sifreDogruMu)
@@ -258,5 +263,33 @@ public class KimlikDogrulamaServisi : IKimlikDogrulamaServisi
         await _personelRepository.DegisiklikleriKaydetAsync();
 
         return ApiResponse<bool>.Ok(true, "Şifre başarıyla belirlendi.");
+    }
+
+    public async Task<ApiResponse<bool>> IlkGirisSifreOlusturAsync(IlkGirisSifreOlusturDto dto)
+    {
+        var tckn = dto.Tckn.Trim();
+
+        if (string.IsNullOrWhiteSpace(tckn))
+            return ApiResponse<bool>.Fail("T.C. Kimlik No zorunludur.");
+
+        var personel = await _personelRepository.TcknIleGetirAsync(tckn);
+
+        if (personel is null)
+            return ApiResponse<bool>.Fail("Bu T.C. Kimlik No ile kayıtlı personel bulunamadı.");
+
+        if (!string.Equals(personel.personelDurumu, "Aktif", StringComparison.OrdinalIgnoreCase))
+            return ApiResponse<bool>.Fail("Personel aktif değil. Şifre oluşturulamaz.");
+
+        if (!string.IsNullOrWhiteSpace(personel.sifreHash))
+            return ApiResponse<bool>.Fail("Bu kullanıcı için şifre zaten oluşturulmuş. Lütfen normal giriş ekranını kullanın.");
+
+        if (!SifreGecerliMi(dto.YeniSifre))
+            return ApiResponse<bool>.Fail("Yeni şifre en az 8 karakter olmalı; büyük harf, küçük harf, rakam ve özel karakter içermelidir.");
+
+        personel.sifreHash = Hashle(dto.YeniSifre);
+
+        await _personelRepository.DegisiklikleriKaydetAsync();
+
+        return ApiResponse<bool>.Ok(true, "Şifre başarıyla oluşturuldu. Artık giriş yapabilirsiniz.");
     }
 }

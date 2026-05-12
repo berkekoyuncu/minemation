@@ -38,3 +38,9 @@ public class SifreBelirleDto
     public int PersonelId { get; set; }
     public string YeniSifre { get; set; } = string.Empty;
 }
+
+public class IlkGirisSifreOlusturDto
+{
+    public string Tckn { get; set; } = string.Empty;
+    public string YeniSifre { get; set; } = string.Empty;
+}

@@ -55,8 +55,38 @@
                     <Button x:Name="ThemeToggleButton" Style="{StaticResource MaterialDesignIconForegroundButton}" Click="ThemeToggleButton_Click" ToolTip="Temayı Değiştir" Margin="0,0,15,0" Foreground="{DynamicResource TextSecondaryBrush}">
                         <materialDesign:PackIcon x:Name="ThemeIcon" Kind="WeatherSunny" Width="24" Height="24" />
                     </Button>
-                    <TextBlock x:Name="UserNameText" Text="Ahmet Yılmaz" FontSize="16" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                    <materialDesign:PackIcon Kind="AccountCircle" Width="40" Height="40" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center"/>
+                    <Button x:Name="UserMenuButton"
+        Style="{StaticResource MaterialDesignFlatButton}"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        Click="UserMenuButton_Click"
+        Padding="8,4">
+
+                        <Button.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Çıkış Yap"
+                      Click="LogoutMenuItem_Click">
+                                    <MenuItem.Icon>
+                                        <materialDesign:PackIcon Kind="Logout" Width="18" Height="18" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Name="UserNameText"
+                   Text="Kullanıcı"
+                   FontSize="16"
+                   Foreground="{DynamicResource TextPrimaryBrush}"
+                   VerticalAlignment="Center"
+                   Margin="0,0,10,0"/>
+
+                            <materialDesign:PackIcon Kind="AccountCircle"
+                                 Width="40"
+                                 Height="40"
+                                 Foreground="{DynamicResource TextSecondaryBrush}"
+                                 VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>

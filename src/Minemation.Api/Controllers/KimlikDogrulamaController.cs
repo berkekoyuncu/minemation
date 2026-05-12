@@ -58,4 +58,15 @@ public class KimlikDogrulamaController : ControllerBase
 
         return Ok(sonuc);
     }
+
+    [HttpPost("ilk-giris-sifre-olustur")]
+    public async Task<IActionResult> IlkGirisSifreOlustur([FromBody] IlkGirisSifreOlusturDto dto)
+    {
+        var sonuc = await _kimlikDogrulamaServisi.IlkGirisSifreOlusturAsync(dto);
+
+        if (!sonuc.Success)
+            return BadRequest(sonuc);
+
+        return Ok(sonuc);
+    }
 }
