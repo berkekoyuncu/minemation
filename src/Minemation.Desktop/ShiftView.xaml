@@ -3,38 +3,317 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              Background="Transparent">
-    
+
     <materialDesign:DialogHost Identifier="ShiftDialog" CloseOnClickAway="True">
-        <!-- Dialog Content remains similar... -->
-        
+
+        <materialDesign:DialogHost.DialogContent>
+            <Border Width="720" Padding="30" Background="{DynamicResource BackgroundBrush}" CornerRadius="8">
+                <StackPanel>
+                    <TextBlock x:Name="ShiftFormTitle"
+                               Text="Yeni Vardiya Kaydı"
+                               FontSize="24"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource PrimaryBrush}"
+                               Margin="0,0,0,20" />
+
+                    <TabControl Style="{StaticResource MaterialDesignTabControl}">
+                        <TabItem Header="Vardiya Bilgileri">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="ShiftNameBox"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Vardiya Adı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="SupervisorBox"
+                                         Grid.Row="0"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Vardiya Süpervizörü"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="StartDatePicker"
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            materialDesign:HintAssist.Hint="Başlangıç Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <DatePicker x:Name="EndDatePicker"
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            materialDesign:HintAssist.Hint="Bitiş Tarihi"
+                                            Style="{StaticResource MaterialDesignOutlinedDatePicker}"
+                                            Margin="5"
+                                            Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="StartTimeBox"
+                                         Grid.Row="2"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Başlangıç Saati örn: 08:00"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="EndTimeBox"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Bitiş Saati örn: 16:00"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ShiftDescriptionBox"
+                                         Grid.Row="3"
+                                         Grid.ColumnSpan="2"
+                                         materialDesign:HintAssist.Hint="Vardiya Tanımı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Height="80"
+                                         TextWrapping="Wrap"
+                                         VerticalContentAlignment="Top"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Operasyon">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <ComboBox x:Name="ShiftStatusComboBox"
+                                          Grid.Row="0"
+                                          Grid.Column="0"
+                                          materialDesign:HintAssist.Hint="Vardiya Durumu"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Aktif" />
+                                    <ComboBoxItem Content="Planlandı" />
+                                    <ComboBoxItem Content="Tamamlandı" />
+                                    <ComboBoxItem Content="İptal" />
+                                </ComboBox>
+
+                                <ComboBox x:Name="ShiftTypeComboBox"
+                                          Grid.Row="0"
+                                          Grid.Column="1"
+                                          materialDesign:HintAssist.Hint="Vardiya Tipi"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Gündüz" />
+                                    <ComboBoxItem Content="Gece" />
+                                    <ComboBoxItem Content="Acil" />
+                                </ComboBox>
+
+                                <TextBox x:Name="WorkAreaBox"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Çalışma Bölgesi"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="OperationTypeBox"
+                                         Grid.Row="1"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Operasyon Tipi"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <ComboBox x:Name="RiskLevelComboBox"
+                                          Grid.Row="2"
+                                          Grid.Column="0"
+                                          materialDesign:HintAssist.Hint="Risk Seviyesi"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}">
+                                    <ComboBoxItem Content="Düşük" />
+                                    <ComboBoxItem Content="Orta" />
+                                    <ComboBoxItem Content="Yüksek" />
+                                    <ComboBoxItem Content="Kritik" />
+                                </ComboBox>
+
+                                <TextBox x:Name="EquipmentOperatorBox"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Ekipman Operatörü"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ShiftNotesBox"
+                                         Grid.Row="3"
+                                         Grid.ColumnSpan="2"
+                                         materialDesign:HintAssist.Hint="Vardiya Notları"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Height="80"
+                                         TextWrapping="Wrap"
+                                         VerticalContentAlignment="Top"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Sayılar ve Sorumlular">
+                            <Grid Margin="0,20,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBox x:Name="PersonnelCountBox"
+                                         Grid.Row="0"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Personel Sayısı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="EquipmentCountBox"
+                                         Grid.Row="0"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Ekipman Sayısı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="TeamCountBox"
+                                         Grid.Row="1"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="Ekip Sayısı"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="ResponsiblePersonBox"
+                                         Grid.Row="1"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Vardiya Sorumlusu ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="IsgResponsibleBox"
+                                         Grid.Row="2"
+                                         Grid.Column="0"
+                                         materialDesign:HintAssist.Hint="İSG Sorumlusu ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <TextBox x:Name="TechnicalResponsibleBox"
+                                         Grid.Row="2"
+                                         Grid.Column="1"
+                                         materialDesign:HintAssist.Hint="Teknik Sorumlu ID"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                         Margin="5"
+                                         Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,30,0,0">
+                        <Button Content="İptal"
+                                Style="{StaticResource MaterialDesignOutlinedButton}"
+                                Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
+                                Margin="0,0,10,0"
+                                Foreground="{DynamicResource TextSecondaryBrush}"
+                                BorderBrush="{DynamicResource BorderBrush}" />
+
+                        <Button Content="Kaydet"
+                                Background="{DynamicResource PrimaryBrush}"
+                                Foreground="White"
+                                Width="100"
+                                Click="BtnSave_Click" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </materialDesign:DialogHost.DialogContent>
+
         <Grid Margin="20">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" /> <!-- Header -->
-                <RowDefinition Height="Auto" /> <!-- Search & Tabs -->
-                <RowDefinition Height="*" />    <!-- List -->
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <!-- Header -->
-            <TextBlock Grid.Row="0" Text="VARDİYA YÖNETİMİ" FontSize="28" FontWeight="Bold" Foreground="{DynamicResource PrimaryBrush}" Margin="0,0,0,20" />
+            <TextBlock Grid.Row="0"
+                       Text="VARDİYA YÖNETİMİ"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{DynamicResource PrimaryBrush}"
+                       Margin="0,0,0,20" />
 
-            <!-- Search & Tabs -->
             <Grid Grid.Row="1" Margin="0,0,0,15">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="350" />
                 </Grid.ColumnDefinitions>
-                
+
                 <StackPanel Grid.Column="0" Orientation="Horizontal">
-                    <Button Content="Aktif Vardiyalar" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource PrimaryBrush}" BorderBrush="{DynamicResource PrimaryBrush}" BorderThickness="0,0,0,2" Margin="0,0,10,0" />
-                    <Button Content="Vardiya Geçmişi" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0" />
+                    <Button x:Name="BtnActiveShifts"
+                            Content="Aktif Vardiyalar"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource PrimaryBrush}"
+                            BorderBrush="{DynamicResource PrimaryBrush}"
+                            BorderThickness="0,0,0,2"
+                            Click="BtnActiveShifts_Click"
+                            Margin="0,0,10,0" />
+
+                    <Button x:Name="BtnShiftHistory"
+                            Content="Vardiya Geçmişi"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Click="BtnShiftHistory_Click"
+                            Margin="0,0,10,0" />
                 </StackPanel>
 
-                <TextBox Grid.Column="1" x:Name="ShiftSearchBox" materialDesign:HintAssist.Hint="Vardiya Ara (İsim, RFID...)" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignOutlinedTextBox}" Foreground="{DynamicResource TextPrimaryBrush}" Padding="10,8" />
+                <TextBox Grid.Column="1"
+                         x:Name="ShiftSearchBox"
+                         materialDesign:HintAssist.Hint="Vardiya Ara"
+                         materialDesign:TextFieldAssist.HasClearButton="True"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Foreground="{DynamicResource TextPrimaryBrush}"
+                         Padding="10,8"
+                         TextChanged="ShiftSearchBox_TextChanged" />
             </Grid>
 
-            <!-- Grid -->
-            <DataGrid Grid.Row="2" x:Name="ShiftGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
-                      Background="{DynamicResource SurfaceBrush}" 
+            <DataGrid Grid.Row="2"
+                      x:Name="ShiftGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      Background="{DynamicResource SurfaceBrush}"
                       RowBackground="{DynamicResource SurfaceBrush}"
                       AlternatingRowBackground="{DynamicResource CardBrush}"
                       Foreground="{DynamicResource TextPrimaryBrush}"
@@ -44,6 +323,7 @@
                       GridLinesVisibility="Horizontal"
                       HorizontalGridLinesBrush="{DynamicResource BorderBrush}"
                       RowHeight="45">
+
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader" BasedOn="{StaticResource MaterialDesignDataGridColumnHeader}">
                         <Setter Property="Background" Value="{DynamicResource CardBrush}" />
@@ -55,33 +335,87 @@
                         <Setter Property="BorderThickness" Value="0,0,0,2" />
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Saat" Width="100" Binding="{Binding Time}" />
-                    <DataGridTextColumn Header="RFID No" Width="100" Binding="{Binding Rfid}" />
-                    <DataGridTextColumn Header="Personel" Width="*" Binding="{Binding PersonName}" />
-                    <DataGridTextColumn Header="Kan Grubu" Width="80" Binding="{Binding BloodType}" />
-                    <DataGridTextColumn Header="Bölge" Width="*" Binding="{Binding Location}" />
-                    <DataGridTextColumn Header="Görev" Width="*" Binding="{Binding Task}" />
-                    <DataGridTemplateColumn Header="Durum" Width="100">
+                    <DataGridTextColumn Header="No." Width="60" Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Vardiya Adı" Width="*" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Başlangıç" Width="150" Binding="{Binding StartText}" />
+                    <DataGridTextColumn Header="Bitiş" Width="150" Binding="{Binding EndText}" />
+                    <DataGridTextColumn Header="Tip" Width="100" Binding="{Binding Type}" />
+                    <DataGridTextColumn Header="Bölge" Width="*" Binding="{Binding WorkArea}" />
+                    <DataGridTextColumn Header="Operasyon" Width="*" Binding="{Binding OperationType}" />
+                    <DataGridTextColumn Header="Risk" Width="100" Binding="{Binding RiskLevel}" />
+
+                    <DataGridTemplateColumn Header="Durum" Width="110">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Border Background="{DynamicResource InfoBrush}" CornerRadius="10" Padding="8,2" HorizontalAlignment="Left">
-                                    <TextBlock Text="Vardiyada" Foreground="White" FontSize="11" FontWeight="Bold" />
+                                    <TextBlock Text="{Binding Status}" Foreground="White" FontSize="11" FontWeight="Bold" />
                                 </Border>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="İşlem" Width="80">
+
+                    <DataGridTemplateColumn Header="İşlemler" Width="100">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0">
-                                    <materialDesign:PackIcon Kind="SwapHorizontal" Foreground="{DynamicResource InfoBrush}" Width="18" Height="18" />
-                                </Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Click="BtnEdit_Click"
+                                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">
+                                        <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
+                                    </Button>
+
+                                    <Button Style="{StaticResource MaterialDesignIconForegroundButton}"
+                                            Width="30"
+                                            Height="30"
+                                            Padding="0"
+                                            Margin="5,0,0,0"
+                                            Click="BtnDelete_Click">
+                                        <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
+                                    </Button>
+                                </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Grid Grid.Row="3" Margin="0,20,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock x:Name="ShiftTotalText"
+                               Text="Toplam 0 Vardiya"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,20,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            Margin="0,0,10,0"
+                            Click="BtnRefresh_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Refresh" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Yenile" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="BtnAddNewShift"
+                            Click="BtnAddNew_Click"
+                            Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                            Content="+ Yeni Vardiya"
+                            Style="{StaticResource MaterialDesignPaperButton}"
+                            Background="{DynamicResource PrimaryBrush}"
+                            Foreground="White"
+                            Height="40"
+                            Padding="15,0"
+                            FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
         </Grid>
     </materialDesign:DialogHost>
 </UserControl>

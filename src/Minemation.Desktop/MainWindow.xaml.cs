@@ -32,27 +32,19 @@ public partial class MainWindow : Window
     
         UpdateNavStyles(NavHome);
     }
-    
+
     private void NavEquipment_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new ModulePlaceholderView(
-            "Ekipman Yönetimi",
-            "Ekipman, takip cihazı ve ekipman sağlık durumları bu ekranda yönetilecek.",
-            PackIconKind.Excavator);
-    
+        MainContent.Content = new EquipmentView();
         UpdateNavStyles(NavEquipment);
     }
-    
+
     private void NavIncidents_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new ModulePlaceholderView(
-            "Vaka Yönetimi",
-            "Sensör eşik aşımı veya manuel bildirimlerden oluşan vakalar bu ekranda takip edilecek.",
-            PackIconKind.AlertCircle);
-    
+        MainContent.Content = new IncidentView();
         UpdateNavStyles(NavIncidents);
     }
-    
+
     private void NavReports_Click(object sender, RoutedEventArgs e)
     {
         MainContent.Content = new ModulePlaceholderView(
