@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +37,11 @@ public class RaporRepository : IRaporRepository
     public async Task EkleAsync(Rapor rapor)
     {
         await _context.Rapor.AddAsync(rapor);
+    }
+
+    public void Sil(Rapor rapor)
+    {
+        _context.Rapor.Remove(rapor);
     }
 
     public async Task DegisiklikleriKaydetAsync()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Minemation.Application.Common;
@@ -166,8 +166,10 @@ public class RaporServisi : IRaporServisi
         if (rapor is null)
             return ApiResponse<bool>.Fail("Rapor bulunamadı.");
 
-        // Rapor entity'sinde durum alanı olmadığı için fiziksel silme yapmıyoruz.
-        return ApiResponse<bool>.Ok(true, "Rapor bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
+        _raporRepository.Sil(rapor);
+        await _raporRepository.DegisiklikleriKaydetAsync();
+
+        return ApiResponse<bool>.Ok(true, "Rapor başarıyla silindi.");
     }
 
     private static RaporDetayDto DetayDtoyaDonustur(Rapor rapor)

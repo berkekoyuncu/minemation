@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Minemation.Domain.Entities;
@@ -12,6 +12,8 @@ public interface IRaporRepository
     Task<Rapor?> IdIleGetirAsync(int id);
 
     Task EkleAsync(Rapor rapor);
+
+    void Sil(Rapor rapor);
 
     Task DegisiklikleriKaydetAsync();
 }

@@ -1,34 +1,44 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using Minemation.Application.DTOs;
+using Minemation.Application.Common;
 
 namespace Minemation.Desktop
 {
     public partial class ReportsView : UserControl
     {
+        private readonly HttpClient _httpClient = new()
+        {
+            BaseAddress = new Uri("http://localhost:5289")
+        };
+
         public ReportsView()
         {
             InitializeComponent();
         }
 
-        private void Tab_Checked(object sender, RoutedEventArgs e)
+        private async void Tab_Checked(object sender, RoutedEventArgs e)
         {
             if (!this.IsLoaded || ReportsGrid == null)
             {
-                this.Loaded += (s, ev) => 
+                this.Loaded += async (s, ev) => 
                 {
-                    if (sender == TabVaka) LoadVakaRaporlari();
-                    else if (sender == TabEkipman) LoadEkipmanRaporlari();
-                    else if (sender == TabPersonel) LoadPersonelRaporlari();
+                    if (sender == TabVaka) await LoadVakaRaporlariAsync();
+                    else if (sender == TabEkipman) await LoadEkipmanRaporlariAsync();
+                    else if (sender == TabPersonel) await LoadPersonelRaporlariAsync();
                 };
                 return;
             }
 
-            if (sender == TabVaka) LoadVakaRaporlari();
-            else if (sender == TabEkipman) LoadEkipmanRaporlari();
-            else if (sender == TabPersonel) LoadPersonelRaporlari();
+            if (sender == TabVaka) await LoadVakaRaporlariAsync();
+            else if (sender == TabEkipman) await LoadEkipmanRaporlariAsync();
+            else if (sender == TabPersonel) await LoadPersonelRaporlariAsync();
         }
 
         private void BtnCreateReport_Click(object sender, RoutedEventArgs e)
@@ -37,11 +47,107 @@ namespace Minemation.Desktop
             if (TabEkipman.IsChecked == true) selectedType = "Ekipman Raporu";
             else if (TabPersonel.IsChecked == true) selectedType = "Personel Raporu";
 
-            var mainWindow = (MainWindow)System.Windows.Application.Current.MainWindow;
-            mainWindow.MainContent.Content = new CreateReportView(selectedType);
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+            {
+                mainWindow.MainContent.Content = new CreateReportView(selectedType);
+            }
         }
 
-        private void LoadVakaRaporlari()
+        private void BtnFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (FilterPanel != null)
+            {
+                FilterPanel.Visibility = FilterPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        private async void BtnApplyFilter_Click(object sender, RoutedEventArgs e)
+        {
+            if (TabVaka.IsChecked == true) await LoadVakaRaporlariAsync();
+            else if (TabEkipman.IsChecked == true) await LoadEkipmanRaporlariAsync();
+            else if (TabPersonel.IsChecked == true) await LoadPersonelRaporlariAsync();
+        }
+
+        private async void BtnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            if (TxtSearch != null) TxtSearch.Text = string.Empty;
+            
+            if (TabVaka.IsChecked == true) await LoadVakaRaporlariAsync();
+            else if (TabEkipman.IsChecked == true) await LoadEkipmanRaporlariAsync();
+            else if (TabPersonel.IsChecked == true) await LoadPersonelRaporlariAsync();
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.DataContext != null)
+            {
+                var item = element.DataContext;
+                int id = 0;
+                string selectedType = "Vaka Raporu";
+                
+                if (item is VakaReport v) 
+                {
+                    id = v.Id;
+                    selectedType = "Vaka Raporu";
+                }
+                else if (item is EkipmanReport eq) 
+                {
+                    id = eq.Id;
+                    selectedType = "Ekipman Raporu";
+                }
+                else if (item is PersonelReport p) 
+                {
+                    id = p.Id;
+                    selectedType = "Personel Raporu";
+                }
+
+                if (Window.GetWindow(this) is MainWindow mainWindow)
+                {
+                    mainWindow.MainContent.Content = new CreateReportView(selectedType, id);
+                }
+            }
+        }
+
+        private async void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is FrameworkElement element && element.DataContext != null)
+            {
+                var item = element.DataContext;
+                var result = MessageBox.Show("Bu raporu silmek istediğinize emin misiniz?", "Silme Onayı", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes)
+                {
+                    int id = 0;
+                    if (item is VakaReport v) id = v.Id;
+                    else if (item is EkipmanReport eq) id = eq.Id;
+                    else if (item is PersonelReport p) id = p.Id;
+
+                    if (id > 0)
+                    {
+                        try
+                        {
+                            var response = await _httpClient.DeleteAsync($"/api/rapor/{id}");
+                            if (response.IsSuccessStatusCode)
+                            {
+                                MessageBox.Show("Rapor silindi.");
+                                if (item is VakaReport) await LoadVakaRaporlariAsync();
+                                else if (item is EkipmanReport) await LoadEkipmanRaporlariAsync();
+                                else if (item is PersonelReport) await LoadPersonelRaporlariAsync();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Silme işlemi başarısız oldu.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Hata: {ex.Message}");
+                        }
+                    }
+                }
+            }
+        }
+
+        private async Task LoadVakaRaporlariAsync()
         {
             ReportsGrid.ItemsSource = null;
             ReportsGrid.Columns.Clear();
@@ -51,22 +157,47 @@ namespace Minemation.Desktop
 
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "No.", Binding = new Binding("Id"), Width = new DataGridLength(50) });
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Tarih", Binding = new Binding("Date") { StringFormat = "dd.MM.yyyy" }, Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Vardiya", Binding = new Binding("Shift"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Konum", Binding = new Binding("Location"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Vaka Tipi", Binding = new Binding("IncidentType"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "Durum", Width = new DataGridLength(100), CellTemplate = durumTemplate });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Rapor Adı", Binding = new Binding("IncidentType"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Ekipman", Binding = new Binding("Location"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Çözüm Süresi", Binding = new Binding("Shift"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "Ciddiyet", Width = new DataGridLength(100), CellTemplate = durumTemplate });
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Oluşturan*", Binding = new Binding("CreatedBy"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
             ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "İşlemler", Width = new DataGridLength(100), CellTemplate = islemlerTemplate });
 
-            ReportsGrid.ItemsSource = new ObservableCollection<VakaReport>
+            try
             {
-                new VakaReport { Id = 1, Date = new DateTime(2026, 5, 10), Shift = "08:00-16:00", Location = "Galeri 3", IncidentType = "Sensör Alarmı", Status = "Çözüldü", CreatedBy = "Sistem" },
-                new VakaReport { Id = 2, Date = new DateTime(2026, 5, 11), Shift = "16:00-00:00", Location = "Ana Şaft", IncidentType = "Ekipman Arızası", Status = "Açık", CreatedBy = "Ahmet Y." },
-                new VakaReport { Id = 3, Date = new DateTime(2026, 5, 12), Shift = "00:00-08:00", Location = "Kuzey Hat", IncidentType = "Gaz Sızıntısı Şüphesi", Status = "Açık", CreatedBy = "Mehmet K." }
-            };
+                string endpoint = "/api/vaka-raporu";
+                if (!string.IsNullOrWhiteSpace(TxtSearch.Text))
+                {
+                    endpoint += $"?Arama={Uri.EscapeDataString(TxtSearch.Text.Trim())}";
+                }
+                
+                var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResult<VakaRaporuListeDto>>>(endpoint);
+                if (response?.Success == true && response.Data != null)
+                {
+                    var list = new ObservableCollection<VakaReport>();
+                    foreach (var item in response.Data.Items)
+                    {
+                        list.Add(new VakaReport { 
+                            Id = item.RaporId, 
+                            Date = item.RaporOlusturmaTarihi ?? DateTime.MinValue,
+                            Shift = item.CozumSuresi.ToString("0.0"),
+                            Location = item.RaporlayanEkipmanAdi ?? "-",
+                            IncidentType = item.RaporAdi ?? "-",
+                            Status = item.CiddiyetSeviyesi,
+                            CreatedBy = item.PersonelAdSoyad ?? "-"
+                        });
+                    }
+                    ReportsGrid.ItemsSource = list;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veriler alınamadı: {ex.Message}");
+            }
         }
 
-        private void LoadEkipmanRaporlari()
+        private async Task LoadEkipmanRaporlariAsync()
         {
             ReportsGrid.ItemsSource = null;
             ReportsGrid.Columns.Clear();
@@ -75,41 +206,85 @@ namespace Minemation.Desktop
 
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "No.", Binding = new Binding("Id"), Width = new DataGridLength(50) });
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Tarih", Binding = new Binding("Date") { StringFormat = "dd.MM.yyyy" }, Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Ekipman", Binding = new Binding("Equipment"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Bakım Türü", Binding = new Binding("MaintenanceType"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Çalışma Saati", Binding = new Binding("WorkingHours"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Oluşturan*", Binding = new Binding("CreatedBy"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Rapor Adı", Binding = new Binding("MaintenanceType"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Ekipman Türü", Binding = new Binding("Equipment"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Arıza Sayısı", Binding = new Binding("WorkingHours"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
             ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "İşlemler", Width = new DataGridLength(100), CellTemplate = islemlerTemplate });
 
-            ReportsGrid.ItemsSource = new ObservableCollection<EkipmanReport>
+            try
             {
-                new EkipmanReport { Id = 1, Date = new DateTime(2026, 5, 9), Equipment = "Ekskavatör E-01", MaintenanceType = "Periyodik", WorkingHours = "1200", CreatedBy = "Sistem" },
-                new EkipmanReport { Id = 2, Date = new DateTime(2026, 5, 11), Equipment = "Kırıcı K-03", MaintenanceType = "Arıza", WorkingHours = "850", CreatedBy = "Ali V." }
-            };
+                string endpoint = "/api/ekipman-raporu";
+                if (!string.IsNullOrWhiteSpace(TxtSearch.Text))
+                {
+                    endpoint += $"?Arama={Uri.EscapeDataString(TxtSearch.Text.Trim())}";
+                }
+
+                var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResult<EkipmanRaporuListeDto>>>(endpoint);
+                if (response?.Success == true && response.Data != null)
+                {
+                    var list = new ObservableCollection<EkipmanReport>();
+                    foreach (var item in response.Data.Items)
+                    {
+                        list.Add(new EkipmanReport { 
+                            Id = item.RaporId, 
+                            Date = item.RaporOlusturmaTarihi ?? DateTime.MinValue,
+                            MaintenanceType = item.RaporAdi ?? "-",
+                            Equipment = item.EkipmanTuru,
+                            WorkingHours = item.ArizaSayisi.ToString()
+                        });
+                    }
+                    ReportsGrid.ItemsSource = list;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veriler alınamadı: {ex.Message}");
+            }
         }
 
-        private void LoadPersonelRaporlari()
+        private async Task LoadPersonelRaporlariAsync()
         {
             ReportsGrid.ItemsSource = null;
             ReportsGrid.Columns.Clear();
 
-            var durumTemplate = (DataTemplate)FindResource("DurumCellTemplate");
             var islemlerTemplate = (DataTemplate)FindResource("IslemlerCellTemplate");
 
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "No.", Binding = new Binding("Id"), Width = new DataGridLength(50) });
             ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Tarih", Binding = new Binding("Date") { StringFormat = "dd.MM.yyyy" }, Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Personel", Binding = new Binding("Personnel"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Vardiya", Binding = new Binding("Shift"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
-            ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "Durum", Width = new DataGridLength(100), CellTemplate = durumTemplate });
-            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Oluşturan*", Binding = new Binding("CreatedBy"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Rapor Adı", Binding = new Binding("Personnel"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Uzmanlık", Binding = new Binding("Shift"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
+            ReportsGrid.Columns.Add(new DataGridTextColumn { Header = "Personel Sayısı", Binding = new Binding("Status"), Width = new DataGridLength(1, DataGridLengthUnitType.Star) });
             ReportsGrid.Columns.Add(new DataGridTemplateColumn { Header = "İşlemler", Width = new DataGridLength(100), CellTemplate = islemlerTemplate });
 
-            ReportsGrid.ItemsSource = new ObservableCollection<PersonelReport>
+            try
             {
-                new PersonelReport { Id = 1, Date = new DateTime(2026, 5, 10), Personnel = "Mehmet Kaya", Shift = "08:00-16:00", Status = "Görevde", CreatedBy = "Sistem" },
-                new PersonelReport { Id = 2, Date = new DateTime(2026, 5, 10), Personnel = "Ayşe Yılmaz", Shift = "08:00-16:00", Status = "İzinli", CreatedBy = "Ahmet Y." },
-                new PersonelReport { Id = 3, Date = new DateTime(2026, 5, 11), Personnel = "Ali Veli", Shift = "16:00-00:00", Status = "Görevde", CreatedBy = "Sistem" }
-            };
+                string endpoint = "/api/personel-raporu";
+                if (!string.IsNullOrWhiteSpace(TxtSearch.Text))
+                {
+                    endpoint += $"?Arama={Uri.EscapeDataString(TxtSearch.Text.Trim())}";
+                }
+
+                var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResult<PersonelRaporuListeDto>>>(endpoint);
+                if (response?.Success == true && response.Data != null)
+                {
+                    var list = new ObservableCollection<PersonelReport>();
+                    foreach (var item in response.Data.Items)
+                    {
+                        list.Add(new PersonelReport { 
+                            Id = item.RaporId, 
+                            Date = item.RaporOlusturmaTarihi ?? DateTime.MinValue,
+                            Personnel = item.RaporAdi ?? "-",
+                            Shift = item.UzmanlikAlani,
+                            Status = item.PersonelSayisi.ToString()
+                        });
+                    }
+                    ReportsGrid.ItemsSource = list;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Veriler alınamadı: {ex.Message}");
+            }
         }
     }
 

@@ -12,21 +12,21 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="Rapor Oluştur" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="24" FontWeight="Bold" Margin="0,0,0,30" />
+        <TextBlock x:Name="ReportTitleText" Grid.Row="0" Text="Rapor Oluştur" Foreground="{DynamicResource TextPrimaryBrush}" FontSize="24" FontWeight="Bold" Margin="0,0,0,30" />
 
         <!-- Form Area -->
         <Border Grid.Row="1" Background="{DynamicResource SurfaceBrush}" CornerRadius="12" Padding="30" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="400">
             <StackPanel>
                 
                 <!-- Rapor No -->
-                <TextBox materialDesign:HintAssist.Hint="Rapor No" 
+                <TextBox x:Name="TxtReportNo" materialDesign:HintAssist.Hint="Rapor No" 
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{DynamicResource TextPrimaryBrush}"
                          BorderBrush="{DynamicResource BorderBrush}"
                          FontSize="16" Margin="0,0,0,20" />
                 
                 <!-- Rapor Adı -->
-                <TextBox materialDesign:HintAssist.Hint="Rapor Adı" 
+                <TextBox x:Name="TxtReportName" materialDesign:HintAssist.Hint="Rapor Adı" 
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
                          Foreground="{DynamicResource TextPrimaryBrush}"
                          BorderBrush="{DynamicResource BorderBrush}"
@@ -41,7 +41,7 @@
                          FontSize="16" Margin="0,0,0,20" IsReadOnly="True" />
                 
                 <!-- Zaman Aralığı -->
-                <ComboBox materialDesign:HintAssist.Hint="Zaman Aralığı"
+                <ComboBox x:Name="CmbZamanAraligi" materialDesign:HintAssist.Hint="Zaman Aralığı"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}"
                           Foreground="{DynamicResource TextPrimaryBrush}"
                           BorderBrush="{DynamicResource BorderBrush}"
@@ -59,7 +59,7 @@
         <!-- Bottom Actions -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
             <Button Content="İptal" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0" Click="BtnCancel_Click" />
-            <Button Content="Kaydet" Style="{StaticResource MaterialDesignPaperButton}" Background="{DynamicResource PrimaryBrush}" Foreground="White" />
+            <Button x:Name="BtnSave" Content="Kaydet" Style="{StaticResource MaterialDesignPaperButton}" Background="{DynamicResource PrimaryBrush}" Foreground="White" Click="BtnSave_Click" />
         </StackPanel>
     </Grid>
 </UserControl>

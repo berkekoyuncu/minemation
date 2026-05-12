@@ -1,8 +1,12 @@
 <UserControl x:Class="Minemation.Desktop.ReportsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Background="Transparent" Height="476" Width="490">
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1366"
+             Background="Transparent">
     <UserControl.Resources>
         <DataTemplate x:Key="DurumCellTemplate">
             <Border Background="{DynamicResource SuccessBrush}" CornerRadius="10" Padding="8,2" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -12,10 +16,10 @@
         
         <DataTemplate x:Key="IslemlerCellTemplate">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0">
+                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Click="BtnEdit_Click">
                     <materialDesign:PackIcon Kind="Pencil" Width="18" Height="18" Foreground="{DynamicResource InfoBrush}" />
                 </Button>
-                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Margin="5,0,0,0">
+                <Button Style="{StaticResource MaterialDesignIconForegroundButton}" Width="30" Height="30" Padding="0" Margin="5,0,0,0" Click="BtnDelete_Click">
                     <materialDesign:PackIcon Kind="Delete" Width="18" Height="18" Foreground="{DynamicResource ErrorBrush}" />
                 </Button>
             </StackPanel>
@@ -25,6 +29,7 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" /> <!-- Sub-navigation tabs -->
+            <RowDefinition Height="Auto" /> <!-- Filter Panel -->
             <RowDefinition Height="*" />    <!-- DataGrid -->
             <RowDefinition Height="Auto" /> <!-- Legend / Hints -->
             <RowDefinition Height="Auto" /> <!-- Bottom Action Bar -->
@@ -40,8 +45,20 @@
             </StackPanel>
         </Border>
 
+        <!-- Filter Panel -->
+        <Border Grid.Row="1" x:Name="FilterPanel" Background="{DynamicResource CardBrush}" CornerRadius="8" Padding="15" Margin="0,0,0,15" Visibility="Collapsed" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="TxtSearch" materialDesign:HintAssist.Hint="Rapor Adı, Türü veya Açıklama Ara..." Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="0,0,15,0" />
+                <Button Grid.Column="1" Content="Uygula" Style="{StaticResource MaterialDesignPaperButton}" Background="{DynamicResource PrimaryBrush}" Foreground="White" Click="BtnApplyFilter_Click" />
+            </Grid>
+        </Border>
+
         <!-- DataGrid -->
-        <DataGrid Grid.Row="1" x:Name="ReportsGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+        <DataGrid Grid.Row="2" x:Name="ReportsGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
                   Background="{DynamicResource SurfaceBrush}" 
                   RowBackground="{DynamicResource SurfaceBrush}"
                   AlternatingRowBackground="{DynamicResource CardBrush}"
@@ -66,7 +83,7 @@
         </DataGrid>
 
         <!-- Bottom Action Bar -->
-        <Border Grid.Row="3" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,2,0,0" Padding="0,15,0,0">
+        <Border Grid.Row="4" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,2,0,0" Padding="0,15,0,0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
@@ -75,7 +92,7 @@
                 </Grid.ColumnDefinitions>
                 
                 <!-- Left: Filtreleme -->
-                <Button Grid.Column="0" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}">
+                <Button Grid.Column="0" Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Click="BtnFilter_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="Filtreleme" VerticalAlignment="Center" Margin="0,0,5,0"/>
                         <materialDesign:PackIcon Kind="Menu" VerticalAlignment="Center" />
@@ -84,7 +101,7 @@
 
                 <!-- Right: Yenile & Oluştur -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0">
+                    <Button Style="{StaticResource MaterialDesignFlatButton}" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,10,0" Click="BtnRefresh_Click">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Refresh" VerticalAlignment="Center" Margin="0,0,5,0"/>
                             <TextBlock Text="Yenile" VerticalAlignment="Center"/>
