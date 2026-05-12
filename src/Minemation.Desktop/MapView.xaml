@@ -57,53 +57,157 @@
                 ClipToBounds="True">
 
             <Grid>
-                <Viewbox Stretch="Uniform">
-                    <Grid Width="1000" Height="650">
+                <Grid x:Name="MapViewport"
+      Background="Transparent"
+      ClipToBounds="True"
+      MouseWheel="MapViewport_MouseWheel"
+      MouseLeftButtonDown="MapViewport_MouseLeftButtonDown"
+      MouseLeftButtonUp="MapViewport_MouseLeftButtonUp"
+      MouseMove="MapViewport_MouseMove">
+
+                    <Grid x:Name="MapSurface"
+          Width="1000"
+          Height="650"
+          HorizontalAlignment="Left"
+          VerticalAlignment="Top"
+          RenderTransformOrigin="0,0">
+
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="MapScaleTransform"
+                                ScaleX="1"
+                                ScaleY="1" />
+                                <TranslateTransform x:Name="MapTranslateTransform"
+                                    X="0"
+                                    Y="0" />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+
                         <Image Source="Resources/Images/MineMap.png"
-                               Width="1000"
-                               Height="650"
-                               Stretch="Fill"
-                               Opacity="1" />
+               Width="1000"
+               Height="650"
+               Stretch="Fill"
+               Opacity="1" />
 
                         <Rectangle Fill="#18000000"
-                                   Width="1000"
-                                   Height="650" />
+                   Width="1000"
+                   Height="650" />
 
                         <Canvas x:Name="MapCanvas"
                                 Width="1000"
                                 Height="650"
                                 ClipToBounds="True">
 
-                            <ItemsControl ItemsSource="{Binding Entrances}"
-                                          Visibility="{Binding IsEntrancesVisible, Converter={StaticResource BoolToVis}}">
+                            <!-- Bağlantı Çizgileri -->
+                            <ItemsControl ItemsSource="{Binding Edges}"
+                                            Visibility="{Binding IsGraphVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Line X1="{Binding X1}"
+                                              Y1="{Binding Y1}"
+                                              X2="{Binding X2}"
+                                              Y2="{Binding Y2}"
+                                              StrokeThickness="4"
+                                              Opacity="0.95"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round">
+                                            <Line.Style>
+                                                <Style TargetType="Line">
+                                                    <Setter Property="Stroke" Value="#00E5FF" />
+                                                    <Setter Property="StrokeThickness" Value="4" />
+                                                    <Setter Property="Opacity" Value="0.95" />
+
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsRisky}" Value="True">
+                                                            <Setter Property="Stroke" Value="#FFB300" />
+                                                            <Setter Property="StrokeDashArray" Value="8 5" />
+                                                            <Setter Property="StrokeThickness" Value="5" />
+                                                            <Setter Property="Opacity" Value="1" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Line.Style>
+                                        </Line>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Görev Rotası -->
+                            <ItemsControl ItemsSource="{Binding RouteEdges}"
+                                            Visibility="{Binding IsRouteVisible, Converter={StaticResource BoolToVis}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Line X1="{Binding X1}"
+                                              Y1="{Binding Y1}"
+                                              X2="{Binding X2}"
+                                              Y2="{Binding Y2}"
+                                              Stroke="#FF1744"
+                                              StrokeThickness="9"
+                                              Opacity="0.95"
+                                              StrokeStartLineCap="Round"
+                                              StrokeEndLineCap="Round" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Düğüm Noktaları -->
+                            <ItemsControl ItemsSource="{Binding Nodes}"
+                                        Visibility="{Binding IsGraphVisible, Converter={StaticResource BoolToVis}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Canvas.Left" Value="{Binding X}" />
                                         <Setter Property="Canvas.Top" Value="{Binding Y}" />
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
+
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-24,-52,0,0" ToolTip="{Binding Description}">
-                                            <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                                                     Width="48"
-                                                                     Height="48"
-                                                                     Foreground="{DynamicResource TextSecondaryBrush}"
-                                                                     HorizontalAlignment="Center" />
+                                        <StackPanel Margin="-12,-12,0,0"
+                        ToolTip="{Binding Description}"
+                        RenderTransformOrigin="0.5,0.5">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
+
+                                            <Grid Width="24" Height="24">
+                                                <Ellipse Fill="#F5F5F5"
+                                                         Stroke="#00E5FF"
+                                                         StrokeThickness="3" />
+                                                <Ellipse Width="9"
+                                                         Height="9"
+                                                         Fill="#00E5FF"
+                                                         HorizontalAlignment="Center"
+                                                         VerticalAlignment="Center" />
+                                            </Grid>
+
                                             <Border Background="{DynamicResource CardBrush}"
-                                                    CornerRadius="5"
-                                                    Padding="6,2"
-                                                    Margin="0,-8,0,0"
+                                                    CornerRadius="4"
+                                                    Padding="5,1"
+                                                    Margin="-28,2,0,0"
                                                     BorderBrush="{DynamicResource BorderBrush}"
                                                     BorderThickness="1">
                                                 <TextBlock Text="{Binding Name}"
                                                            Foreground="{DynamicResource TextPrimaryBrush}"
-                                                           FontSize="12"
+                                                           FontSize="10"
                                                            FontWeight="SemiBold" />
                                             </Border>
                                         </StackPanel>
@@ -111,114 +215,187 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
+                            <!-- Giriş Markerları -->
+                            <ItemsControl ItemsSource="{Binding Entrances}"
+                  Visibility="{Binding IsEntrancesVisible, Converter={StaticResource BoolToVis}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="-24,-52,0,0"
+                                                    ToolTip="{Binding Description}"
+                                                    RenderTransformOrigin="0.5,1">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
+                                            <materialDesign:PackIcon Kind="{Binding IconKind}"
+                                             Width="48"
+                                             Height="48"
+                                             Foreground="{DynamicResource TextSecondaryBrush}"
+                                             HorizontalAlignment="Center" />
+                                            <Border Background="{DynamicResource CardBrush}"
+                            CornerRadius="5"
+                            Padding="6,2"
+                            Margin="0,-8,0,0"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1">
+                                                <TextBlock Text="{Binding Name}"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontSize="12"
+                                   FontWeight="SemiBold" />
+                                            </Border>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Ekipman Markerları -->
                             <ItemsControl ItemsSource="{Binding Equipments}"
-                                          Visibility="{Binding IsEquipmentVisible, Converter={StaticResource BoolToVis}}">
+                  Visibility="{Binding IsEquipmentVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
+
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Canvas.Left" Value="{Binding X}" />
                                         <Setter Property="Canvas.Top" Value="{Binding Y}" />
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
+
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-19,-42,0,0" ToolTip="{Binding Description}">
+                                        <StackPanel Margin="-24,-52,0,0"
+                                                    ToolTip="{Binding Description}"
+                                                    RenderTransformOrigin="0.5,1">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
                                             <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                                                     Width="38"
-                                                                     Height="38"
-                                                                     Foreground="{DynamicResource PrimaryBrush}"
-                                                                     HorizontalAlignment="Center" />
+                                             Width="38"
+                                             Height="38"
+                                             Foreground="{DynamicResource PrimaryBrush}"
+                                             HorizontalAlignment="Center" />
                                             <Border Background="{DynamicResource CardBrush}"
-                                                    CornerRadius="5"
-                                                    Padding="6,2"
-                                                    Margin="0,-6,0,0"
-                                                    BorderBrush="{DynamicResource BorderBrush}"
-                                                    BorderThickness="1">
+                            CornerRadius="5"
+                            Padding="6,2"
+                            Margin="0,-6,0,0"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1">
                                                 <TextBlock Text="{Binding Name}"
-                                                           Foreground="{DynamicResource PrimaryBrush}"
-                                                           FontWeight="Bold"
-                                                           FontSize="11"
-                                                           HorizontalAlignment="Center" />
+                                   Foreground="{DynamicResource PrimaryBrush}"
+                                   FontWeight="Bold"
+                                   FontSize="11"
+                                   HorizontalAlignment="Center" />
                                             </Border>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
+                            <!-- Personel Markerları -->
                             <ItemsControl ItemsSource="{Binding Personnels}"
-                                          Visibility="{Binding IsPersonnelVisible, Converter={StaticResource BoolToVis}}">
+                  Visibility="{Binding IsPersonnelVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
+
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Canvas.Left" Value="{Binding X}" />
                                         <Setter Property="Canvas.Top" Value="{Binding Y}" />
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
+
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-16,-38,0,0" ToolTip="{Binding Description}">
+                                        <StackPanel Margin="-24,-52,0,0"
+                                                    ToolTip="{Binding Description}"
+                                                    RenderTransformOrigin="0.5,1">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
                                             <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                                                     Width="32"
-                                                                     Height="32"
-                                                                     Foreground="{DynamicResource SuccessBrush}"
-                                                                     HorizontalAlignment="Center" />
+                                             Width="32"
+                                             Height="32"
+                                             Foreground="{DynamicResource SuccessBrush}"
+                                             HorizontalAlignment="Center" />
                                             <Border Background="{DynamicResource CardBrush}"
-                                                    CornerRadius="5"
-                                                    Padding="5,2"
-                                                    Margin="0,-5,0,0"
-                                                    BorderBrush="{DynamicResource BorderBrush}"
-                                                    BorderThickness="1">
+                            CornerRadius="5"
+                            Padding="5,2"
+                            Margin="0,-5,0,0"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1">
                                                 <TextBlock Text="{Binding Name}"
-                                                           Foreground="{DynamicResource TextPrimaryBrush}"
-                                                           FontSize="10"
-                                                           FontWeight="SemiBold"
-                                                           HorizontalAlignment="Center" />
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontSize="10"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
                                             </Border>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
+                            <!-- Görev Noktaları -->
                             <ItemsControl ItemsSource="{Binding TaskPoints}"
-                                          Visibility="{Binding IsTaskPointsVisible, Converter={StaticResource BoolToVis}}">
+                  Visibility="{Binding IsTaskPointsVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
+
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
                                         <Setter Property="Canvas.Left" Value="{Binding X}" />
                                         <Setter Property="Canvas.Top" Value="{Binding Y}" />
                                     </Style>
                                 </ItemsControl.ItemContainerStyle>
+
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-18,-44,0,0" ToolTip="{Binding Description}">
+                                        <StackPanel Margin="-24,-52,0,0"
+                                                    ToolTip="{Binding Description}"
+                                                    RenderTransformOrigin="0.5,1">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
                                             <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                                                     Width="36"
-                                                                     Height="36"
-                                                                     Foreground="{DynamicResource WarningBrush}"
-                                                                     HorizontalAlignment="Center" />
+                                             Width="36"
+                                             Height="36"
+                                             Foreground="{DynamicResource WarningBrush}"
+                                             HorizontalAlignment="Center" />
                                             <Border Background="{DynamicResource CardBrush}"
-                                                    CornerRadius="5"
-                                                    Padding="6,2"
-                                                    Margin="0,-6,0,0"
-                                                    BorderBrush="{DynamicResource BorderBrush}"
-                                                    BorderThickness="1">
+                            CornerRadius="5"
+                            Padding="6,2"
+                            Margin="0,-6,0,0"
+                            BorderBrush="{DynamicResource BorderBrush}"
+                            BorderThickness="1">
                                                 <TextBlock Text="{Binding Name}"
-                                                           Foreground="{DynamicResource TextPrimaryBrush}"
-                                                           FontSize="11"
-                                                           FontWeight="SemiBold"
-                                                           HorizontalAlignment="Center" />
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center" />
                                             </Border>
                                         </StackPanel>
                                     </DataTemplate>
@@ -226,25 +403,31 @@
                             </ItemsControl>
                         </Canvas>
                     </Grid>
-                </Viewbox>
+                </Grid>
 
                 <Border HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Margin="20"
                         Background="{DynamicResource CardBrush}"
                         CornerRadius="8"
-                        Padding="20"
+                        Padding="16"
                         BorderBrush="{DynamicResource BorderBrush}"
                         BorderThickness="1"
-                        Opacity="0.96">
+                        Opacity="0.96"
+                        MaxHeight="560">
+
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="15"
-                                          Opacity="0.35"
-                                          ShadowDepth="4" />
+                          Opacity="0.35"
+                          ShadowDepth="4" />
                     </Border.Effect>
 
-                    <StackPanel Width="235">
-                        <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
+                    <ScrollViewer Width="250"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        
+                            <StackPanel Width="235">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
                             <materialDesign:PackIcon Kind="LayersOutline"
                                                      Width="24"
                                                      Height="24"
@@ -261,6 +444,20 @@
                         <Separator Background="{DynamicResource BorderBrush}"
                                    Margin="0,0,0,15"
                                    Height="1" />
+
+                        <CheckBox Content="Bağlantı Ağı"
+                                  IsChecked="{Binding IsGraphVisible}"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"
+                                  FontSize="14"
+                                  Margin="0,5" />
+
+                        <CheckBox Content="Görev Rotası"
+                                  IsChecked="{Binding IsRouteVisible}"
+                                  Style="{StaticResource MaterialDesignCheckBox}"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"
+                                  FontSize="14"
+                                  Margin="0,5" />
 
                         <CheckBox Content="Personeller"
                                   IsChecked="{Binding IsPersonnelVisible}"
@@ -289,7 +486,116 @@
                                   Foreground="{DynamicResource TextPrimaryBrush}"
                                   FontSize="14"
                                   Margin="0,5" />
-                    </StackPanel>
+
+                        <Separator Background="{DynamicResource BorderBrush}"
+                                   Margin="0,15,0,12"
+                                   Height="1" />
+
+                        <TextBlock Text="Açıklama"
+                                   Foreground="{DynamicResource TextPrimaryBrush}"
+                                   FontSize="15"
+                                   FontWeight="SemiBold"
+                                   Margin="0,0,0,8" />
+
+                        <StackPanel Margin="0,0,0,4">
+                            <StackPanel Orientation="Horizontal" Margin="0,4">
+                                <Line X1="0"
+                                      Y1="8"
+                                      X2="34"
+                                      Y2="8"
+                                      Stroke="#00E5FF"
+                                      StrokeThickness="4"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Margin="0,0,10,0" />
+                                <TextBlock Text="Normal geçiş yolu"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           FontSize="12"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,4">
+                                <Line X1="0"
+                                      Y1="8"
+                                      X2="34"
+                                      Y2="8"
+                                      Stroke="#FFB300"
+                                      StrokeThickness="5"
+                                      StrokeDashArray="6 4"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Margin="0,0,10,0" />
+                                <TextBlock Text="Riskli bağlantı"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           FontSize="12"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,4">
+                                <Line X1="0"
+                                      Y1="8"
+                                      X2="34"
+                                      Y2="8"
+                                      Stroke="#FF1744"
+                                      StrokeThickness="7"
+                                      StrokeStartLineCap="Round"
+                                      StrokeEndLineCap="Round"
+                                      Margin="0,0,10,0" />
+                                <TextBlock Text="Aktif görev rotası"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           FontSize="12"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,4">
+                                <Grid Width="18" Height="18" Margin="0,0,10,0">
+                                    <Ellipse Fill="#F5F5F5"
+                                             Stroke="#00E5FF"
+                                             StrokeThickness="3" />
+                                    <Ellipse Width="7"
+                                             Height="7"
+                                             Fill="#00E5FF"
+                                             HorizontalAlignment="Center"
+                                             VerticalAlignment="Center" />
+                                </Grid>
+                                <TextBlock Text="Bağlantı noktası"
+                                           Foreground="{DynamicResource TextSecondaryBrush}"
+                                           FontSize="12"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+
+
+                        <Separator Background="{DynamicResource BorderBrush}"
+                                   Margin="0,15,0,12"
+                                   Height="1" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Column="0"
+                                    Content="-"
+                                    Margin="0,0,5,0"
+                                    Height="32"
+                                    Click="ZoomOutButton_Click" />
+
+                            <Button Grid.Column="1"
+                                    Content="Sıfırla"
+                                    Margin="0,0,5,0"
+                                    Height="32"
+                                    Click="ResetZoomButton_Click" />
+
+                            <Button Grid.Column="2"
+                                    Content="+"
+                                    Height="32"
+                                    Click="ZoomInButton_Click" />
+                        </Grid>
+                            </StackPanel>
+                    </ScrollViewer>
                 </Border>
 
                 <Border HorizontalAlignment="Left"
@@ -306,10 +612,12 @@
                                    Foreground="{DynamicResource TextPrimaryBrush}"
                                    FontWeight="SemiBold"
                                    FontSize="14" />
-                        <TextBlock Text="Konumlar saha planı üzerinde yaklaşık olarak gösterilir."
+                        <TextBlock Text="Mavi yollar normal geçişleri, turuncu kesikli yollar riskli bağlantıları, kırmızı rota ise aktif görev güzergâhını gösterir."
                                    Foreground="{DynamicResource TextSecondaryBrush}"
                                    FontSize="12"
-                                   Margin="0,4,0,0" />
+                                   TextWrapping="Wrap"
+                                   Margin="0,4,0,0"
+                                   MaxWidth="430" />
                     </StackPanel>
                 </Border>
             </Grid>
