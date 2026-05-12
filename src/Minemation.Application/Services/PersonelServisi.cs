@@ -104,7 +104,12 @@ public class PersonelServisi : IPersonelServisi
                 Departman = x.departman,
                 KullaniciRolu = x.kullaniciRolu,
                 CalismaKonumu = x.calismaKonumu,
-                PersonelDurumu = x.personelDurumu
+                PersonelDurumu = x.personelDurumu,
+
+                Tckn = x.tckn,
+                TelNo = x.telNo,
+                RfidKartNumarasi = x.rfidKartNumarasi,
+                KanGrubu = x.SaglikBilgileri != null ? x.SaglikBilgileri.kanGrubu : "Belirtilmemiş"
             })
             .ToList();
 

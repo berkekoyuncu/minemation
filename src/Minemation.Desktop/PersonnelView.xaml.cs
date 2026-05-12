@@ -49,11 +49,11 @@ public partial class PersonnelView : UserControl
             _allPersonnel = response.Data.Items.Select(x => new PersonModel
             {
                 Id = x.PersonelId,
-                Rfid = string.Empty,
-                Identity = string.Empty,
+                Rfid = x.RfidKartNumarasi,
+                Identity = x.Tckn,
                 FullName = x.AdSoyad,
-                Phone = string.Empty,
-                BloodType = string.Empty,
+                Phone = x.TelNo,
+                BloodType = x.KanGrubu,
                 Role = x.Uzmanlik,
                 Shift = string.Empty,
                 Status = x.PersonelDurumu,
@@ -558,6 +558,11 @@ public class PersonelListItemDto
     public string KullaniciRolu { get; set; } = string.Empty;
     public string CalismaKonumu { get; set; } = string.Empty;
     public string PersonelDurumu { get; set; } = string.Empty;
+
+    public string Tckn { get; set; } = string.Empty;
+    public string TelNo { get; set; } = string.Empty;
+    public string KanGrubu { get; set; } = string.Empty;
+    public string RfidKartNumarasi { get; set; } = string.Empty;
 }
 
 public class PersonelDetailDto

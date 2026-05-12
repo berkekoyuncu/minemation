@@ -103,33 +103,33 @@ namespace Minemation.Infrastructure.Persistence
             // Acil Durum İletişim Yapılandırması
             modelBuilder.Entity<AcilDurumIletisim>(entity =>
             {
-                    // 1. Birincil Anahtar (Kendi benzersiz Id'si)
-                    entity.HasKey(e => e.acilDurumKisisiId);
+                // 1. Birincil Anahtar (Kendi benzersiz Id'si)
+                entity.HasKey(e => e.acilDurumKisisiId);
 
-                    // 2. Özellik Kısıtlamaları (İsimlendirmelerine göre)
-                    entity.Property(e => e.acilDurumKisileriAd)
-                      .HasMaxLength(50)
-                      .IsRequired();
+                // 2. Özellik Kısıtlamaları (İsimlendirmelerine göre)
+                entity.Property(e => e.acilDurumKisileriAd)
+                  .HasMaxLength(50)
+                  .IsRequired();
 
-                    entity.Property(e => e.acilDurumKisileriSoyad)
-                      .HasMaxLength(50)
-                      .IsRequired();
+                entity.Property(e => e.acilDurumKisileriSoyad)
+                  .HasMaxLength(50)
+                  .IsRequired();
 
 
 
-                    entity.Property(e => e.acilDurumKisileriTelNo)
-                      .HasMaxLength(20)
-                      .IsRequired();
+                entity.Property(e => e.acilDurumKisileriTelNo)
+                  .HasMaxLength(20)
+                  .IsRequired();
 
-                    entity.Property(e => e.acilDurumKisileriYakinlik)
-                      .HasMaxLength(50);
+                entity.Property(e => e.acilDurumKisileriYakinlik)
+                  .HasMaxLength(50);
 
-                    // 3. İlişki Tanımı (Bire-Çok / 1:N)
-                    // Bir personelId'ye bağlı birden fazla acil durum kişisi olabilir.
-                    entity.HasOne(d => d.Personel)
-                      .WithMany(p => p.AcilDurumKisileri) // Personel.cs içindeki koleksiyon ismi
-                      .HasForeignKey(d => d.personelId)
-                      .OnDelete(DeleteBehavior.Cascade); // Personel silinince iletişim kayıtları da silinir.
+                // 3. İlişki Tanımı (Bire-Çok / 1:N)
+                // Bir personelId'ye bağlı birden fazla acil durum kişisi olabilir.
+                entity.HasOne(d => d.Personel)
+                  .WithMany(p => p.AcilDurumKisileri) // Personel.cs içindeki koleksiyon ismi
+                  .HasForeignKey(d => d.personelId)
+                  .OnDelete(DeleteBehavior.Cascade); // Personel silinince iletişim kayıtları da silinir.
             });
 
 
@@ -504,29 +504,29 @@ namespace Minemation.Infrastructure.Persistence
             // Ekip Yapılandırması
             modelBuilder.Entity<Ekip>(entity =>
             {
-                    // 1. Birincil Anahtar
-                    entity.HasKey(e => e.ekipId);
+                // 1. Birincil Anahtar
+                entity.HasKey(e => e.ekipId);
 
-                    // 2. Özellik Kısıtlamaları
-                    entity.Property(e => e.personelGorevi)
-                          .HasMaxLength(50);
+                // 2. Özellik Kısıtlamaları
+                entity.Property(e => e.personelGorevi)
+                      .HasMaxLength(50);
 
-                    entity.Property(e => e.durum)
-                          .HasMaxLength(20);
+                entity.Property(e => e.durum)
+                      .HasMaxLength(20);
 
-                    // 3. Personel ile İlişki (Foreign Key: personelId)
-                    // Bir personel bir ekip kaydında yer alır.
-                    entity.HasOne(e => e.Personel)
-                          .WithMany() // Eğer Personel sınıfında 'ICollection<Ekip> Ekipler' varsa buraya eklenir
-                          .HasForeignKey(e => e.personelId)
-                          .OnDelete(DeleteBehavior.Restrict); // Personel silinince ekip geçmişi bozulmasın
+                // 3. Personel ile İlişki (Foreign Key: personelId)
+                // Bir personel bir ekip kaydında yer alır.
+                entity.HasOne(e => e.Personel)
+                      .WithMany() // Eğer Personel sınıfında 'ICollection<Ekip> Ekipler' varsa buraya eklenir
+                      .HasForeignKey(e => e.personelId)
+                      .OnDelete(DeleteBehavior.Restrict); // Personel silinince ekip geçmişi bozulmasın
 
-                    // 4. Vardiya ile İlişki (Foreign Key: vardiyaId)
-                    // Bu ekip kaydı belirli bir vardiyaya aittir.
-                    entity.HasOne(e => e.Vardiya)
-                          .WithMany() // Eğer Vardiya sınıfında 'ICollection<Ekip> Ekipler' varsa buraya eklenir
-                          .HasForeignKey(e => e.vardiyaId)
-                          .OnDelete(DeleteBehavior.Cascade); // Vardiya silinirse o vardiyaya bağlı ekip tanımları silinsin
+                // 4. Vardiya ile İlişki (Foreign Key: vardiyaId)
+                // Bu ekip kaydı belirli bir vardiyaya aittir.
+                entity.HasOne(e => e.Vardiya)
+                      .WithMany() // Eğer Vardiya sınıfında 'ICollection<Ekip> Ekipler' varsa buraya eklenir
+                      .HasForeignKey(e => e.vardiyaId)
+                      .OnDelete(DeleteBehavior.Cascade); // Vardiya silinirse o vardiyaya bağlı ekip tanımları silinsin
             });
 
 
@@ -566,33 +566,33 @@ namespace Minemation.Infrastructure.Persistence
             // Aksiyon (Müdahale) Yapılandırması
             modelBuilder.Entity<Aksiyon>(entity =>
             {
-                        // 1. Birincil Anahtar (Primary Key)
-                        entity.HasKey(e => e.mudahaleId);
+                // 1. Birincil Anahtar (Primary Key)
+                entity.HasKey(e => e.mudahaleId);
 
-                        // 2. Özellik Kısıtlamaları
-                        entity.Property(e => e.mudahaleTuru)
-                              .HasMaxLength(50);
+                // 2. Özellik Kısıtlamaları
+                entity.Property(e => e.mudahaleTuru)
+                      .HasMaxLength(50);
 
-                        entity.Property(e => e.uygulananCozum)
-                              .HasColumnType("text"); // Uzun metinler için SQL 'text' tipi
+                entity.Property(e => e.uygulananCozum)
+                      .HasColumnType("text"); // Uzun metinler için SQL 'text' tipi
 
-                        // 3. Vaka ile İlişki (Foreign Key: vakaId)
-                        // Her müdahale mutlaka bir vakaya bağlıdır (Bire-Çok)
-                        entity.HasOne(a => a.Vaka)
-                              .WithMany() // Bir vaka için birden fazla aksiyon/müdahale kaydı olabilir
-                              .HasForeignKey(a => a.vakaId)
-                              .OnDelete(DeleteBehavior.Cascade); // Vaka silinirse müdahale kayıtları da silinir
+                // 3. Vaka ile İlişki (Foreign Key: vakaId)
+                // Her müdahale mutlaka bir vakaya bağlıdır (Bire-Çok)
+                entity.HasOne(a => a.Vaka)
+                      .WithMany() // Bir vaka için birden fazla aksiyon/müdahale kaydı olabilir
+                      .HasForeignKey(a => a.vakaId)
+                      .OnDelete(DeleteBehavior.Cascade); // Vaka silinirse müdahale kayıtları da silinir
 
-                        // 4. Ekip ile İlişki (Foreign Key: ekipId)
-                        // Müdahaleyi yapan ekibin bağlantısı
-                        entity.HasOne(a => a.Ekip)
-                              .WithMany() // Bir ekip tarih boyunca birçok müdahalede bulunmuş olabilir
-                              .HasForeignKey(a => a.ekipId)
-                              .OnDelete(DeleteBehavior.Restrict); // Ekip silinse bile geçmiş müdahale kayıtları silinmesin
+                // 4. Ekip ile İlişki (Foreign Key: ekipId)
+                // Müdahaleyi yapan ekibin bağlantısı
+                entity.HasOne(a => a.Ekip)
+                      .WithMany() // Bir ekip tarih boyunca birçok müdahalede bulunmuş olabilir
+                      .HasForeignKey(a => a.ekipId)
+                      .OnDelete(DeleteBehavior.Restrict); // Ekip silinse bile geçmiş müdahale kayıtları silinmesin
 
-                        // 5. Zaman Verileri Zorunluluğu
-                        entity.Property(e => e.mudahaleBaslangicSaati)
-                              .IsRequired();
+                // 5. Zaman Verileri Zorunluluğu
+                entity.Property(e => e.mudahaleBaslangicSaati)
+                      .IsRequired();
             });
 
 
@@ -701,6 +701,8 @@ namespace Minemation.Infrastructure.Persistence
 
             //SEED DATA - ÖRNEK VERİLER
 
+            /*
+
             // 1. Personel Seed
             modelBuilder.Entity<Personel>().HasData(
                 new Personel
@@ -726,6 +728,7 @@ namespace Minemation.Infrastructure.Persistence
                     sonGirisTarihi = new DateTime(2026, 05, 09, 10, 00, 00) // Sabitlendi
                 }
             );
+
 
             // 2. Sağlık Bilgileri Seed
             modelBuilder.Entity<SaglikBilgileri>().HasData(
@@ -858,6 +861,331 @@ namespace Minemation.Infrastructure.Persistence
                 }
             );
 
+            */
+
+
+            var random = new Random();
+
+            var isimler = new[] { "Ahmet", "Mehmet", "Elif", "Ayşe", "Mustafa", "Can", "Selin", "Deniz", "Mert", "Zeynep" };
+            var soyisimler = new[] { "Yılmaz", "Kaya", "Demir", "Şahin", "Öztürk", "Aydın", "Yıldız", "Arkan", "Bulut", "Koç" };
+            var uzmanliklar = new[]
+            {
+                "Maden Mühendisi", "Operatör (Ekskavatör)", "Operatör (Kamyon)",
+                "ISG Uzmanı", "Jeoloji Mühendisi", "Elektrik Teknisyeni",
+                "Mekanik Bakım Ustası", "Vardiya Amiri", "Saha Formeni",
+                "Patlayıcı Uzmanı", "Survey Mühendisi (Ölçüm)", "Maden Teknikeri"
+            };
+            var yakinliklar = new[] { "Anne", "Baba", "Eş", "Kardeş", "Arkadaş" };
+            var gorevler = new[] { "Vardiya Amiri", "Güvenlik Sorumlusu", "Operatör", "Teknik Destek", "ISG Gözlemci" };
+            var birimler = new[] { "°C", "%", "ppm", "m/s", "bar" };
+            var vakaTurleri = new[] { "Gaz Sızıntısı", "Yüksek Isı", "Ekipman Arızası", "İzinsiz Giriş", "Teknik Arıza", "Güvenlik İhlali", "Ekipman Kaybı" };
+            var vakaNedenleri = new[] { "Sensör Kalibrasyon Hatası", "Yetersiz Havalandırma", "Aşırı Yüklenme", "Protokol İhlali", "Donanım Arızası" };
+            var cozumler = new[] { "Parça değişimi yapıldı.", "Sistem resetlendi.", "ISG protokolü uygulandı.", "Hata giderildi." };
+            var durumlar = new[] { "Aktif", "Pasif", "İncelemede", "Tamamlandı" };
+            var cihazTipleri = new[] { "Personel Bilekliği", "Kask Sensörü", "Araç Takip Birimi", "Taşınabilir Beacon" };
+            var bolgeler = new[] { "Kuzey Galerisi", "Güney Panosu", "Batı Nakliye Hattı", "Ana Üretim Katı", "Havalandırma Şaftı" };
+            var operasyonlar = new[] { "Kazı", "Tahkimat", "Nakliye", "Arama-Tarama", "Bakım-Onarım" };
+            var operatorIsimleri = new[] { "Ahmet Operatör", "Mehmet Operatör", "Selin Operatör", "Can Operatör" };
+            var notlar = new[] {
+                "Ekipman bakımı tamamlandı.",
+                "İlerleme planlandığı gibi gidiyor.",
+                "Zemin nemi normalin biraz üzerinde, dikkatli olunmalı.",
+                "Haberleşme testleri başarılı.",
+                "Vardiya devri sorunsuz yapıldı."
+            }; 
+            var supervizorler = new[] { "Büşra Arslan", "Elif Nisa Okur ", "Berke Koyuncu" };
+
+
+
+            DateTime DateTime = new DateTime(2026, 1, 1);
+
+            // --- 1. PERSONEL VE BAĞLI TABLOLAR (50 Kayıt) ---
+
+            for (int i = 1; i <= 50; i++)
+            {
+                // TCKN her personel için benzersiz ve 11 haneli (Örn: 10000000001)
+                string generatedTckn = (10000000000 + i).ToString();
+
+                modelBuilder.Entity<Personel>().HasData(new Personel
+                {
+                    personelId = i,
+                    personelAdi = i == 1 ? "Büşra" : $"Ad_{i}",
+                    personelSoyadi = i == 1 ? "Arslan" : $"Soyad_{i}",
+                    tckn = generatedTckn,
+                    sifreHash = generatedTckn,
+                    uzmanlik = i == 1 ? "Sistem Mühendisi" : uzmanliklar[i % uzmanliklar.Length],
+                    personelDurumu = "Aktif",
+                    rfidKartNumarasi = $"RFID-{i + 100}",
+                    iseGirisTarihi = new DateTime(2024, 1, 1).AddDays(i),
+
+                    kullaniciRolu = i % 5 == 0 ? "Admin" : (i % 2 == 0 ? "Operator" : "User"),
+
+                    adres = $"Mahalle_{i}, Sokak_{i}, No: {i} Ankara",
+                    telNo = $"055500000{i:D2}",
+                    ikinciTelNo = $"055599999{i:D2}",
+                    eposta = $"personel{i}@minemation.com",
+                    cinsiyet = i % 2 == 0 ? "Erkek" : "Kadın",
+                    departman = i % 3 == 0 ? "Üretim" : "Teknik",
+                    calisanTipi = "Tam Zamanlı",
+                    calismaKonumu = "Saha-1",
+                });
+
+                modelBuilder.Entity<SaglikBilgileri>().HasData(new SaglikBilgileri
+                {
+                    personelId = i,
+                    kanGrubu = i % 4 == 0 ? "A Rh+" : (i % 4 == 1 ? "B Rh+" : "0 Rh-"),
+                    saglikDurumu = "Genel sağlık durumu yerinde.",
+                    acilDurumNotu = "Bilinen kronik bir rahatsızlığı bulunmamaktadır.",
+                    saglikCalismaKisitlamalari = "Yok",
+                    kronikHastaliklar = new List<string>(), // JSON conversion varsa boş liste sorun çıkarmaz
+                    alerjiler = new List<string> { "Yok" },
+                    sonMuayeneTarihi = DateTime.AddMonths(-i % 6)
+                });
+
+                modelBuilder.Entity<AcilDurumIletisim>().HasData(new AcilDurumIletisim
+                {
+                    acilDurumKisisiId = i,
+                    personelId = i,
+                    acilDurumKisileriAd = $"Yakin_{i}",
+                    acilDurumKisileriSoyad = $"Soyad_{i}",
+                    acilDurumKisileriTelNo = "050000000" + i.ToString("D2"),
+                    acilDurumKisileriYakinlik = yakinliklar[i % yakinliklar.Length]
+                });
+            }
+
+            // --- 2. EKİPMAN VE ALT TİPLERİ (50 Kayıt - TPT Yapısı) ---
+            for (int i = 1; i <= 50; i++)
+            {
+                int currentEkipmanId = 500 + i;
+                modelBuilder.Entity<Ekipman>().HasData(new Ekipman
+                {
+                    ekipmanId = currentEkipmanId,
+                    ekipmanAdi = i % 2 == 0 ? $"Ekskavatör EX-{i}" : $"Kamyon TR-{i}",
+                    ekipmanMarka = i % 2 == 0 ? "Caterpillar" : "Volvo",
+                    ekipmanModel = i % 2 == 0 ? "320-GC" : "FMX-460",
+                    durum = "Aktif",
+                    seriNo = $"SN-2026-{currentEkipmanId}",
+                    RFIDEtiket = $"RFID-EQ-{currentEkipmanId}",
+                    ureticiFirma = "Global Mining Tech",
+                    tedarikciFirma = "Borusan Makina",
+                    operasyonTuru = i % 2 == 0 ? "Kazı" : "Nakliye",
+
+                    bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                    teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                    kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                    garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                    satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+                    uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                    satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                    garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i)
+                });
+
+                // TPT Miras Yapısı: Her ekipmanı tipine göre detay tablosuna ekle
+                if (i % 4 == 0)
+                {
+                    modelBuilder.Entity<Ekskavator>().HasData(new Ekskavator
+                    {
+                        ekipmanId = currentEkipmanId,
+                        plaka = $"06-BS-{i}",
+                        kovaKapasitesi = 5m,
+                        motorGucu = 400m,
+                        paletTipi = "Çelik"
+                    });
+                }
+                else if (i % 4 == 1)
+                {
+                    modelBuilder.Entity<Hafriyat>().HasData(new Hafriyat
+                    {
+                        ekipmanId = currentEkipmanId,
+                        plaka = $"06-AR-{i}",
+                        damperHacmi = 15m,
+                        azamiYukAgirligi = 30000m
+                    });
+                }
+                else if (i % 4 == 2)
+                {
+                    modelBuilder.Entity<Kepce>().HasData(new Kepce
+                    {
+                        ekipmanId = currentEkipmanId,
+                        plaka = $"06-MN-{i}",
+                        yuklemeKapasitesi = 8m,
+                        kovaKapasitesi = 4m
+                    });
+                }
+                else
+                {
+                    modelBuilder.Entity<Kirici>().HasData(new Kirici
+                    {
+                        ekipmanId = currentEkipmanId,
+                        ucTipi = "Sivri",
+                        gerekenYagDebisi = "50L/dk"
+                    });
+
+                }
+
+                // Her ekipmana bir Sensör
+                modelBuilder.Entity<Sensor>().HasData(new Sensor
+                {
+                    ekipmanId = currentEkipmanId,
+                    sensorTipi = i % 2 == 0 ? "Gaz" : "Sıcaklık",
+                    sensorDurumu = "Aktif",
+
+                    baglantiProtokolu = i % 2 == 0 ? "MQTT" : "LoRaWAN",
+
+                    haberlesmeTipi = "Kablosuz",
+                    minEsikDeger = 0.0,
+                    maxEsikDeger = 100.0,
+                    hassasiyet = 0.1
+                });
+            }
+
+
+
+            // --- 3. VARDİYA, EKİP VE TAKİP (50 Kayıt) ---
+            for (int i = 1; i <= 50; i++)
+            {
+                modelBuilder.Entity<Vardiya>().HasData(new Vardiya
+                {
+                    vardiyaId = i,
+                    vardiyaAdi = $"Vardiya-{i:D2}",
+                    vardiyaTanimi = $"{bolgeler[i % bolgeler.Length]} {operasyonlar[i % operasyonlar.Length]} Çalışması",
+
+                    calismaBolgesi = bolgeler[i % bolgeler.Length],
+                    vardiyaSupervizoru = supervizorler[i % supervizorler.Length],
+                    operasyonTipi = operasyonlar[i % operasyonlar.Length],
+                    vardiyaDurumu = "Aktif",
+                    vardiyaTipi = i % 3 == 0 ? "Gece" : (i % 2 == 0 ? "Akşam" : "Gündüz"),
+                    operasyonRiskSeviyesi = i % 5 == 0 ? "Yüksek" : "Normal",
+                    vardiyaNotlari = notlar[i % notlar.Length],
+                    // Sorumlular (Manuel eklediğin 1 nolu personeli veya döngüdeki personelleri kullanabilirsin)
+                    vardiyaSorumlusu = (i % 50) + 1,
+                    vardiyaIsgSorumlusu = 1,
+                    vardiyaTeknikSorumlusu = 1,
+                    vardiyaBaslangicTarihi = DateTime.AddHours(8 * (i % 3)),
+                    vardiyaBitisTarihi = DateTime.AddHours(8 * ((i % 3) + 1)),
+                    ekipmanOperatoru = operatorIsimleri[i % operatorIsimleri.Length],
+                });
+
+                modelBuilder.Entity<Ekip>().HasData(new Ekip
+                {
+                    ekipId = i,
+                    personelId = i,
+                    vardiyaId = i,
+                    durum = "Görevde",
+                    personelGorevi = gorevler[i % gorevler.Length]
+                });
+
+                modelBuilder.Entity<TakipCihazi>().HasData(new TakipCihazi
+                {
+                    takipCihaziId = i,
+                    takipCihaziSeriNo = $"TC-{i}",
+                    personelId = i,
+                    pilSeviyesi = 100.0m - (i % 40),
+                    takipCihaziDurumu = i % 10 == 0 ? "Bakımda" : "Aktif",
+                    takipCihaziHaberlesmeProtokolu = i % 2 == 0 ? "UHF-RFID" : "LoRaWAN",
+                    takipCihaziModeli = i % 2 == 0 ? "MineTrack-v1" : "SafeZone-v4",
+                    takipCihaziTuru = cihazTipleri[i % cihazTipleri.Length],
+                });
+            }
+
+            // --- 4. VAKA, AKSİYON VE LOG (50 Kayıt) ---
+
+
+            for (int i = 1; i <= 50; i++)
+            {
+                modelBuilder.Entity<Vaka>().HasData(new Vaka
+                {
+                    vakaId = i,
+                    vakaAdi = $"Vaka_{i}",
+                    vakaTuru = vakaTurleri[i % vakaTurleri.Length],
+                    vakaCiddiyetSeviyesi = "Orta",
+                    vakaDurumu = "Açık",
+                    vakaAciklamasi = $"Detaylı vaka açıklaması {i}",
+                    personelId = (i % 50) + 1,
+                    ilgiliEkipmanId = 500 + i,
+                    vakaOlusmaTarihi = DateTime.AddDays(-i),
+                    olayNedeni = vakaNedenleri[i % vakaNedenleri.Length],
+                });
+
+                modelBuilder.Entity<Aksiyon>().HasData(new Aksiyon
+                {
+                    mudahaleId = i,
+                    vakaId = i,
+                    ekipId = (i % 50) + 1,
+                    mudahaleTuru = "Bakım",
+                    uygulananCozum = cozumler[i % cozumler.Length],
+                    mudahaleBaslangicSaati = DateTime.AddHours(-i)
+                });
+            }
+
+
+            // --- SENSÖR VERİSİ DÖNGÜSÜ (Eşleşen ID'ler) ---
+            for (int i = 1; i <= 50; i++)
+            {
+                // Ekipman döngüsünde başlangıç ID'si neyse (örn: 500), aynısını burada kullan!
+                int eslesenEkipmanId = 500 + i;
+
+                modelBuilder.Entity<SensorVerisi>().HasData(new SensorVerisi
+                {
+                    sensorVerisiId = i, // Benzersiz PK
+                    ekipmanId = eslesenEkipmanId, // HATA BURADAYDI: Bu ID Sensor tablosunda olmalı
+                    vardiyaId = (i % 10) + 1,
+                    deger = 20.5m + i,
+                    birim = i % 2 == 0 ? "°C" : "%",
+                    olcumTarihi = new DateTime(2026, 1, 1).AddHours(i)
+                });
+            }
+
+
+
+            // --- 5. RAPORLAR VE ALT TİPLERİ (50 Kayıt) ---
+            for (int r = 1; r <= 51; r++)
+            {
+                modelBuilder.Entity<Rapor>().HasData(new Rapor
+                {
+                    raporId = r,
+                    raporAdi = $"Rapor_{r}",
+                    raporTuru = r % 2 == 0 ? "Teknik" : "İdari",
+                    raporAciklamasi = $"Rapor içeriği detayları {r}",
+                    raporDosyaYolu = $"/reports/rep_{r}.pdf",
+                    zamanAraligi = "Günlük",
+                    personelId = (r % 50) + 1,
+                });
+
+                // Alt tiplerde zorunlu olan 'uzmanlikAlani', 'ekipmanTuru' vb. dolduruyoruz
+                if (r <= 20)
+                {
+                    modelBuilder.Entity<PersonelRaporu>().HasData(new PersonelRaporu
+                    {
+                        raporId = r,
+                        // HATA BURADAYDI: Zorunlu olan uzmanlık alanı
+                        uzmanlikAlani = "Maden Mühendisliği",
+                        calismaSuresi = 160m
+                    });
+                }
+                else if (r <= 40)
+                {
+                    modelBuilder.Entity<EkipmanRaporu>().HasData(new EkipmanRaporu
+                    {
+                        raporId = r,
+                        // Eğer hata verirse burası da zorunlu olabilir:
+                        ekipmanTuru = "Ağır İş Makinesi"
+                    });
+                }
+                else
+                {
+                    modelBuilder.Entity<VakaRaporu>().HasData(new VakaRaporu
+                    {
+                        raporId = r,
+                        ciddiyetSeviyesi = "Yüksek",
+                        personelId = r > 50 ? 1 : r,
+                        cozumSuresi = 12.5m
+                    });
+                }
+            }
+
         }
+
     }
 }

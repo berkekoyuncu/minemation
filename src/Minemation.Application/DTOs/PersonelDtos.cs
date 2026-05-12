@@ -14,6 +14,12 @@ public class PersonelListeDto
     public string KullaniciRolu { get; set; } = string.Empty;
     public string CalismaKonumu { get; set; } = string.Empty;
     public string PersonelDurumu { get; set; } = string.Empty;
+
+
+    public string Tckn { get; set; } = string.Empty;
+    public string TelNo { get; set; } = string.Empty;
+    public string KanGrubu { get; set; } = string.Empty;
+    public string RfidKartNumarasi { get; set; } = string.Empty;
 }
 
 public class PersonelDetayDto

@@ -17,6 +17,7 @@ public class PersonelRepository : IPersonelRepository
     public async Task<List<Personel>> TumunuGetirAsync()
     {
         return await _context.Personeller
+            .Include(p => p.SaglikBilgileri)
             .AsNoTracking()
             .ToListAsync();
     }
@@ -24,6 +25,8 @@ public class PersonelRepository : IPersonelRepository
     public async Task<Personel?> IdIleGetirAsync(int id)
     {
         return await _context.Personeller
+            .Include(p => p.SaglikBilgileri)   // Detay sayfasında sağlık bilgilerini görmek için
+            .Include(p => p.AcilDurumKisileri) // Acil durum kişilerini görmek için
             .FirstOrDefaultAsync(p => p.personelId == id);
     }
 
