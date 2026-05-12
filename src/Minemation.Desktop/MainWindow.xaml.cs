@@ -4,11 +4,11 @@ namespace Minemation.Desktop;
 
 public partial class MainWindow : Window
 {
-    public MainWindow(string role = "Admin")
+    public MainWindow(string role = "Admin", string userName = "Ahmet Yılmaz")
     {
         InitializeComponent();
         
-        SetupRole(role);
+        SetupRole(role, userName);
     }
 
     private void NavPersonnel_Click(object sender, RoutedEventArgs e)
@@ -95,8 +95,10 @@ public partial class MainWindow : Window
         }
     }
 
-    private void SetupRole(string role)
+    private void SetupRole(string role, string userName)
     {
+        UserNameText.Text = string.IsNullOrWhiteSpace(userName) ? "Kullanıcı" : userName;
+        
         if (role == "Admin") // Yönetici
         {
             NavPersonnel.Visibility = Visibility.Visible;
@@ -106,7 +108,6 @@ public partial class MainWindow : Window
             
             NavShift.Content = "Vardiya";
             NavIncidents.Content = "Vakalar";
-            UserNameText.Text = "Ahmet Yılmaz";
             
             // Default view for Admin
             MainContent.Content = new PersonnelView();
@@ -121,7 +122,6 @@ public partial class MainWindow : Window
             
             NavShift.Content = "Vardiyalarım";
             NavIncidents.Content = "Vakalarım";
-            UserNameText.Text = "Mehmet Kaya";
             
             // Saha Personeli Personel ekranını göremez, o yüzden Vardiyalarım ekranına at
             MainContent.Content = new ShiftView();
