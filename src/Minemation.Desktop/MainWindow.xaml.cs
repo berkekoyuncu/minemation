@@ -53,14 +53,10 @@ public partial class MainWindow : Window
 
     private void NavRisk_Click(object sender, RoutedEventArgs e)
     {
-        MainContent.Content = new ModulePlaceholderView(
-            "Risk İzleme",
-            "Sensör verileri, eşik değerleri ve risk uyarıları bu ekranda izlenecek.",
-            PackIconKind.Radar);
-    
+        MainContent.Content = new RiskMonitoringView();
         UpdateNavStyles(NavRisk);
     }
-    
+
     private void NavMap_Click(object sender, RoutedEventArgs e)
     {
         MainContent.Content = new ModulePlaceholderView(
