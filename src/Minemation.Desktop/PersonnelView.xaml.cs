@@ -38,7 +38,8 @@ public partial class PersonnelView : UserControl
     {
         try
         {
-            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResponse<PersonelListItemDto>>>("/api/personel");
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResponse<PersonelListItemDto>>>(
+                "/api/personel?SayfaNumarasi=1&SayfaBoyutu=1000");
 
             if (response?.Success != true || response.Data is null)
             {

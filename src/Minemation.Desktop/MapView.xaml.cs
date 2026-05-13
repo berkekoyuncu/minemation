@@ -1,9 +1,12 @@
+using MaterialDesignThemes.Wpf;
+using Minemation.Desktop.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
-using MaterialDesignThemes.Wpf;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Minemation.Desktop;
@@ -28,6 +31,11 @@ public partial class MapView : UserControl, INotifyPropertyChanged
 
     private readonly int _currentPersonelId;
     private readonly bool _canManage;
+
+    private readonly HttpClient _httpClient = new()
+    {
+        BaseAddress = new Uri("http://localhost:5289")
+    };
 
     public ObservableCollection<MapMarker> Entrances { get; } = new();
     public ObservableCollection<MapMarker> Equipments { get; } = new();
@@ -105,15 +113,15 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         InitializeComponent();
 
         DataContext = this;
-        LoadMapData();
+        Loaded += async (_, _) => await LoadMapDataAsync();
     }
 
-    private void BtnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
+    private async void BtnRefresh_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        LoadMapData();
+        await LoadMapDataAsync();
     }
 
-    private void LoadMapData()
+    private async Task LoadMapDataAsync()
     {
         Nodes.Clear();
         Edges.Clear();
@@ -127,9 +135,58 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         BuildHighlightedRoute();
 
         LoadEntrances();
-        LoadEquipments();
-        LoadPersonnelMarkers();
+
+        await LoadEquipmentsFromApiAsync();
+        await LoadPersonnelMarkersFromApiAsync();
+
         LoadTaskPoints();
+    }
+
+    private async Task LoadEquipmentsFromApiAsync()
+    {
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResponse<MapEquipmentDto>>>(
+                "/api/ekipman?SayfaNumarasi=1&SayfaBoyutu=1000");
+
+            if (response?.Success != true || response.Data is null)
+            {
+                LoadEquipments();
+                return;
+            }
+
+            var nodeUsage = new Dictionary<string, int>();
+
+            foreach (var equipment in response.Data.Items)
+            {
+                var node = GetNodeForEquipment(equipment);
+
+                if (node is null)
+                    continue;
+
+                var index = nodeUsage.TryGetValue(node.NodeId, out var count) ? count : 0;
+                nodeUsage[node.NodeId] = index + 1;
+
+                var position = GetOffsetPosition(node.X + 18, node.Y + 18, index);
+
+                Equipments.Add(new MapMarker
+                {
+                    Name = string.IsNullOrWhiteSpace(equipment.EkipmanAdi)
+                        ? $"Ekipman-{equipment.EkipmanId}"
+                        : equipment.EkipmanAdi,
+                    Description =
+                        $"Tür: {TextOrDefault(equipment.EkipmanTuru)}\n" +
+                        $"Durum: {TextOrDefault(equipment.Durum)}",
+                    X = position.X,
+                    Y = position.Y,
+                    IconKind = GetEquipmentIcon(equipment.EkipmanTuru)
+                });
+            }
+        }
+        catch
+        {
+            LoadEquipments();
+        }
     }
 
     private void LoadEntrances()
@@ -231,6 +288,60 @@ public partial class MapView : UserControl, INotifyPropertyChanged
 
         foreach (var person in visiblePersonnel)
             Personnels.Add(person);
+    }
+
+    private async Task LoadPersonnelMarkersFromApiAsync()
+    {
+        try
+        {
+            var response = await _httpClient.GetFromJsonAsync<ApiResponse<PagedResponse<MapPersonelDto>>>(
+                "/api/personel?SayfaNumarasi=1&SayfaBoyutu=1000");
+
+            if (response?.Success != true || response.Data is null)
+            {
+                LoadPersonnelMarkers();
+                return;
+            }
+
+            var visiblePersonnel = _canManage
+                ? response.Data.Items
+                : response.Data.Items.Where(x => x.PersonelId == _currentPersonelId).ToList();
+
+            var nodeUsage = new Dictionary<string, int>();
+
+            foreach (var personel in visiblePersonnel)
+            {
+                var node = GetNodeForPersonnel(personel);
+
+                if (node is null)
+                    continue;
+
+                var index = nodeUsage.TryGetValue(node.NodeId, out var count) ? count : 0;
+                nodeUsage[node.NodeId] = index + 1;
+
+                var position = GetOffsetPosition(node.X, node.Y, index);
+
+                Personnels.Add(new MapMarker
+                {
+                    PersonelId = personel.PersonelId,
+                    Name = personel.AdSoyad,
+                    Description =
+                        $"Görev/Konum: {TextOrDefault(personel.CalismaKonumu)}\n" +
+                        $"Departman: {TextOrDefault(personel.Departman)}\n" +
+                        $"Uzmanlık: {TextOrDefault(personel.Uzmanlik)}\n" +
+                        $"Durum: {TextOrDefault(personel.PersonelDurumu)}",
+                    X = position.X,
+                    Y = position.Y,
+                    IconKind = IsAdminRole(personel.KullaniciRolu)
+                        ? PackIconKind.AccountTieHat
+                        : PackIconKind.AccountHardHat
+                });
+            }
+        }
+        catch
+        {
+            LoadPersonnelMarkers();
+        }
     }
 
     private void LoadTaskPoints()
@@ -603,6 +714,121 @@ public partial class MapView : UserControl, INotifyPropertyChanged
 
         MarkerVisualScale = scale;
     }
+
+    private MapNode? GetNodeForPersonnel(MapPersonelDto personel)
+    {
+        var text = $"{personel.CalismaKonumu} {personel.Departman} {personel.Uzmanlik}".ToLowerInvariant();
+
+        if (text.Contains("batı") || text.Contains("bati") || text.Contains("dekapaj"))
+            return FindNode("bati-ocagi");
+
+        if (text.Contains("galeri") || text.Contains("yer alt"))
+            return FindNode("ana-galeri");
+
+        if (text.Contains("yükleme") || text.Contains("yukleme") || text.Contains("kamyon"))
+            return FindNode("yukleme");
+
+        if (text.Contains("risk") || text.Contains("isg") || text.Contains("güvenlik") || text.Contains("guvenlik"))
+            return FindNode("riskli-bolge");
+
+        if (text.Contains("acil") || text.Contains("çıkış") || text.Contains("cikis"))
+            return FindNode("acil-cikis");
+
+        if (text.Contains("saha") || text.Contains("merkez") || text.Contains("teknik") || text.Contains("üretim") || text.Contains("uretim"))
+            return FindNode("kontrol");
+
+        return FindNode("kontrol");
+    }
+
+    private MapNode? GetNodeForEquipment(MapEquipmentDto equipment)
+    {
+        var text = $"{equipment.EkipmanAdi} {equipment.EkipmanTuru} {equipment.Durum}".ToLowerInvariant();
+
+        if (text.Contains("ekskavat"))
+            return FindNode("bati-ocagi");
+
+        if (text.Contains("kamyon") || text.Contains("hafriyat"))
+            return FindNode("yukleme");
+
+        if (text.Contains("sensor") || text.Contains("sensör") || text.Contains("risk"))
+            return FindNode("riskli-bolge");
+
+        if (text.Contains("takip"))
+            return FindNode("kontrol");
+
+        if (text.Contains("jeneratör") || text.Contains("jenerator") || text.Contains("enerji"))
+            return FindNode("ana-galeri");
+
+        return FindNode("kontrol");
+    }
+
+    private static PackIconKind GetEquipmentIcon(string? equipmentType)
+    {
+        var text = equipmentType?.ToLowerInvariant() ?? string.Empty;
+
+        if (text.Contains("ekskavat"))
+            return PackIconKind.Excavator;
+
+        if (text.Contains("kamyon") || text.Contains("hafriyat"))
+            return PackIconKind.Truck;
+
+        if (text.Contains("sensor") || text.Contains("sensör"))
+            return PackIconKind.AccessPoint;
+
+        if (text.Contains("takip"))
+            return PackIconKind.AccessPointCheck;
+
+        if (text.Contains("jeneratör") || text.Contains("jenerator"))
+            return PackIconKind.Engine;
+
+        return PackIconKind.Tools;
+    }
+
+    private MapNode? FindNode(string nodeId)
+    {
+        return Nodes.FirstOrDefault(x => x.NodeId == nodeId);
+    }
+
+    private static Point GetOffsetPosition(double x, double y, int index)
+    {
+        var offsets = new[]
+        {
+        new Point(0, 0),
+        new Point(26, 0),
+        new Point(-26, 0),
+        new Point(0, 26),
+        new Point(0, -26),
+        new Point(26, 26),
+        new Point(-26, 26),
+        new Point(26, -26),
+        new Point(-26, -26),
+        new Point(52, 0),
+        new Point(-52, 0),
+        new Point(0, 52),
+        new Point(0, -52)
+    };
+
+        var offset = offsets[index % offsets.Length];
+        var ring = index / offsets.Length;
+
+        return new Point(
+            x + offset.X + ring * 12,
+            y + offset.Y + ring * 12);
+    }
+
+    private static string TextOrDefault(string? value)
+    {
+        return string.IsNullOrWhiteSpace(value) ? "-" : value;
+    }
+
+    private static bool IsAdminRole(string? role)
+    {
+        return string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(role, "Yönetici", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(role, "Yonetici", StringComparison.OrdinalIgnoreCase);
+    }
+
+
 }
 
 public class MapMarker
@@ -643,4 +869,27 @@ public class MapEdge
     public double Weight { get; set; } = 1;
 
     public bool IsRisky { get; set; }
+}
+
+public class MapPersonelDto
+{
+    public int PersonelId { get; set; }
+    public string AdSoyad { get; set; } = string.Empty;
+    public string Uzmanlik { get; set; } = string.Empty;
+    public string Departman { get; set; } = string.Empty;
+    public string KullaniciRolu { get; set; } = string.Empty;
+    public string CalismaKonumu { get; set; } = string.Empty;
+    public string PersonelDurumu { get; set; } = string.Empty;
+    public string Tckn { get; set; } = string.Empty;
+    public string TelNo { get; set; } = string.Empty;
+    public string KanGrubu { get; set; } = string.Empty;
+    public string RfidKartNumarasi { get; set; } = string.Empty;
+}
+
+public class MapEquipmentDto
+{
+    public int EkipmanId { get; set; }
+    public string EkipmanAdi { get; set; } = string.Empty;
+    public string EkipmanTuru { get; set; } = string.Empty;
+    public string Durum { get; set; } = string.Empty;
 }
