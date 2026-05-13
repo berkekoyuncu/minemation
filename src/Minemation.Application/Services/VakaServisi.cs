@@ -10,11 +10,20 @@ namespace Minemation.Application.Services;
 
 public class VakaServisi : IVakaServisi
 {
-    private readonly IVakaRepository _vakaRepository;
 
-    public VakaServisi(IVakaRepository vakaRepository)
+    private readonly IVakaRepository _vakaRepository;
+    private readonly IPersonelRepository _personelRepository;
+    private readonly IEkipmanRepository _ekipmanRepository;
+
+
+    public VakaServisi(
+    IVakaRepository vakaRepository,
+    IPersonelRepository personelRepository,
+    IEkipmanRepository ekipmanRepository)
     {
         _vakaRepository = vakaRepository;
+        _personelRepository = personelRepository;
+        _ekipmanRepository = ekipmanRepository;
     }
 
     public async Task<ApiResponse<PagedResult<VakaListeDto>>> TumunuGetirAsync(VakaSorguParametreleri sorgu)
@@ -137,6 +146,16 @@ public class VakaServisi : IVakaServisi
 
     public async Task<ApiResponse<VakaDetayDto>> OlusturAsync(VakaOlusturDto dto)
     {
+        
+
+        var dogrulamaSonucu = await VakaIliskileriniDogrulaAsync(
+            dto.PersonelId,
+            dto.RaporlayanEkipmanId,
+            dto.IlgiliEkipmanId);
+
+        if (!dogrulamaSonucu.Success)
+            return ApiResponse<VakaDetayDto>.Fail(dogrulamaSonucu.Message);
+
         var vaka = new Vaka
         {
             vakaTuru = dto.VakaTuru,
@@ -167,6 +186,14 @@ public class VakaServisi : IVakaServisi
 
         if (vaka is null)
             return ApiResponse<VakaDetayDto>.Fail("Vaka bulunamadı.");
+
+        var dogrulamaSonucu = await VakaIliskileriniDogrulaAsync(
+            dto.PersonelId,
+            dto.RaporlayanEkipmanId,
+            dto.IlgiliEkipmanId);
+
+        if (!dogrulamaSonucu.Success)
+            return ApiResponse<VakaDetayDto>.Fail(dogrulamaSonucu.Message);
 
         vaka.vakaTuru = dto.VakaTuru;
         vaka.vakaAdi = dto.VakaAdi;
@@ -226,4 +253,37 @@ public class VakaServisi : IVakaServisi
             IlgiliEkipmanAdi = vaka.IlgiliEkipman?.ekipmanAdi
         };
     }
+
+    private async Task<ApiResponse<bool>> VakaIliskileriniDogrulaAsync(
+    int? personelId,
+    int? raporlayanEkipmanId,
+    int? ilgiliEkipmanId)
+    {
+        if (personelId.HasValue && personelId.Value > 0)
+        {
+            var personel = await _personelRepository.IdIleGetirAsync(personelId.Value);
+
+            if (personel is null)
+                return ApiResponse<bool>.Fail("Seçilen personel sistemde bulunamadı. Lütfen geçerli bir Personel ID girin.");
+        }
+
+        if (raporlayanEkipmanId.HasValue && raporlayanEkipmanId.Value > 0)
+        {
+            var raporlayanEkipman = await _ekipmanRepository.IdIleGetirAsync(raporlayanEkipmanId.Value);
+
+            if (raporlayanEkipman is null)
+                return ApiResponse<bool>.Fail("Raporlayan ekipman sistemde bulunamadı. Lütfen geçerli bir Raporlayan Ekipman ID girin.");
+        }
+
+        if (ilgiliEkipmanId.HasValue && ilgiliEkipmanId.Value > 0)
+        {
+            var ilgiliEkipman = await _ekipmanRepository.IdIleGetirAsync(ilgiliEkipmanId.Value);
+
+            if (ilgiliEkipman is null)
+                return ApiResponse<bool>.Fail("İlgili ekipman sistemde bulunamadı. Lütfen geçerli bir İlgili Ekipman ID girin.");
+        }
+
+        return ApiResponse<bool>.Ok(true);
+    }
+
 }

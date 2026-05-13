@@ -10,6 +10,7 @@ public interface ITakipCihaziRepository
     Task<List<TakipCihazi>> TumunuGetirAsync();
 
     Task<TakipCihazi?> IdIleGetirAsync(int id);
+    Task<TakipCihazi?> EkipmanIdIleGetirAsync(int ekipmanId);
 
     Task<bool> SeriNoVarMiAsync(string seriNo, int? haricTutulacakId = null);
 
