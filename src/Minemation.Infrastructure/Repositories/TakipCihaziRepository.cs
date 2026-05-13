@@ -55,4 +55,14 @@ public class TakipCihaziRepository : ITakipCihaziRepository
     {
         await _context.SaveChangesAsync();
     }
+
+    public async Task<TakipCihazi?> IdIleGetirAsync(int id)
+    {
+        return await _context.TakipCihazi
+            .FirstOrDefaultAsync(x => x.takipCihaziId == id);
+    }
+
+    
+
+
 }

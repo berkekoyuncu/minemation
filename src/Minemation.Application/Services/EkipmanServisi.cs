@@ -94,7 +94,8 @@ public class EkipmanServisi : IEkipmanServisi
                 Durum = x.durum,
                 SeriNo = x.seriNo,
                 RFIDEtiket = x.RFIDEtiket,
-                OperasyonTuru = x.operasyonTuru
+                OperasyonTuru = x.operasyonTuru,
+                    EkipmanTuru = x.ekipmanTuru
             })
             .ToList();
 
@@ -147,7 +148,8 @@ public class EkipmanServisi : IEkipmanServisi
             garantiBelgesi = dto.GarantiBelgesi,
             bakimFormu = dto.BakimFormu,
             satinAlmaBelgesi = dto.SatinAlmaBelgesi,
-            operasyonTuru = dto.OperasyonTuru
+            operasyonTuru = dto.OperasyonTuru,
+            ekipmanTuru = dto.EkipmanTuru
         };
 
         await _ekipmanRepository.EkleAsync(ekipman);
@@ -192,6 +194,7 @@ public class EkipmanServisi : IEkipmanServisi
         ekipman.bakimFormu = dto.BakimFormu;
         ekipman.satinAlmaBelgesi = dto.SatinAlmaBelgesi;
         ekipman.operasyonTuru = dto.OperasyonTuru;
+        ekipman.ekipmanTuru = dto.EkipmanTuru; 
 
         await _ekipmanRepository.DegisiklikleriKaydetAsync();
 
@@ -240,7 +243,8 @@ public class EkipmanServisi : IEkipmanServisi
             GarantiBelgesi = ekipman.garantiBelgesi,
             BakimFormu = ekipman.bakimFormu,
             SatinAlmaBelgesi = ekipman.satinAlmaBelgesi,
-            OperasyonTuru = ekipman.operasyonTuru
+            OperasyonTuru = ekipman.operasyonTuru,
+            EkipmanTuru = ekipman.ekipmanTuru
         };
     }
 }

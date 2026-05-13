@@ -28,6 +28,8 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
 
                                 <TextBox x:Name="EquipmentNameBox"
@@ -78,12 +80,244 @@
                                          Foreground="{DynamicResource TextPrimaryBrush}" />
 
                                 <TextBox x:Name="OperationTypeBox"
-                                         Grid.Row="3" Grid.ColumnSpan="2"
+                                         Grid.Row="3" Grid.Column="0"
                                          materialDesign:HintAssist.Hint="Operasyon Türü"
                                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                          Margin="5"
                                          Foreground="{DynamicResource TextPrimaryBrush}" />
+
+                                <!-- Ekipman Türü -->
+                                <ComboBox x:Name="EquipmentTypeComboBox"
+                                          Grid.Row="3" Grid.Column="1"
+                                          materialDesign:HintAssist.Hint="Ekipman Türü"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                          Margin="5"
+                                          Foreground="{DynamicResource TextPrimaryBrush}"
+                                          SelectionChanged="EquipmentTypeComboBox_SelectionChanged">
+                                    <ComboBoxItem Content="Ekskavatör"/>
+                                    <ComboBoxItem Content="Hafriyat"/>
+                                    <ComboBoxItem Content="Kepçe"/>
+                                    <ComboBoxItem Content="Kırıcı"/>
+                                    <ComboBoxItem Content="Sensör"/>
+                                    <ComboBoxItem Content="Takip Cihazı"/>
+                                    <ComboBoxItem Content="El Aletleri"/>
+                                </ComboBox>
+
+
+                                <!-- EKSKAVATOR ALANLARI -->
+                                <StackPanel x:Name="EkskavatorPanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="EksPlakaBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Plaka"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="EksPaletTipiBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Palet Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="EksKovaKapasitesiBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Kova Kapasitesi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="EksMotorGucuBox" Grid.Row="1" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Motor Gücü (kW)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="EksMaxKaziDerinligiBox" Grid.Row="2" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Maks. Kazı Derinliği (m)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="EksBomUzunluguBox" Grid.Row="2" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Bom Uzunluğu (m)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- HAFRİYAT ALANLARI -->
+                                <StackPanel x:Name="HafriyatPanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="HafPlakaBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Plaka"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="HafDingilSayisiBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Dingil Sayısı"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="HafDamperHacmiBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Damper Hacmi (m³)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="HafAzamiYukBox" Grid.Row="1" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Azami Yük Ağırlığı (kg)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- KEPÇE ALANLARI -->
+                                <StackPanel x:Name="KepcePanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="KepPlakaBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Plaka"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KepYuklemeKapasitesiBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Yükleme Kapasitesi (t)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KepKovaKapasitesiBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Kova Kapasitesi (m³)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KepBosaltmaYuksekligiBox" Grid.Row="1" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Boşaltma Yüksekliği (m)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KepDevrilmeYukuBox" Grid.Row="2" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Devrilme Yükü (kg)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- KIRICI ALANLARI -->
+                                <StackPanel x:Name="KiriciPanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="KirUcTipiBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Uç Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KirGerekenYagDebisiBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Gereken Yağ Debisi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KirDarbeEnerjisiBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Darbe Enerjisi (J)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KirDakikadakiDarbeBox" Grid.Row="1" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Dakikadaki Darbe Sayısı"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="KirCalismaBasinciBox" Grid.Row="2" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Çalışma Basıncı (bar)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- SENSÖR ALANLARI -->
+                                <StackPanel x:Name="SensorPanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="SenTipiBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Sensör Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="SenBaglantiProtokoluBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Bağlantı Protokolü"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="SenHaberlesmeTipiBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Haberleşme Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="SenHassasiyetBox" Grid.Row="1" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Hassasiyet"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="SenMinEsikBox" Grid.Row="2" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Min Eşik Değer"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="SenMaxEsikBox" Grid.Row="2" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Max Eşik Değer"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
+                                <!-- EL ALETLERİ ALANLARI -->
+                                <StackPanel x:Name="ElAletleriPanel" Grid.Row="4" Grid.ColumnSpan="2" Visibility="Collapsed">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBox x:Name="ElGucKaynagiBox" Grid.Row="0" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Güç Kaynağı Tipi"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="ElBataryaKapasitesiBox" Grid.Row="0" Grid.Column="1"
+                                  materialDesign:HintAssist.Hint="Batarya Kapasitesi (Ah)"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                        <TextBox x:Name="ElKullanimAmaciBox" Grid.Row="1" Grid.Column="0"
+                                  materialDesign:HintAssist.Hint="Kullanım Amacı"
+                                  Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="5"
+                                  Foreground="{DynamicResource TextPrimaryBrush}"/>
+                                    </Grid>
+                                </StackPanel>
+
                             </Grid>
+
+           
+
                         </TabItem>
 
                         <TabItem Header="Bakım ve Tedarik">

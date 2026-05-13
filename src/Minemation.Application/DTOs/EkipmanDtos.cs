@@ -14,6 +14,7 @@ public class EkipmanListeDto
     public string SeriNo { get; set; } = string.Empty;
     public string RFIDEtiket { get; set; } = string.Empty;
     public string OperasyonTuru { get; set; } = string.Empty;
+    public string EkipmanTuru { get; set; } = string.Empty;
 }
 
 public class EkipmanDetayDto
@@ -49,6 +50,7 @@ public class EkipmanDetayDto
     public string SatinAlmaBelgesi { get; set; } = string.Empty;
 
     public string OperasyonTuru { get; set; } = string.Empty;
+    public string EkipmanTuru { get; set; } = string.Empty;
 }
 
 public class EkipmanOlusturDto
@@ -82,6 +84,7 @@ public class EkipmanOlusturDto
     public string SatinAlmaBelgesi { get; set; } = string.Empty;
 
     public string OperasyonTuru { get; set; } = string.Empty;
+    public string EkipmanTuru { get; set; } = string.Empty;
 }
 
 public class EkipmanGuncelleDto
@@ -115,6 +118,7 @@ public class EkipmanGuncelleDto
     public string SatinAlmaBelgesi { get; set; } = string.Empty;
 
     public string OperasyonTuru { get; set; } = string.Empty;
+    public string EkipmanTuru { get; set; } = string.Empty;
 }
 
 public class EkipmanSorguParametreleri
