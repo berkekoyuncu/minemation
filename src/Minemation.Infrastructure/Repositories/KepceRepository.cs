@@ -21,14 +21,12 @@ public class KepceRepository : IKepceRepository
     {
         return await _context.Kepce
             .AsNoTracking()
-            .Include(k => k.Ekipman)
             .ToListAsync();
     }
 
     public async Task<Kepce?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.Kepce
-            .Include(k => k.Ekipman)
             .FirstOrDefaultAsync(k => k.ekipmanId == ekipmanId);
     }
 

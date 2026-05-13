@@ -29,6 +29,10 @@ public class Personel
     public string sifreHash { get; set; }
     public DateTime sonGirisTarihi { get; set; }    // er diyagramda yok
 
+    // Personel.cs içinde
+    public int? AtanmisTakipCihaziId { get; set; } // Foreign Key (ID)
+    public virtual TakipCihazi? TakipCihazi { get; set; } // Navigation Property
+
 
     // SAĞLIK BİLGİSİ: Bire-Bir (Zayıf Varlık)
     public virtual SaglikBilgileri SaglikBilgileri { get; set; }

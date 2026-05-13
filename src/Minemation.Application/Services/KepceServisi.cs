@@ -29,9 +29,9 @@ public class KepceServisi : IKepceServisi
 
             filtreli = filtreli.Where(k =>
                 (k.plaka ?? "").ToLower().Contains(arama) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanMarka ?? "").ToLower().Contains(arama)) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanModel ?? "").ToLower().Contains(arama)));
+                (k.ekipmanAdi ?? "").ToLower().Contains(arama) ||
+                (k.ekipmanMarka ?? "").ToLower().Contains(arama) ||
+                (k.ekipmanModel ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.Plaka))
@@ -75,8 +75,8 @@ public class KepceServisi : IKepceServisi
             .Select(k => new KepceListeDto
             {
                 EkipmanId = k.ekipmanId,
-                EkipmanAdi = k.Ekipman == null ? null : k.Ekipman.ekipmanAdi,
-                EkipmanDurumu = k.Ekipman == null ? null : k.Ekipman.durum,
+                EkipmanAdi = k.ekipmanAdi,
+                EkipmanDurumu = k.durum,
                 Plaka = k.plaka,
                 YuklemeKapasitesi = k.yuklemeKapasitesi,
                 KovaKapasitesi = k.kovaKapasitesi,
@@ -169,12 +169,11 @@ public class KepceServisi : IKepceServisi
         if (kepce is null)
             return ApiResponse<bool>.Fail("Kepçe kaydı bulunamadı.");
 
-        if (kepce.Ekipman != null)
-        {
-            kepce.Ekipman.durum = "Pasif";
+
+            kepce.durum = "Pasif";
             await _kepceRepository.DegisiklikleriKaydetAsync();
             return ApiResponse<bool>.Ok(true, "Kepçe ekipmanı pasif hale getirildi.");
-        }
+        
 
         return ApiResponse<bool>.Ok(true, "Kepçe kaydı bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
     }
@@ -184,10 +183,10 @@ public class KepceServisi : IKepceServisi
         return new KepceDetayDto
         {
             EkipmanId = kepce.ekipmanId,
-            EkipmanAdi = kepce.Ekipman == null ? null : kepce.Ekipman.ekipmanAdi,
-            EkipmanMarka = kepce.Ekipman == null ? null : kepce.Ekipman.ekipmanMarka,
-            EkipmanModel = kepce.Ekipman == null ? null : kepce.Ekipman.ekipmanModel,
-            EkipmanDurumu = kepce.Ekipman == null ? null : kepce.Ekipman.durum,
+            EkipmanAdi = kepce.ekipmanAdi,
+            EkipmanMarka = kepce.ekipmanMarka,
+            EkipmanModel = kepce.ekipmanModel,
+            EkipmanDurumu = kepce.durum,
             Plaka = kepce.plaka,
             YuklemeKapasitesi = kepce.yuklemeKapasitesi,
             KovaKapasitesi = kepce.kovaKapasitesi,

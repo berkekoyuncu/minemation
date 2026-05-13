@@ -21,14 +21,12 @@ public class KiriciRepository : IKiriciRepository
     {
         return await _context.Kirici
             .AsNoTracking()
-            .Include(k => k.Ekipman)
             .ToListAsync();
     }
 
     public async Task<Kirici?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.Kirici
-            .Include(k => k.Ekipman)
             .FirstOrDefaultAsync(k => k.ekipmanId == ekipmanId);
     }
 

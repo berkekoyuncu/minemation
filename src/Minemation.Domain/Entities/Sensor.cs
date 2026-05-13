@@ -4,10 +4,8 @@ using System.Text;
 
 namespace Minemation.Domain.Entities
 {
-    public class Sensor
+    public class Sensor : Ekipman
     {
-        public int ekipmanId { get; set; }
-
         public string sensorTipi {  get; set; }
         public string sensorDurumu { get; set; }
         public double minEsikDeger { get; set; }
@@ -16,9 +14,9 @@ namespace Minemation.Domain.Entities
         public string baglantiProtokolu {  get; set; }
         public string haberlesmeTipi { get; set; }
 
+        // --- İlişkiler ---
+        // Bir sensörün geçmişe dönük birçok ölçüm verisi olabilir
+        public virtual ICollection<SensorVerisi> SensorVerileri { get; set; } = new List<SensorVerisi>();
 
-
-    // Foreign key
-        public virtual Ekipman Ekipman { get; set; }
     }
 }

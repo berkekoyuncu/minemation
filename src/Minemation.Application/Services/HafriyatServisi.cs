@@ -29,9 +29,9 @@ public class HafriyatServisi : IHafriyatServisi
 
             filtreli = filtreli.Where(h =>
                 (h.plaka ?? "").ToLower().Contains(arama) ||
-                (h.Ekipman != null && (h.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
-                (h.Ekipman != null && (h.Ekipman.ekipmanMarka ?? "").ToLower().Contains(arama)) ||
-                (h.Ekipman != null && (h.Ekipman.ekipmanModel ?? "").ToLower().Contains(arama)));
+                (h.ekipmanAdi ?? "").ToLower().Contains(arama) ||
+                (h.ekipmanMarka ?? "").ToLower().Contains(arama) ||
+                (h.ekipmanModel ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.Plaka))
@@ -71,8 +71,8 @@ public class HafriyatServisi : IHafriyatServisi
             .Select(h => new HafriyatListeDto
             {
                 EkipmanId = h.ekipmanId,
-                EkipmanAdi = h.Ekipman == null ? null : h.Ekipman.ekipmanAdi,
-                EkipmanDurumu = h.Ekipman == null ? null : h.Ekipman.durum,
+                EkipmanAdi = h.ekipmanAdi,
+                EkipmanDurumu = h.durum,
                 Plaka = h.plaka,
                 DamperHacmi = h.damperHacmi,
                 AzamiYukAgirligi = h.azamiYukAgirligi,
@@ -162,12 +162,10 @@ public class HafriyatServisi : IHafriyatServisi
         if (hafriyat is null)
             return ApiResponse<bool>.Fail("Hafriyat kaydı bulunamadı.");
 
-        if (hafriyat.Ekipman != null)
-        {
-            hafriyat.Ekipman.durum = "Pasif";
+        
+            hafriyat.durum = "Pasif";
             await _hafriyatRepository.DegisiklikleriKaydetAsync();
             return ApiResponse<bool>.Ok(true, "Hafriyat ekipmanı pasif hale getirildi.");
-        }
 
         return ApiResponse<bool>.Ok(true, "Hafriyat kaydı bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
     }
@@ -177,10 +175,10 @@ public class HafriyatServisi : IHafriyatServisi
         return new HafriyatDetayDto
         {
             EkipmanId = hafriyat.ekipmanId,
-            EkipmanAdi = hafriyat.Ekipman == null ? null : hafriyat.Ekipman.ekipmanAdi,
-            EkipmanMarka = hafriyat.Ekipman == null ? null : hafriyat.Ekipman.ekipmanMarka,
-            EkipmanModel = hafriyat.Ekipman == null ? null : hafriyat.Ekipman.ekipmanModel,
-            EkipmanDurumu = hafriyat.Ekipman == null ? null : hafriyat.Ekipman.durum,
+            EkipmanAdi = hafriyat.ekipmanAdi,
+            EkipmanMarka = hafriyat.ekipmanMarka,
+            EkipmanModel = hafriyat.ekipmanModel,
+            EkipmanDurumu = hafriyat.durum,
             Plaka = hafriyat.plaka,
             DamperHacmi = hafriyat.damperHacmi,
             AzamiYukAgirligi = hafriyat.azamiYukAgirligi,

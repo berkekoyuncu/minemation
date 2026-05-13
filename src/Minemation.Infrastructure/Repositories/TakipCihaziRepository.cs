@@ -22,16 +22,14 @@ public class TakipCihaziRepository : ITakipCihaziRepository
         return await _context.TakipCihazi
             .AsNoTracking()
             .Include(t => t.Personel)
-            .Include(t => t.Ekipman)
             .ToListAsync();
     }
 
-    public async Task<TakipCihazi?> IdIleGetirAsync(int id)
+    public async Task<TakipCihazi?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.TakipCihazi
             .Include(t => t.Personel)
-            .Include(t => t.Ekipman)
-            .FirstOrDefaultAsync(t => t.takipCihaziId == id);
+            .FirstOrDefaultAsync(t => t.ekipmanId == ekipmanId);
     }
 
     public async Task<bool> SeriNoVarMiAsync(string seriNo, int? haricTutulacakId = null)

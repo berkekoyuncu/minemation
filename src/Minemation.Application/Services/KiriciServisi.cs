@@ -30,9 +30,9 @@ public class KiriciServisi : IKiriciServisi
             filtreli = filtreli.Where(k =>
                 (k.ucTipi ?? "").ToLower().Contains(arama) ||
                 (k.gerekenYagDebisi ?? "").ToLower().Contains(arama) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanMarka ?? "").ToLower().Contains(arama)) ||
-                (k.Ekipman != null && (k.Ekipman.ekipmanModel ?? "").ToLower().Contains(arama)));
+                (k.ekipmanAdi ?? "").ToLower().Contains(arama) ||
+                (k.ekipmanMarka ?? "").ToLower().Contains(arama) ||
+                (k.ekipmanModel ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.UcTipi))
@@ -72,8 +72,8 @@ public class KiriciServisi : IKiriciServisi
             .Select(k => new KiriciListeDto
             {
                 EkipmanId = k.ekipmanId,
-                EkipmanAdi = k.Ekipman == null ? null : k.Ekipman.ekipmanAdi,
-                EkipmanDurumu = k.Ekipman == null ? null : k.Ekipman.durum,
+                EkipmanAdi = k.ekipmanAdi,
+                EkipmanDurumu = k.durum,
                 DarbeEnerjisi = k.darbeEnerjisi,
                 DakikadakiDarbeSayisi = k.dakikadakiDarbeSayisi,
                 CalismaBasinci = k.calismaBasinci,
@@ -156,12 +156,10 @@ public class KiriciServisi : IKiriciServisi
         if (kirici is null)
             return ApiResponse<bool>.Fail("Kırıcı kaydı bulunamadı.");
 
-        if (kirici.Ekipman != null)
-        {
-            kirici.Ekipman.durum = "Pasif";
+            kirici.durum = "Pasif";
             await _kiriciRepository.DegisiklikleriKaydetAsync();
             return ApiResponse<bool>.Ok(true, "Kırıcı ekipmanı pasif hale getirildi.");
-        }
+
 
         return ApiResponse<bool>.Ok(true, "Kırıcı kaydı bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
     }
@@ -171,10 +169,10 @@ public class KiriciServisi : IKiriciServisi
         return new KiriciDetayDto
         {
             EkipmanId = kirici.ekipmanId,
-            EkipmanAdi = kirici.Ekipman == null ? null : kirici.Ekipman.ekipmanAdi,
-            EkipmanMarka = kirici.Ekipman == null ? null : kirici.Ekipman.ekipmanMarka,
-            EkipmanModel = kirici.Ekipman == null ? null : kirici.Ekipman.ekipmanModel,
-            EkipmanDurumu = kirici.Ekipman == null ? null : kirici.Ekipman.durum,
+            EkipmanAdi = kirici.ekipmanAdi,
+            EkipmanMarka = kirici.ekipmanMarka,
+            EkipmanModel = kirici.ekipmanModel,
+            EkipmanDurumu = kirici.durum,
             DarbeEnerjisi = kirici.darbeEnerjisi,
             DakikadakiDarbeSayisi = kirici.dakikadakiDarbeSayisi,
             CalismaBasinci = kirici.calismaBasinci,

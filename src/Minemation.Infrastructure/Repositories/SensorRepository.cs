@@ -21,14 +21,12 @@ public class SensorRepository : ISensorRepository
     {
         return await _context.Sensor
             .AsNoTracking()
-            .Include(s => s.Ekipman)
             .ToListAsync();
     }
 
     public async Task<Sensor?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.Sensor
-            .Include(s => s.Ekipman)
             .FirstOrDefaultAsync(s => s.ekipmanId == ekipmanId);
     }
 

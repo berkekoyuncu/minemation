@@ -30,9 +30,9 @@ public class ElAletleriServisi : IElAletleriServisi
             filtreli = filtreli.Where(e =>
                 (e.gucKaynagiTipi ?? "").ToLower().Contains(arama) ||
                 (e.kullanimAmaci ?? "").ToLower().Contains(arama) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanMarka ?? "").ToLower().Contains(arama)) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanModel ?? "").ToLower().Contains(arama)));
+                (e.ekipmanAdi ?? "").ToLower().Contains(arama) ||
+                (e.ekipmanMarka ?? "").ToLower().Contains(arama) ||
+                (e.ekipmanModel ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.GucKaynagiTipi))
@@ -74,8 +74,8 @@ public class ElAletleriServisi : IElAletleriServisi
             .Select(e => new ElAletleriListeDto
             {
                 EkipmanId = e.ekipmanId,
-                EkipmanAdi = e.Ekipman == null ? null : e.Ekipman.ekipmanAdi,
-                EkipmanDurumu = e.Ekipman == null ? null : e.Ekipman.durum,
+                EkipmanAdi = e.ekipmanAdi,
+                EkipmanDurumu = e.durum,
                 GucKaynagiTipi = e.gucKaynagiTipi,
                 BataryaKapasitesi = e.bataryaKapasitesi,
                 KullanimAmaci = e.kullanimAmaci
@@ -152,12 +152,11 @@ public class ElAletleriServisi : IElAletleriServisi
         if (elAletleri is null)
             return ApiResponse<bool>.Fail("El aletleri kaydı bulunamadı.");
 
-        if (elAletleri.Ekipman != null)
-        {
-            elAletleri.Ekipman.durum = "Pasif";
+
+            elAletleri.durum = "Pasif";
             await _elAletleriRepository.DegisiklikleriKaydetAsync();
             return ApiResponse<bool>.Ok(true, "El aletleri ekipmanı pasif hale getirildi.");
-        }
+        
 
         return ApiResponse<bool>.Ok(true, "El aletleri kaydı bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
     }
@@ -167,10 +166,10 @@ public class ElAletleriServisi : IElAletleriServisi
         return new ElAletleriDetayDto
         {
             EkipmanId = elAletleri.ekipmanId,
-            EkipmanAdi = elAletleri.Ekipman == null ? null : elAletleri.Ekipman.ekipmanAdi,
-            EkipmanMarka = elAletleri.Ekipman == null ? null : elAletleri.Ekipman.ekipmanMarka,
-            EkipmanModel = elAletleri.Ekipman == null ? null : elAletleri.Ekipman.ekipmanModel,
-            EkipmanDurumu = elAletleri.Ekipman == null ? null : elAletleri.Ekipman.durum,
+            EkipmanAdi = elAletleri.ekipmanAdi,
+            EkipmanMarka = elAletleri.ekipmanMarka,
+            EkipmanModel = elAletleri.ekipmanModel,
+            EkipmanDurumu = elAletleri.durum,
             GucKaynagiTipi = elAletleri.gucKaynagiTipi,
             BataryaKapasitesi = elAletleri.bataryaKapasitesi,
             KullanimAmaci = elAletleri.kullanimAmaci

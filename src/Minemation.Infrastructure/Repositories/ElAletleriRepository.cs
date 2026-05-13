@@ -21,14 +21,12 @@ public class ElAletleriRepository : IElAletleriRepository
     {
         return await _context.ElAletleri
             .AsNoTracking()
-            .Include(e => e.Ekipman)
             .ToListAsync();
     }
 
     public async Task<ElAletleri?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.ElAletleri
-            .Include(e => e.Ekipman)
             .FirstOrDefaultAsync(e => e.ekipmanId == ekipmanId);
     }
 

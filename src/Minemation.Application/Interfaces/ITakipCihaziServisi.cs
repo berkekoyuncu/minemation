@@ -10,7 +10,7 @@ public interface ITakipCihaziServisi
 {
     Task<ApiResponse<PagedResult<TakipCihaziListeDto>>> TumunuGetirAsync(TakipCihaziSorguParametreleri sorgu);
 
-    Task<ApiResponse<TakipCihaziDetayDto>> IdIleGetirAsync(int id);
+    Task<ApiResponse<TakipCihaziDetayDto>> EkipmanIdIleGetirAsync(int ekipmanId);
 
     Task<ApiResponse<TakipCihaziDetayDto>> OlusturAsync(TakipCihaziOlusturDto dto);
 
