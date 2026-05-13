@@ -18,7 +18,8 @@
         <Border Grid.Column="0" Background="{DynamicResource SurfaceBrush}">
             <!-- Background Image -->
             <Grid>
-                <Image Source="/Resources/photo1.jpeg" Stretch="UniformToFill" />
+                <Image Source="pack://application:,,,/Resources/photo1.jpeg"
+       Stretch="UniformToFill" />
                 <!-- Overlay -->
                 <Border Background="#800F172A" />
                 

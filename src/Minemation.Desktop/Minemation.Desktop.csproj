@@ -29,4 +29,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+	<ItemGroup>
+		<Resource Include="Resources\photo1.jpeg" />
+	</ItemGroup>
+
 </Project>
