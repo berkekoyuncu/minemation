@@ -20,6 +20,15 @@ public partial class MapView : UserControl, INotifyPropertyChanged
     private bool _isGraphVisible = true;
     private bool _isRouteVisible = true;
     private bool _isDragging;
+    private bool _isPersonnelDetailVisible;
+    private bool _isPersonnelClusterVisible = true;
+    private bool _isPersonnelMarkersVisible = false;
+    private bool _isClusterDetailPanelVisible;
+    private bool _isEquipmentClusterVisible = true;
+    private bool _isEquipmentMarkersVisible;
+
+    private string _selectedClusterTitle = string.Empty;
+    private string _selectedClusterDescription = string.Empty;
 
     private const double MinZoom = 0.6;
     private const double MaxZoom = 3.5;
@@ -44,6 +53,9 @@ public partial class MapView : UserControl, INotifyPropertyChanged
     public ObservableCollection<MapNode> Nodes { get; } = new();
     public ObservableCollection<MapEdge> Edges { get; } = new();
     public ObservableCollection<MapEdge> RouteEdges { get; } = new();
+    public ObservableCollection<MapClusterMarker> PersonnelClusters { get; } = new();
+    public ObservableCollection<string> SelectedClusterItems { get; } = new();
+    public ObservableCollection<MapEquipmentClusterMarker> EquipmentClusters { get; } = new();
 
     public bool IsPersonnelVisible
     {
@@ -52,6 +64,7 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         {
             _isPersonnelVisible = value;
             OnPropertyChanged();
+            UpdatePersonnelVisibilityByZoom();
         }
     }
 
@@ -62,6 +75,7 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         {
             _isEquipmentVisible = value;
             OnPropertyChanged();
+            UpdateEquipmentVisibilityByZoom();
         }
     }
 
@@ -129,7 +143,9 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         Entrances.Clear();
         Equipments.Clear();
         Personnels.Clear();
+        PersonnelClusters.Clear();
         TaskPoints.Clear();
+        EquipmentClusters.Clear();
 
         LoadGraph();
         BuildHighlightedRoute();
@@ -152,40 +168,81 @@ public partial class MapView : UserControl, INotifyPropertyChanged
             if (response?.Success != true || response.Data is null)
             {
                 LoadEquipments();
+                BuildEquipmentClustersFromCurrentMarkers();
+                UpdateEquipmentVisibilityByZoom();
                 return;
             }
 
-            var nodeUsage = new Dictionary<string, int>();
+            var visibleEquipments = response.Data.Items
+                .Where(e => !IsTrackingDevice(e))
+                .ToList();
 
-            foreach (var equipment in response.Data.Items)
+            var groupedByNode = visibleEquipments
+                .Select(equipment => new
+                {
+                    Equipment = equipment,
+                    Node = GetNodeForEquipment(equipment)
+                })
+                .Where(x => x.Node is not null)
+                .GroupBy(x => x.Node!.NodeId)
+                .ToList();
+
+            foreach (var group in groupedByNode)
             {
-                var node = GetNodeForEquipment(equipment);
+                var node = FindNode(group.Key);
 
                 if (node is null)
                     continue;
 
-                var index = nodeUsage.TryGetValue(node.NodeId, out var count) ? count : 0;
-                nodeUsage[node.NodeId] = index + 1;
+                var equipmentsInNode = group.Select(x => x.Equipment).ToList();
 
-                var position = GetOffsetPosition(node.X + 18, node.Y + 18, index);
-
-                Equipments.Add(new MapMarker
+                EquipmentClusters.Add(new MapEquipmentClusterMarker
                 {
-                    Name = string.IsNullOrWhiteSpace(equipment.EkipmanAdi)
-                        ? $"Ekipman-{equipment.EkipmanId}"
-                        : equipment.EkipmanAdi,
-                    Description =
-                        $"Tür: {TextOrDefault(equipment.EkipmanTuru)}\n" +
-                        $"Durum: {TextOrDefault(equipment.Durum)}",
-                    X = position.X,
-                    Y = position.Y,
-                    IconKind = GetEquipmentIcon(equipment.EkipmanTuru)
+                    NodeId = node.NodeId,
+                    Name = node.Name,
+                    Description = $"{node.Name} bölgesinde {equipmentsInNode.Count} ekipman bulunuyor.",
+                    X = node.X + 34,
+                    Y = node.Y + 34,
+                    EquipmentCount = equipmentsInNode.Count,
+                    EquipmentNames = equipmentsInNode
+                        .Select(e =>
+                        {
+                            var name = string.IsNullOrWhiteSpace(e.EkipmanAdi)
+                                ? $"Ekipman-{e.EkipmanId}"
+                                : e.EkipmanAdi;
+
+                            return $"{name} - {TextOrDefault(e.EkipmanTuru)}";
+                        })
+                        .ToList()
                 });
+
+                for (var i = 0; i < equipmentsInNode.Count; i++)
+                {
+                    var equipment = equipmentsInNode[i];
+                    var position = GetOffsetPosition(node.X + 18, node.Y + 18, i);
+
+                    Equipments.Add(new MapMarker
+                    {
+                        Name = string.IsNullOrWhiteSpace(equipment.EkipmanAdi)
+                            ? $"Ekipman-{equipment.EkipmanId}"
+                            : equipment.EkipmanAdi,
+                        Description =
+                            $"Tür: {TextOrDefault(equipment.EkipmanTuru)}\n" +
+                            $"Durum: {TextOrDefault(equipment.Durum)}",
+                        X = position.X,
+                        Y = position.Y,
+                        IconKind = GetEquipmentIcon(equipment.EkipmanTuru)
+                    });
+                }
             }
+
+            UpdateEquipmentVisibilityByZoom();
         }
         catch
         {
             LoadEquipments();
+            BuildEquipmentClustersFromCurrentMarkers();
+            UpdateEquipmentVisibilityByZoom();
         }
     }
 
@@ -300,6 +357,8 @@ public partial class MapView : UserControl, INotifyPropertyChanged
             if (response?.Success != true || response.Data is null)
             {
                 LoadPersonnelMarkers();
+                BuildPersonnelClustersFromCurrentMarkers();
+                UpdatePersonnelVisibilityByZoom();
                 return;
             }
 
@@ -307,40 +366,68 @@ public partial class MapView : UserControl, INotifyPropertyChanged
                 ? response.Data.Items
                 : response.Data.Items.Where(x => x.PersonelId == _currentPersonelId).ToList();
 
-            var nodeUsage = new Dictionary<string, int>();
+            var groupedByNode = visiblePersonnel
+                .Select(personel => new
+                {
+                    Personel = personel,
+                    Node = GetNodeForPersonnel(personel)
+                })
+                .Where(x => x.Node is not null)
+                .GroupBy(x => x.Node!.NodeId)
+                .ToList();
 
-            foreach (var personel in visiblePersonnel)
+            foreach (var group in groupedByNode)
             {
-                var node = GetNodeForPersonnel(personel);
+                var node = FindNode(group.Key);
 
                 if (node is null)
                     continue;
 
-                var index = nodeUsage.TryGetValue(node.NodeId, out var count) ? count : 0;
-                nodeUsage[node.NodeId] = index + 1;
+                var personnelInNode = group.Select(x => x.Personel).ToList();
 
-                var position = GetOffsetPosition(node.X, node.Y, index);
-
-                Personnels.Add(new MapMarker
+                PersonnelClusters.Add(new MapClusterMarker
                 {
-                    PersonelId = personel.PersonelId,
-                    Name = personel.AdSoyad,
-                    Description =
-                        $"Görev/Konum: {TextOrDefault(personel.CalismaKonumu)}\n" +
-                        $"Departman: {TextOrDefault(personel.Departman)}\n" +
-                        $"Uzmanlık: {TextOrDefault(personel.Uzmanlik)}\n" +
-                        $"Durum: {TextOrDefault(personel.PersonelDurumu)}",
-                    X = position.X,
-                    Y = position.Y,
-                    IconKind = IsAdminRole(personel.KullaniciRolu)
-                        ? PackIconKind.AccountTieHat
-                        : PackIconKind.AccountHardHat
+                    NodeId = node.NodeId,
+                    Name = node.Name,
+                    Description = $"{node.Name} bölgesinde {personnelInNode.Count} personel bulunuyor.",
+                    X = node.X,
+                    Y = node.Y,
+                    PersonnelCount = personnelInNode.Count,
+                    PersonnelNames = personnelInNode
+                        .Select(p => $"{p.AdSoyad} - {TextOrDefault(p.Uzmanlik)}")
+                        .ToList()
                 });
+
+                for (var i = 0; i < personnelInNode.Count; i++)
+                {
+                    var personel = personnelInNode[i];
+                    var position = GetOffsetPosition(node.X, node.Y, i);
+
+                    Personnels.Add(new MapMarker
+                    {
+                        PersonelId = personel.PersonelId,
+                        Name = personel.AdSoyad,
+                        Description =
+                            $"Görev/Konum: {TextOrDefault(personel.CalismaKonumu)}\n" +
+                            $"Departman: {TextOrDefault(personel.Departman)}\n" +
+                            $"Uzmanlık: {TextOrDefault(personel.Uzmanlik)}\n" +
+                            $"Durum: {TextOrDefault(personel.PersonelDurumu)}",
+                        X = position.X,
+                        Y = position.Y,
+                        IconKind = IsAdminRole(personel.KullaniciRolu)
+                            ? PackIconKind.AccountTieHat
+                            : PackIconKind.AccountHardHat
+                    });
+                }
             }
+
+            UpdatePersonnelVisibilityByZoom();
         }
         catch
         {
             LoadPersonnelMarkers();
+            BuildPersonnelClustersFromCurrentMarkers();
+            UpdatePersonnelVisibilityByZoom();
         }
     }
 
@@ -635,6 +722,8 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         MapTranslateTransform.Y = 0;
 
         UpdateMarkerVisualScale();
+        UpdatePersonnelVisibilityByZoom();
+        UpdateEquipmentVisibilityByZoom();
     }
 
     private void ZoomAtPoint(double zoomFactor, Point mousePosition)
@@ -657,6 +746,8 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         MapScaleTransform.ScaleY = newScale;
 
         UpdateMarkerVisualScale();
+        UpdatePersonnelVisibilityByZoom();
+        UpdateEquipmentVisibilityByZoom();
     }
 
     private void MapViewport_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -753,13 +844,21 @@ public partial class MapView : UserControl, INotifyPropertyChanged
         if (text.Contains("sensor") || text.Contains("sensör") || text.Contains("risk"))
             return FindNode("riskli-bolge");
 
-        if (text.Contains("takip"))
-            return FindNode("kontrol");
-
         if (text.Contains("jeneratör") || text.Contains("jenerator") || text.Contains("enerji"))
             return FindNode("ana-galeri");
 
         return FindNode("kontrol");
+    }
+
+    private static bool IsTrackingDevice(MapEquipmentDto equipment)
+    {
+        var text = $"{equipment.EkipmanAdi} {equipment.EkipmanTuru}".ToLowerInvariant();
+
+        return text.Contains("takip")
+            || text.Contains("cihaz")
+            || text.Contains("gps")
+            || text.Contains("rfid")
+            || text.Contains("konum");
     }
 
     private static PackIconKind GetEquipmentIcon(string? equipmentType)
@@ -828,7 +927,214 @@ public partial class MapView : UserControl, INotifyPropertyChanged
             || string.Equals(role, "Yonetici", StringComparison.OrdinalIgnoreCase);
     }
 
+    public bool IsPersonnelDetailVisible
+    {
+        get => _isPersonnelDetailVisible;
+        set
+        {
+            _isPersonnelDetailVisible = value;
+            OnPropertyChanged();
+        }
+    }
 
+    public bool IsPersonnelClusterVisible
+    {
+        get => _isPersonnelClusterVisible;
+        set
+        {
+            _isPersonnelClusterVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void UpdatePersonnelVisibilityByZoom()
+    {
+        var zoom = MapScaleTransform.ScaleX;
+
+        if (!IsPersonnelVisible)
+        {
+            IsPersonnelClusterVisible = false;
+            IsPersonnelMarkersVisible = false;
+            return;
+        }
+
+        if (zoom < 2.4)
+        {
+            IsPersonnelClusterVisible = true;
+            IsPersonnelMarkersVisible = false;
+        }
+        else
+        {
+            IsPersonnelClusterVisible = false;
+            IsPersonnelMarkersVisible = true;
+        }
+    }
+
+    private void BuildPersonnelClustersFromCurrentMarkers()
+    {
+        PersonnelClusters.Clear();
+
+        if (Personnels.Count == 0)
+            return;
+
+        PersonnelClusters.Add(new MapClusterMarker
+        {
+            NodeId = "fallback-personnel",
+            Name = "Personel Yoğunluğu",
+            Description = $"Haritada {Personnels.Count} personel gösteriliyor.",
+            X = 260,
+            Y = 210,
+            PersonnelCount = Personnels.Count,
+            PersonnelNames = Personnels
+        .Select(p => p.Name)
+        .ToList()
+        });
+    }
+
+    public bool IsPersonnelMarkersVisible
+    {
+        get => _isPersonnelMarkersVisible;
+        set
+        {
+            _isPersonnelMarkersVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string SelectedClusterTitle
+    {
+        get => _selectedClusterTitle;
+        set
+        {
+            _selectedClusterTitle = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public string SelectedClusterDescription
+    {
+        get => _selectedClusterDescription;
+        set
+        {
+            _selectedClusterDescription = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsClusterDetailPanelVisible
+    {
+        get => _isClusterDetailPanelVisible;
+        set
+        {
+            _isClusterDetailPanelVisible = value;
+            OnPropertyChanged();
+        }
+    }
+    private void PersonnelCluster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is not FrameworkElement element ||
+            element.DataContext is not MapClusterMarker cluster)
+            return;
+
+        SelectedClusterTitle = $"{cluster.Name} Personelleri";
+        SelectedClusterDescription = cluster.Description;
+
+        SelectedClusterItems.Clear();
+
+        foreach (var personName in cluster.PersonnelNames)
+            SelectedClusterItems.Add(personName);
+
+        IsClusterDetailPanelVisible = true;
+
+        e.Handled = true;
+    }
+    private void EquipmentCluster_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is not FrameworkElement element ||
+            element.DataContext is not MapEquipmentClusterMarker cluster)
+            return;
+
+        SelectedClusterTitle = $"{cluster.Name} Ekipmanları";
+        SelectedClusterDescription = cluster.Description;
+
+        SelectedClusterItems.Clear();
+
+        foreach (var equipmentName in cluster.EquipmentNames)
+            SelectedClusterItems.Add(equipmentName);
+
+        IsClusterDetailPanelVisible = true;
+
+        e.Handled = true;
+    }
+
+    private void CloseClusterDetailButton_Click(object sender, RoutedEventArgs e)
+    {
+        IsClusterDetailPanelVisible = false;
+    }
+    public bool IsEquipmentClusterVisible
+    {
+        get => _isEquipmentClusterVisible;
+        set
+        {
+            _isEquipmentClusterVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsEquipmentMarkersVisible
+    {
+        get => _isEquipmentMarkersVisible;
+        set
+        {
+            _isEquipmentMarkersVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private void UpdateEquipmentVisibilityByZoom()
+    {
+        var zoom = MapScaleTransform.ScaleX;
+        const double DetailZoomThreshold = 2.4;
+
+        if (!IsEquipmentVisible)
+        {
+            IsEquipmentClusterVisible = false;
+            IsEquipmentMarkersVisible = false;
+            return;
+        }
+
+        if (zoom < DetailZoomThreshold)
+        {
+            IsEquipmentClusterVisible = true;
+            IsEquipmentMarkersVisible = false;
+        }
+        else
+        {
+            IsEquipmentClusterVisible = false;
+            IsEquipmentMarkersVisible = true;
+        }
+    }
+
+    private void BuildEquipmentClustersFromCurrentMarkers()
+    {
+        EquipmentClusters.Clear();
+
+        if (Equipments.Count == 0)
+            return;
+
+        EquipmentClusters.Add(new MapEquipmentClusterMarker
+        {
+            NodeId = "fallback-equipment",
+            Name = "Ekipman Yoğunluğu",
+            Description = $"Haritada {Equipments.Count} ekipman gösteriliyor.",
+            X = 320,
+            Y = 245,
+            EquipmentCount = Equipments.Count,
+            EquipmentNames = Equipments
+                .Select(e => e.Name)
+                .ToList()
+        });
+    }
 }
 
 public class MapMarker
@@ -892,4 +1198,32 @@ public class MapEquipmentDto
     public string EkipmanAdi { get; set; } = string.Empty;
     public string EkipmanTuru { get; set; } = string.Empty;
     public string Durum { get; set; } = string.Empty;
+}
+
+public class MapClusterMarker
+{
+    public string NodeId { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+
+    public double X { get; set; }
+    public double Y { get; set; }
+
+    public int PersonnelCount { get; set; }
+
+    public List<string> PersonnelNames { get; set; } = new();
+}
+
+public class MapEquipmentClusterMarker
+{
+    public string NodeId { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+
+    public double X { get; set; }
+    public double Y { get; set; }
+
+    public int EquipmentCount { get; set; }
+
+    public List<string> EquipmentNames { get; set; } = new();
 }

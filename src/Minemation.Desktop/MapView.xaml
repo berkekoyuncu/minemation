@@ -98,6 +98,74 @@
                                 Height="650"
                                 ClipToBounds="True">
 
+                            <!-- Personel Bölge Sayaçları / Cluster -->
+                            <!-- Personel Bölge Sayaçları / Cluster -->
+                            <ItemsControl ItemsSource="{Binding PersonnelClusters}"
+                                            Visibility="{Binding IsPersonnelClusterVisible, Converter={StaticResource BoolToVis}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="-34,-44,0,0"
+                                                    ToolTip="{Binding Description}"
+                                                    RenderTransformOrigin="0.5,0.5"
+                                                    Cursor="Hand"
+                                                    MouseLeftButtonDown="PersonnelCluster_MouseLeftButtonDown">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
+
+                                            <Grid Width="68" Height="54">
+                                                <Border Background="#263238"
+                            BorderBrush="#00E5FF"
+                            BorderThickness="2"
+                            CornerRadius="12"
+                            Opacity="0.96" />
+
+                                                <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                                                        <materialDesign:PackIcon Kind="AccountGroup"
+                                                     Width="22"
+                                                     Height="22"
+                                                     Foreground="#00E5FF"
+                                                     Margin="0,0,5,0" />
+                                                        <TextBlock Text="{Binding PersonnelCount}"
+                                       Foreground="White"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       VerticalAlignment="Center" />
+                                                    </StackPanel>
+
+                                                    <TextBlock Text="{Binding Name}"
+                                   Foreground="#CFD8DC"
+                                   FontSize="9"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"
+                                   TextAlignment="Center"
+                                   TextTrimming="CharacterEllipsis"
+                                   MaxWidth="58"
+                                   Margin="0,2,0,0" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
                             <!-- Bağlantı Çizgileri -->
                             <ItemsControl ItemsSource="{Binding Edges}"
                                             Visibility="{Binding IsGraphVisible, Converter={StaticResource BoolToVis}}">
@@ -261,9 +329,9 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <!-- Ekipman Markerları -->
-                            <ItemsControl ItemsSource="{Binding Equipments}"
-                  Visibility="{Binding IsEquipmentVisible, Converter={StaticResource BoolToVis}}">
+                            <!-- Ekipman Bölge Sayaçları / Cluster -->
+                            <ItemsControl ItemsSource="{Binding EquipmentClusters}"
+              Visibility="{Binding IsEquipmentClusterVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
@@ -279,30 +347,101 @@
 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-24,-52,0,0"
+                                        <StackPanel Margin="-34,-44,0,0"
+                        ToolTip="{Binding Description}"
+                        RenderTransformOrigin="0.5,0.5"
+                        Cursor="Hand"
+                        MouseLeftButtonDown="EquipmentCluster_MouseLeftButtonDown">
+                                            <StackPanel.RenderTransform>
+                                                <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                    ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+                                            </StackPanel.RenderTransform>
+
+                                            <Grid Width="68" Height="54">
+                                                <Border Background="#263238"
+                            BorderBrush="#69F0AE"
+                            BorderThickness="2"
+                            CornerRadius="12"
+                            Opacity="0.96" />
+
+                                                <StackPanel HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                                    <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center">
+                                                        <materialDesign:PackIcon Kind="Tools"
+                                                                                 Width="22"
+                                                                                 Height="22"
+                                                                                 Foreground="#69F0AE"
+                                                                                 Margin="0,0,5,0" />
+                                                        <TextBlock Text="{Binding EquipmentCount}"
+                                                                   Foreground="White"
+                                                                   FontSize="18"
+                                                                   FontWeight="Bold"
+                                                                   VerticalAlignment="Center" />
+                                                    </StackPanel>
+
+                                                    <TextBlock Text="{Binding Name}"
+                                                               Foreground="#CFD8DC"
+                                                               FontSize="9"
+                                                               FontWeight="SemiBold"
+                                                               HorizontalAlignment="Center"
+                                                               TextAlignment="Center"
+                                                               TextTrimming="CharacterEllipsis"
+                                                               MaxWidth="58"
+                                                               Margin="0,2,0,0" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+
+                            <!-- Ekipman Markerları -->
+                            <ItemsControl ItemsSource="{Binding Equipments}"
+                                        Visibility="{Binding IsEquipmentMarkersVisible, Converter={StaticResource BoolToVis}}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <Canvas />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Canvas.Left" Value="{Binding X}" />
+                                        <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
+
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Margin="-11,-22,0,0"
                                                     ToolTip="{Binding Description}"
                                                     RenderTransformOrigin="0.5,1">
                                             <StackPanel.RenderTransform>
                                                 <ScaleTransform ScaleX="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}"
                                                                 ScaleY="{Binding DataContext.MarkerVisualScale, RelativeSource={RelativeSource AncestorType=UserControl}}" />
                                             </StackPanel.RenderTransform>
-                                            <materialDesign:PackIcon Kind="{Binding IconKind}"
-                                             Width="38"
-                                             Height="38"
-                                             Foreground="{DynamicResource PrimaryBrush}"
-                                             HorizontalAlignment="Center" />
-                                            <Border Background="{DynamicResource CardBrush}"
-                            CornerRadius="5"
-                            Padding="6,2"
-                            Margin="0,-6,0,0"
-                            BorderBrush="{DynamicResource BorderBrush}"
-                            BorderThickness="1">
-                                                <TextBlock Text="{Binding Name}"
-                                   Foreground="{DynamicResource PrimaryBrush}"
-                                   FontWeight="Bold"
-                                   FontSize="11"
-                                   HorizontalAlignment="Center" />
-                                            </Border>
+                                            <Grid Width="30" Height="30">
+                                                <Ellipse Fill="#263238"
+                                                         Stroke="#69F0AE"
+                                                         StrokeThickness="2"
+                                                         Opacity="0.96" />
+
+                                                <materialDesign:PackIcon Kind="{Binding IconKind}"
+                                                                         Width="20"
+                                                                         Height="20"
+                                                                         Foreground="#69F0AE"
+                                                                         HorizontalAlignment="Center"
+                                                                         VerticalAlignment="Center" />
+
+                                                <Grid.Effect>
+                                                    <DropShadowEffect BlurRadius="8"
+                                                                      ShadowDepth="0"
+                                                                      Opacity="0.75"
+                                                                      Color="#69F0AE" />
+                                                </Grid.Effect>
+                                            </Grid>
+
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -310,7 +449,7 @@
 
                             <!-- Personel Markerları -->
                             <ItemsControl ItemsSource="{Binding Personnels}"
-                  Visibility="{Binding IsPersonnelVisible, Converter={StaticResource BoolToVis}}">
+                                            Visibility="{Binding IsPersonnelMarkersVisible, Converter={StaticResource BoolToVis}}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <Canvas />
@@ -326,7 +465,7 @@
 
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="-24,-52,0,0"
+                                        <StackPanel Margin="-13,-26,0,0"
                                                     ToolTip="{Binding Description}"
                                                     RenderTransformOrigin="0.5,1">
                                             <StackPanel.RenderTransform>
@@ -338,18 +477,7 @@
                                              Height="32"
                                              Foreground="{DynamicResource SuccessBrush}"
                                              HorizontalAlignment="Center" />
-                                            <Border Background="{DynamicResource CardBrush}"
-                            CornerRadius="5"
-                            Padding="5,2"
-                            Margin="0,-5,0,0"
-                            BorderBrush="{DynamicResource BorderBrush}"
-                            BorderThickness="1">
-                                                <TextBlock Text="{Binding Name}"
-                                   Foreground="{DynamicResource TextPrimaryBrush}"
-                                   FontSize="10"
-                                   FontWeight="SemiBold"
-                                   HorizontalAlignment="Center" />
-                                            </Border>
+                                            
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -404,6 +532,89 @@
                         </Canvas>
                     </Grid>
                 </Grid>
+
+                <Border HorizontalAlignment="Left"
+        VerticalAlignment="Top"
+        Margin="20"
+        Width="300"
+        MaxHeight="420"
+        Background="#F2263238"
+        CornerRadius="10"
+        Padding="14"
+        BorderBrush="#00E5FF"
+        BorderThickness="1.5"
+        Visibility="{Binding IsClusterDetailPanelVisible, Converter={StaticResource BoolToVis}}">
+
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="16"
+                          ShadowDepth="2"
+                          Opacity="0.45" />
+                    </Border.Effect>
+
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding SelectedClusterTitle}"
+                       Foreground="White"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       VerticalAlignment="Center" />
+
+                            <Button Grid.Column="1"
+                    Content="×"
+                    Width="28"
+                    Height="28"
+                    Padding="0"
+                    Click="CloseClusterDetailButton_Click" />
+                        </Grid>
+
+                        <TextBlock Grid.Row="1"
+                   Text="{Binding SelectedClusterDescription}"
+                   Foreground="#CFD8DC"
+                   FontSize="12"
+                   TextWrapping="Wrap"
+                   Margin="0,8,0,10" />
+
+                        <ScrollViewer Grid.Row="2"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      MaxHeight="320">
+
+                            <ItemsControl ItemsSource="{Binding SelectedClusterItems}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#33455055"
+                                CornerRadius="6"
+                                Padding="8,6"
+                                Margin="0,0,0,6">
+                                            <StackPanel Orientation="Horizontal">
+                                                <materialDesign:PackIcon Kind="InformationOutline"
+                                                                         Width="18"
+                                                                         Height="18"
+                                                                         Foreground="#69F0AE"
+                                                                         Margin="0,0,8,0" />
+                                                <TextBlock Text="{Binding}"
+                                           Foreground="White"
+                                           FontSize="12"
+                                           TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </Grid>
+                </Border>
 
                 <Border HorizontalAlignment="Right"
                         VerticalAlignment="Top"
