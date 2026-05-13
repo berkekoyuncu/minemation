@@ -21,14 +21,12 @@ public class EkskavatorRepository : IEkskavatorRepository
     {
         return await _context.Ekskavator
             .AsNoTracking()
-            .Include(e => e.Ekipman)
             .ToListAsync();
     }
 
     public async Task<Ekskavator?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.Ekskavator
-            .Include(e => e.Ekipman)
             .FirstOrDefaultAsync(e => e.ekipmanId == ekipmanId);
     }
 

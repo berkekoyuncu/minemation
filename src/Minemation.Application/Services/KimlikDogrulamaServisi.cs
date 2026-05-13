@@ -48,15 +48,15 @@ public class KimlikDogrulamaServisi : IKimlikDogrulamaServisi
             return ApiResponse<GirisSonucDto>.Fail("Kullanıcı bulunamadı.");
         }
 
-        if (!string.Equals(personel.personelDurumu, "Aktif", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(personel.personelDurumu, "Pasif", StringComparison.OrdinalIgnoreCase))
         {
             await BasarisizGirisLoglaAsync(
                 kullaniciAdi,
-                "Personel aktif değil.",
+                "Personel pasif durumda.",
                 personel.personelId
             );
 
-            return ApiResponse<GirisSonucDto>.Fail("Personel aktif değil.");
+            return ApiResponse<GirisSonucDto>.Fail("Personel pasif durumda olduğu için giriş yapamaz.");
         }
 
         if (string.IsNullOrWhiteSpace(personel.sifreHash))
@@ -112,15 +112,15 @@ public class KimlikDogrulamaServisi : IKimlikDogrulamaServisi
             return ApiResponse<GirisSonucDto>.Fail("RFID kartına bağlı personel bulunamadı.");
         }
 
-        if (!string.Equals(personel.personelDurumu, "Aktif", StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(personel.personelDurumu, "Pasif", StringComparison.OrdinalIgnoreCase))
         {
             await BasarisizGirisLoglaAsync(
                 rfid,
-                "RFID girişinde personel aktif değil.",
+                "RFID girişinde personel pasif durumda.",
                 personel.personelId
             );
 
-            return ApiResponse<GirisSonucDto>.Fail("Personel aktif değil.");
+            return ApiResponse<GirisSonucDto>.Fail("Personel pasif durumda olduğu için giriş yapamaz.");
         }
 
         personel.sonGirisTarihi = DateTime.Now;
@@ -277,8 +277,8 @@ public class KimlikDogrulamaServisi : IKimlikDogrulamaServisi
         if (personel is null)
             return ApiResponse<bool>.Fail("Bu T.C. Kimlik No ile kayıtlı personel bulunamadı.");
 
-        if (!string.Equals(personel.personelDurumu, "Aktif", StringComparison.OrdinalIgnoreCase))
-            return ApiResponse<bool>.Fail("Personel aktif değil. Şifre oluşturulamaz.");
+        if (string.Equals(personel.personelDurumu, "Pasif", StringComparison.OrdinalIgnoreCase))
+            return ApiResponse<bool>.Fail("Personel pasif durumda olduğu için şifre oluşturamaz.");
 
         if (!string.IsNullOrWhiteSpace(personel.sifreHash))
             return ApiResponse<bool>.Fail("Bu kullanıcı için şifre zaten oluşturulmuş. Lütfen normal giriş ekranını kullanın.");

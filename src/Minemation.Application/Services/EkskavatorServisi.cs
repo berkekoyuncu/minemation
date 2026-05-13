@@ -30,9 +30,9 @@ public class EkskavatorServisi : IEkskavatorServisi
             filtreli = filtreli.Where(e =>
                 (e.plaka ?? "").ToLower().Contains(arama) ||
                 (e.paletTipi ?? "").ToLower().Contains(arama) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanMarka ?? "").ToLower().Contains(arama)) ||
-                (e.Ekipman != null && (e.Ekipman.ekipmanModel ?? "").ToLower().Contains(arama)));
+                (e.ekipmanAdi ?? "").ToLower().Contains(arama) ||
+                (e.ekipmanMarka ?? "").ToLower().Contains(arama) ||
+                (e.ekipmanModel ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.Plaka))
@@ -82,8 +82,8 @@ public class EkskavatorServisi : IEkskavatorServisi
             .Select(e => new EkskavatorListeDto
             {
                 EkipmanId = e.ekipmanId,
-                EkipmanAdi = e.Ekipman == null ? null : e.Ekipman.ekipmanAdi,
-                EkipmanDurumu = e.Ekipman == null ? null : e.Ekipman.durum,
+                EkipmanAdi = e.ekipmanAdi,
+                EkipmanDurumu = e.durum,
                 Plaka = e.plaka,
                 KovaKapasitesi = e.kovaKapasitesi,
                 MotorGucu = e.motorGucu,
@@ -178,13 +178,11 @@ public class EkskavatorServisi : IEkskavatorServisi
 
         if (ekskavator is null)
             return ApiResponse<bool>.Fail("Ekskavatör kaydı bulunamadı.");
-
-        if (ekskavator.Ekipman != null)
-        {
-            ekskavator.Ekipman.durum = "Pasif";
+        
+            ekskavator.durum = "Pasif";
             await _ekskavatorRepository.DegisiklikleriKaydetAsync();
             return ApiResponse<bool>.Ok(true, "Ekskavatör ekipmanı pasif hale getirildi.");
-        }
+        
 
         return ApiResponse<bool>.Ok(true, "Ekskavatör kaydı bulundu. Bu entity'de durum alanı olmadığı için pasife alma yapılmadı.");
     }
@@ -194,10 +192,10 @@ public class EkskavatorServisi : IEkskavatorServisi
         return new EkskavatorDetayDto
         {
             EkipmanId = ekskavator.ekipmanId,
-            EkipmanAdi = ekskavator.Ekipman == null ? null : ekskavator.Ekipman.ekipmanAdi,
-            EkipmanMarka = ekskavator.Ekipman == null ? null : ekskavator.Ekipman.ekipmanMarka,
-            EkipmanModel = ekskavator.Ekipman == null ? null : ekskavator.Ekipman.ekipmanModel,
-            EkipmanDurumu = ekskavator.Ekipman == null ? null : ekskavator.Ekipman.durum,
+            EkipmanAdi = ekskavator.ekipmanAdi,
+            EkipmanMarka = ekskavator.ekipmanMarka,
+            EkipmanModel = ekskavator.ekipmanModel,
+            EkipmanDurumu = ekskavator.durum,
             Plaka = ekskavator.plaka,
             KovaKapasitesi = ekskavator.kovaKapasitesi,
             MotorGucu = ekskavator.motorGucu,

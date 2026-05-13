@@ -30,7 +30,7 @@ public class SensorVerisiServisi : ISensorVerisiServisi
             filtreli = filtreli.Where(sv =>
                 (sv.birim ?? "").ToLower().Contains(arama) ||
                 (sv.Sensor != null && (sv.Sensor.sensorTipi ?? "").ToLower().Contains(arama)) ||
-                (sv.Sensor != null && sv.Sensor.Ekipman != null && (sv.Sensor.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
+                (sv.Sensor != null && (sv.Sensor.ekipmanAdi ?? "").ToLower().Contains(arama)) ||
                 (sv.Vardiya != null && (sv.Vardiya.vardiyaAdi ?? "").ToLower().Contains(arama)));
         }
 
@@ -87,7 +87,7 @@ public class SensorVerisiServisi : ISensorVerisiServisi
                 OlcumTarihi = sv.olcumTarihi,
                 EkipmanId = sv.ekipmanId,
                 SensorTipi = sv.Sensor == null ? null : sv.Sensor.sensorTipi,
-                EkipmanAdi = sv.Sensor == null || sv.Sensor.Ekipman == null ? null : sv.Sensor.Ekipman.ekipmanAdi,
+                EkipmanAdi = sv.Sensor == null ? null : sv.Sensor.ekipmanAdi,
                 VardiyaId = sv.vardiyaId,
                 VardiyaAdi = sv.Vardiya == null ? null : sv.Vardiya.vardiyaAdi,
                 EsikDisiMi = EsikDisiMi(sv)
@@ -178,7 +178,7 @@ public class SensorVerisiServisi : ISensorVerisiServisi
             EkipmanId = sensorVerisi.ekipmanId,
             SensorTipi = sensorVerisi.Sensor == null ? null : sensorVerisi.Sensor.sensorTipi,
             SensorDurumu = sensorVerisi.Sensor == null ? null : sensorVerisi.Sensor.sensorDurumu,
-            EkipmanAdi = sensorVerisi.Sensor == null || sensorVerisi.Sensor.Ekipman == null ? null : sensorVerisi.Sensor.Ekipman.ekipmanAdi,
+            EkipmanAdi = sensorVerisi.Sensor == null ? null : sensorVerisi.Sensor.ekipmanAdi,
             MinEsikDeger = sensorVerisi.Sensor == null ? 0 : sensorVerisi.Sensor.minEsikDeger,
             MaxEsikDeger = sensorVerisi.Sensor == null ? 0 : sensorVerisi.Sensor.maxEsikDeger,
             VardiyaId = sensorVerisi.vardiyaId,

@@ -21,14 +21,12 @@ public class HafriyatRepository : IHafriyatRepository
     {
         return await _context.Hafriyat
             .AsNoTracking()
-            .Include(h => h.Ekipman)
             .ToListAsync();
     }
 
     public async Task<Hafriyat?> EkipmanIdIleGetirAsync(int ekipmanId)
     {
         return await _context.Hafriyat
-            .Include(h => h.Ekipman)
             .FirstOrDefaultAsync(h => h.ekipmanId == ekipmanId);
     }
 

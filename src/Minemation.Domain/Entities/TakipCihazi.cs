@@ -5,7 +5,7 @@ using System;
 
 namespace Minemation.Domain.Entities
 {
-    public class TakipCihazi
+    public class TakipCihazi : Ekipman
     {
         public int takipCihaziId {  get; set; }
         public string takipCihaziSeriNo { get; set; }
@@ -21,8 +21,5 @@ namespace Minemation.Domain.Entities
         public int? personelId { get; set; }
         public virtual Personel Personel { get; set; }
 
-        // ekipmanın olabilir 
-        public int? ekipmanId { get; set; }
-        public virtual Ekipman Ekipman { get; set; }
     }
 }

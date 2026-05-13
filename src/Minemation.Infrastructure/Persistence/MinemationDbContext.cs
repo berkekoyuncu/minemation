@@ -46,9 +46,22 @@ namespace Minemation.Infrastructure.Persistence
             // --- PERSONEL YAPILANDIRMASI ---
             modelBuilder.Entity<Personel>(entity =>
             {
+                // FK nullable olmalı, NO ACTION yerine bunu kullan
+                entity.HasOne(p => p.TakipCihazi)
+                      .WithOne()
+                      .HasForeignKey<Personel>(p => p.AtanmisTakipCihaziId)
+                      .IsRequired(false)          // ← NULL olabilir
+                      .OnDelete(DeleteBehavior.SetNull); // ← Cihaz silinirse null olsun 
+
                 entity.HasKey(e => e.personelId);
                 entity.Property(e => e.tckn).HasColumnType("char(11)").IsRequired();
                 entity.Property(e => e.rfidKartNumarasi).HasMaxLength(50);
+
+               /* entity.HasOne(p => p.TakipCihazi)
+                      .WithOne() // Bir cihaz bir kişiye özeldir
+                      .HasForeignKey<Personel>(p => p.AtanmisTakipCihaziId)
+                      .OnDelete(DeleteBehavior.Restrict);
+               */
 
                 // List<string> tipi veritabanında doğrudan saklanamaz. 
                 // Ya bunu string'e çevirmelisin ya da EF Core'a nasıl saklayacağını söylemelisin.
@@ -141,11 +154,21 @@ namespace Minemation.Infrastructure.Persistence
             {
                 // 1. Birincil Anahtar
                 entity.HasKey(e => e.ekipmanId);
+                entity.ToTable("Ekipmanlar");
 
                 // 2. Metin Alanı Kısıtlamaları
                 entity.Property(e => e.ekipmanAdi)
                       .HasMaxLength(100)
                       .IsRequired();
+
+                entity.Property(e => e.ekipmanTuru)
+                      .HasMaxLength(50)
+                      .IsRequired();
+
+                /*entity.HasOne(e => e.TakipCihazi)
+                      .WithOne() // Bir cihaz bir ekipmana özeldir
+                      .HasForeignKey<Ekipman>(e => e.AtanmisTakipCihaziId)
+                      .OnDelete(DeleteBehavior.Restrict);*/
 
                 entity.Property(e => e.ekipmanMarka)
                       .HasMaxLength(50);
@@ -188,12 +211,13 @@ namespace Minemation.Infrastructure.Persistence
                       .HasMaxLength(500)
                       .IsUnicode(true);
 
+
                 // 5. İlişki Tanımı: Sensör (1:1 İlişki)
                 // Ekipman'ın tek bir sensörü olduğu ve Sensör'ün EkipmanId'yi anahtar olarak kullandığı yapı:
-                entity.HasOne(e => e.Sensor)
+                /*entity.HasOne(e => e.Sensor)
                       .WithOne(s => s.Ekipman)
                       .HasForeignKey<Sensor>(s => s.ekipmanId)
-                      .OnDelete(DeleteBehavior.Cascade);
+                      .OnDelete(DeleteBehavior.Cascade);*/
             });
 
 
@@ -201,8 +225,9 @@ namespace Minemation.Infrastructure.Persistence
             // Ekskavatör Yapılandırması (Table-per-Type Miras Yapısı)
             modelBuilder.Entity<Ekskavator>(entity =>
             {
+                entity.ToTable("Ekskavatorler");
                 // 1. ekipmanId'yi bu tablonun Primary Key'i yapıyoruz
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
 
                 // 2. Ondalık (decimal) alanlar için veritabanı hassasiyet ayarı
                 // Bu ayar yapılmazsa EF Core hata verebilir veya veriyi yuvarlayabilir.
@@ -214,12 +239,13 @@ namespace Minemation.Infrastructure.Persistence
                 entity.Property(e => e.plaka).HasMaxLength(20);
                 entity.Property(e => e.paletTipi).HasMaxLength(50);
 
-                // 3. İlişki Tanımı: Bire-Bir (1:1)
+                /*// 3. İlişki Tanımı: Bire-Bir (1:1)
                 // Ekskavator tablosundaki her satır, Ekipman tablosundaki bir satıra karşılık gelir.
                 entity.HasOne(e => e.Ekipman)
                       .WithOne() // Eğer Ekipman.cs içinde 'public Ekskavator Ekskavator' yoksa boş bırakılır
                       .HasForeignKey<Ekskavator>(e => e.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse ekskavatör detayları da silinsin
+                */
             });
 
 
@@ -227,8 +253,9 @@ namespace Minemation.Infrastructure.Persistence
             // El Aletleri Yapılandırması (Table-per-Type Miras Yapısı)
             modelBuilder.Entity<ElAletleri>(entity =>
             {
+                entity.ToTable("ElAletleri");
                 // 1. ekipmanId'yi bu tablonun Birincil Anahtarı (Primary Key) yapıyoruz
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
 
                 // 2. Özellik Kısıtlamaları
                 entity.Property(e => e.gucKaynagiTipi)
@@ -240,12 +267,14 @@ namespace Minemation.Infrastructure.Persistence
                 entity.Property(e => e.kullanimAmaci)
                       .HasMaxLength(200);
 
+                /*
                 // 3. İlişki Tanımı: Bire-Bir (1:1)
                 // ElAletleri tablosundaki her satır, Ekipman tablosundaki bir satırla aynı ID'ye sahip olmalıdır.
                 entity.HasOne(ea => ea.Ekipman)
                       .WithOne() // Ekipman sınıfında 'public ElAletleri ElAletleri' yoksa boş bırakılır
                       .HasForeignKey<ElAletleri>(ea => ea.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse el aleti detayı da silinsin
+                */
             });
 
 
@@ -254,8 +283,9 @@ namespace Minemation.Infrastructure.Persistence
             // Hafriyat Yapılandırması (Table-per-Type Miras Yapısı)
             modelBuilder.Entity<Hafriyat>(entity =>
             {
+                entity.ToTable("Hafriyat");
                 // 1. Birincil Anahtar Tanımlama
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
 
                 // 2. Özellik Kısıtlamaları
                 entity.Property(e => e.plaka)
@@ -267,13 +297,14 @@ namespace Minemation.Infrastructure.Persistence
 
                 entity.Property(e => e.azamiYukAgirligi)
                       .HasColumnType("decimal(18,2)");
-
+                /*
                 // 3. İlişki Tanımı: Bire-Bir (1:1)
                 // Hafriyat tablosundaki ID, Ekipman tablosundaki ID ile birebir eşleşmelidir.
                 entity.HasOne(h => h.Ekipman)
                       .WithOne() // Ekipman tarafında 'public Hafriyat Hafriyat' yoksa boş bırakılır
                       .HasForeignKey<Hafriyat>(h => h.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse hafriyat detayları da silinsin
+                */
             });
 
 
@@ -282,8 +313,9 @@ namespace Minemation.Infrastructure.Persistence
             // Kepçe Yapılandırması (Table-per-Type Miras Yapısı)
             modelBuilder.Entity<Kepce>(entity =>
             {
+                entity.ToTable("Kepce");
                 // 1. Birincil Anahtar Tanımlama
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
 
                 // 2. Özellik Kısıtlamaları ve Hassasiyet Ayarları
                 entity.Property(e => e.plaka)
@@ -294,13 +326,13 @@ namespace Minemation.Infrastructure.Persistence
                 entity.Property(e => e.kovaKapasitesi).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.bosaltmaYuksekligi).HasColumnType("decimal(18,2)");
                 entity.Property(e => e.devrilmeYuku).HasColumnType("decimal(18,2)");
-
+                /*
                 // 3. İlişki Tanımı: Bire-Bir (1:1)
                 // Kepce tablosundaki ID, Ekipman tablosundaki ID ile aynı olmalıdır.
                 entity.HasOne(k => k.Ekipman)
                       .WithOne() // Ekipman tarafında 'public Kepce Kepce' özelliği yoksa boş bırakılır
                       .HasForeignKey<Kepce>(k => k.ekipmanId)
-                      .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse kepçe detayları da silinsin
+                      .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse kepçe detayları da silinsin*/
             });
 
 
@@ -309,8 +341,9 @@ namespace Minemation.Infrastructure.Persistence
             // Kırıcı Yapılandırması (Table-per-Type Miras Yapısı)
             modelBuilder.Entity<Kirici>(entity =>
             {
+                entity.ToTable("Kirici");
                 // 1. Birincil Anahtar Tanımlama
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
 
                 // 2. Ondalık (decimal) alanlar için veritabanı hassasiyet ayarı
                 // Maden ekipmanlarında hassas teknik değerler için bu ayar zorunludur.
@@ -320,13 +353,14 @@ namespace Minemation.Infrastructure.Persistence
 
                 entity.Property(e => e.ucTipi).HasMaxLength(50);
                 entity.Property(e => e.gerekenYagDebisi).HasMaxLength(50);
-
+                /*
                 // 3. İlişki Tanımı: Bire-Bir (1:1)
                 // Kirici tablosundaki ID, Ekipman tablosundaki ID ile aynı olmalıdır.
                 entity.HasOne(k => k.Ekipman)
                       .WithOne() // Ekipman sınıfında 'public Kirici Kirici' yoksa boş bırakılır
                       .HasForeignKey<Kirici>(k => k.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse kırıcı detayları da silinsin
+            */
             });
 
 
@@ -334,9 +368,12 @@ namespace Minemation.Infrastructure.Persistence
             // Sensör Yapılandırması (1:1 - Zayıf Varlık Yapısı)
             modelBuilder.Entity<Sensor>(entity =>
             {
+                entity.ToTable("Sensor");
                 // 1. Birincil Anahtar Tanımlama
                 // Sensör'ün kendi Id'si yok, EkipmanId'yi anahtar olarak kullanıyor.
-                entity.HasKey(e => e.ekipmanId);
+                //entity.HasKey(e => e.ekipmanId);
+
+
 
                 // 2. Özellik Kısıtlamaları
                 entity.Property(e => e.sensorTipi)
@@ -348,13 +385,14 @@ namespace Minemation.Infrastructure.Persistence
 
                 entity.Property(e => e.baglantiProtokolu)
                       .HasMaxLength(50);
-
+                /*
                 // 3. İlişki Tanımı: Bire-Bir (1:1)
                 // Sensör tablosundaki her satır, Ekipman tablosundaki tam bir satıra karşılık gelir.
                 entity.HasOne(s => s.Ekipman)
                       .WithOne(e => e.Sensor) // Ekipman sınıfındaki 'public Sensor Sensor { get; set; }' ile eşleşir
                       .HasForeignKey<Sensor>(s => s.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Ekipman silinirse sensör bilgisi de silinir
+                */
             });
 
 
@@ -380,7 +418,7 @@ namespace Minemation.Infrastructure.Persistence
                 // 3. Sensör/Ekipman ile İlişki (N:1)
                 // Sensor tablosunun anahtarı ekipmanId olduğu için bağlantıyı buradan kuruyoruz.
                 entity.HasOne(sv => sv.Sensor)
-                      .WithMany() // Bir sensörün binlerce veri kaydı olabilir
+                      .WithMany(s => s.SensorVerileri) // Bir sensörün binlerce veri kaydı olabilir
                       .HasForeignKey(sv => sv.ekipmanId)
                       .OnDelete(DeleteBehavior.Cascade); // Cihaz silinirse ölçüm geçmişi de silinir
 
@@ -431,37 +469,55 @@ namespace Minemation.Infrastructure.Persistence
 
 
 
+            /*
+                        // Takip Cihazı Yapılandırması
+                        modelBuilder.Entity<TakipCihazi>(entity =>
+                        {
+                            // 1. Birincil Anahtar
+                            entity.HasKey(e => e.takipCihaziId);
 
-            // Takip Cihazı Yapılandırması
+                            // 2. Özellik Kısıtlamaları
+                            entity.Property(e => e.takipCihaziSeriNo)
+                                  .HasMaxLength(50)
+                                  .IsRequired();
+
+                            entity.Property(e => e.takipCihaziDurumu)
+                                  .HasMaxLength(20);
+
+                            entity.Property(e => e.pilSeviyesi)
+                                  .HasColumnType("decimal(5,2)"); // Örn: %100.00 şeklinde saklamak için
+
+                            // 3. Personel ile İlişki (N:1)
+                            entity.HasOne(t => t.Personel)
+                                  .WithMany() // Bir personelin birden fazla takip cihazı taşıması senaryosuna açık
+                                  .HasForeignKey(t => t.personelId)
+                                  .OnDelete(DeleteBehavior.SetNull); // Personel silinirse cihaz 'boşta' konumuna düşer
+
+                            // 4. Ekipman ile İlişki (N:1)
+                            entity.HasOne(t => t.Ekipman)
+                                  .WithMany()
+                                  .HasForeignKey(t => t.ekipmanId)
+                                  .OnDelete(DeleteBehavior.SetNull); // Ekipman silinirse cihaz kaydı korunur, FK null olur
+                        });
+            */
+
+            // Takip Cihazı Yapılandırması (Yeni TPT ve Zimmet Modeli)
             modelBuilder.Entity<TakipCihazi>(entity =>
             {
-                // 1. Birincil Anahtar
-                entity.HasKey(e => e.takipCihaziId);
+                // 1. TPT kuralı: Anahtar, Base tablodaki (Ekipman) ID ile aynı olmalı
+                //entity.HasKey(e => e.ekipmanId);
+                entity.ToTable("TakipCihazlari"); // Alt tablo ismi
 
-                // 2. Özellik Kısıtlamaları
-                entity.Property(e => e.takipCihaziSeriNo)
-                      .HasMaxLength(50)
-                      .IsRequired();
-
-                entity.Property(e => e.takipCihaziDurumu)
-                      .HasMaxLength(20);
-
+                // 2. Özellik Kısıtlamaları (Ekipman sınıfında olmayanlar)
                 entity.Property(e => e.pilSeviyesi)
-                      .HasColumnType("decimal(5,2)"); // Örn: %100.00 şeklinde saklamak için
+                      .HasColumnType("decimal(5,2)");
 
-                // 3. Personel ile İlişki (N:1)
-                entity.HasOne(t => t.Personel)
-                      .WithMany() // Bir personelin birden fazla takip cihazı taşıması senaryosuna açık
-                      .HasForeignKey(t => t.personelId)
-                      .OnDelete(DeleteBehavior.SetNull); // Personel silinirse cihaz 'boşta' konumuna düşer
+                entity.Property(e => e.takipCihaziHaberlesmeProtokolu)
+                      .HasMaxLength(50);
 
-                // 4. Ekipman ile İlişki (N:1)
-                entity.HasOne(t => t.Ekipman)
-                      .WithMany()
-                      .HasForeignKey(t => t.ekipmanId)
-                      .OnDelete(DeleteBehavior.SetNull); // Ekipman silinirse cihaz kaydı korunur, FK null olur
+                // NOT: takipCihaziSeriNo, durum vb. alanlar artık Ekipman 
+                // tablosundan miras geldiği için burada ayrıca yapılandırmaya gerek yok.
             });
-
 
 
             // --- 3. VARDİYA & TAKİP MODÜLÜ ---
@@ -928,6 +984,8 @@ namespace Minemation.Infrastructure.Persistence
                     departman = i % 3 == 0 ? "Üretim" : "Teknik",
                     calisanTipi = "Tam Zamanlı",
                     calismaKonumu = "Saha-1",
+
+                    AtanmisTakipCihaziId = null  // Takip cihazları 2000'den başlıyorsa
                 });
 
                 modelBuilder.Entity<SaglikBilgileri>().HasData(new SaglikBilgileri
@@ -951,24 +1009,312 @@ namespace Minemation.Infrastructure.Persistence
                     acilDurumKisileriTelNo = "050000000" + i.ToString("D2"),
                     acilDurumKisileriYakinlik = yakinliklar[i % yakinliklar.Length]
                 });
-            }
+           // }
 
+
+
+
+            // --- 2. EKİPMAN VE ALT TİPLERİ (50 Kayıt - TPT Yapısı) ---
+            // DİKKAT: modelBuilder.Entity<Ekipman>().HasData(...) kısmını tamamen sildik.
+            // Veriyi direkt alt sınıflar üzerinden gönderiyoruz.
+
+            //for (int i = 1; i <= 50; i++)
+           // {
+                int currentEkipmanId = 500 + i;
+                string secilenTur = i % 5 == 0 ? "Ekskavatör" :
+                             (i % 5 == 1 ? "Hafriyat" :
+                             (i % 5 == 2 ? "Kepçe" :
+                             (i % 5 == 3 ? "Kırıcı" : "Sensör")));
+
+                if (secilenTur == "Ekskavatör")
+                {
+                    modelBuilder.Entity<Ekskavator>().HasData(new Ekskavator
+                    {
+                        // --- Ekipman'dan Miras Alınan Alanlar (Zorunlu) ---
+                        ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Ekskavatör Unit-{i}",
+                        ekipmanTuru = secilenTur,
+                        ekipmanMarka = "Caterpillar",
+                        ekipmanModel = "320-GC",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-EX-{i}",
+                        RFIDEtiket = $"RFID-EX-{i}",
+                        ureticiFirma = "Global Mining Tech",
+                        tedarikciFirma = "Borusan Makina",
+                        operasyonTuru = "Kazı",
+                        uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                        satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        sonBakimTarihi = new DateTime(2026, 01, 01),
+                        gelecekBakimTarihi = new DateTime(2026, 12, 01),
+                        boyut = 10.5m,
+                        agirlik = 25000m,
+
+                        bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                        teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                        kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                        garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                        satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+
+
+                        // --- Ekskavatör'e Özel Alanlar ---
+                        plaka = $"06-BS-{i}",
+                        kovaKapasitesi = 5m,
+                        motorGucu = 400m,
+                        paletTipi = "Çelik"
+                    });
+                }
+                else if (secilenTur == "Hafriyat")
+                {
+                    modelBuilder.Entity<Hafriyat>().HasData(new Hafriyat
+                    {
+                        ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Hafriyat Unit-{i}",
+                        ekipmanTuru = secilenTur,
+                        ekipmanMarka = "Mercedes",
+                        ekipmanModel = "Arocs",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-HF-{i}",
+                        RFIDEtiket = $"RFID-HF-{i}",
+                        ureticiFirma = "Global Mining Tech",
+                        tedarikciFirma = "Mercedes Benz TR",
+                        operasyonTuru = "Taşıma",
+                        uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                        satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        sonBakimTarihi = new DateTime(2026, 02, 01),
+                        gelecekBakimTarihi = new DateTime(2026, 11, 01),
+                        boyut = 8.5m,
+                        agirlik = 18000m,
+
+                        bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                        teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                        kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                        garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                        satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+
+
+                        // --- Hafriyat'a Özel Alanlar ---
+                        plaka = $"06-AR-{i}",
+                        damperHacmi = 15m,
+                        azamiYukAgirligi = 30000m
+                    });
+                }
+                else if (secilenTur == "Kepçe")
+                {
+                    modelBuilder.Entity<Kepce>().HasData(new Kepce
+                    {
+                        ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Kepçe Unit-{i}",
+                        ekipmanTuru = secilenTur,
+                        ekipmanMarka = "Liebherr",
+                        ekipmanModel = "L-580",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-KP-{i}",
+                        RFIDEtiket = $"RFID-KP-{i}",
+                        ureticiFirma = "Global Mining Tech",
+                        tedarikciFirma = "Liebherr TR",
+                        operasyonTuru = "Yükleme",
+                        uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                        satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        sonBakimTarihi = new DateTime(2026, 03, 01),
+                        gelecekBakimTarihi = new DateTime(2026, 09, 01),
+                        boyut = 9.0m,
+                        agirlik = 22000m,
+
+
+                        bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                        teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                        kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                        garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                        satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+                        // --- Kepçe'ye Özel Alanlar ---
+                        plaka = $"06-MN-{i}",
+                        yuklemeKapasitesi = 8m,
+                        kovaKapasitesi = 4m
+                    });
+                }
+                else if (secilenTur == "Kırıcı")
+                {
+                    modelBuilder.Entity<Kirici>().HasData(new Kirici
+                    {
+                        ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Kırıcı Unit-{i}",
+                        ekipmanTuru = secilenTur,
+                        ekipmanMarka = "Atlas Copco",
+                        ekipmanModel = "HB-2000",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-KR-{i}",
+                        RFIDEtiket = $"RFID-KR-{i}",
+                        ureticiFirma = "Global Mining Tech",
+                        tedarikciFirma = "Atlas Copco TR",
+                        operasyonTuru = "Kırma",
+                        uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                        satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        sonBakimTarihi = new DateTime(2026, 04, 01),
+                        gelecekBakimTarihi = new DateTime(2026, 08, 01),
+                        boyut = 3.2m,
+                        agirlik = 2000m,
+
+
+                        bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                        teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                        kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                        garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                        satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+
+
+                        // --- Kırıcı'ya Özel Alanlar ---
+                        ucTipi = "Sivri",
+                        gerekenYagDebisi = "50L/dk"
+                    });
+                }
+                else // Sensör
+                {
+                    modelBuilder.Entity<Sensor>().HasData(new Sensor
+                    {
+                        ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Sensör Unit-{i}",
+                        ekipmanTuru = secilenTur,
+                        ekipmanMarka = "Siemens",
+                        ekipmanModel = "S-100",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-SN-{i}",
+                        RFIDEtiket = $"RFID-SN-{i}",
+                        ureticiFirma = "Global Mining Tech",
+                        tedarikciFirma = "Siemens TR",
+                        operasyonTuru = "Ölçüm",
+                        uretimYili = new DateTime(2022, 1, 1).AddMonths(i),
+                        satinAlmaTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        garantiBaslangicTarihi = new DateTime(2024, 1, 1).AddDays(i),
+                        sonBakimTarihi = new DateTime(2026, 05, 01),
+                        gelecekBakimTarihi = new DateTime(2026, 12, 01),
+                        boyut = 0.5m,
+                        agirlik = 1.2m,
+
+                        bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
+                        teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
+                        kullanimKilavuzu = $"/docs/manual_{currentEkipmanId}.pdf",
+                        garantiBelgesi = $"/docs/warranty_{currentEkipmanId}.pdf",
+                        satinAlmaBelgesi = $"/docs/invoice_{currentEkipmanId}.pdf",
+
+
+                        // --- Sensör'e Özel Alanlar ---
+                        sensorTipi = i % 2 == 0 ? "Metan Gazı" : "Sıcaklık",
+                        sensorDurumu = "Aktif",
+                        baglantiProtokolu = "MQTT",
+                        haberlesmeTipi = "Kablosuz",
+                        minEsikDeger = 0.0,
+                        maxEsikDeger = 100.0,
+                        hassasiyet = 0.1
+                    });
+
+
+
+                    // HATA ÇÖZÜMÜ: SADECE BURADA, TEK BİR KEZ SensorVerisi ekliyoruz
+                    modelBuilder.Entity<SensorVerisi>().HasData(new SensorVerisi
+                    {
+                        sensorVerisiId = i, // sensorVerisiId her zaman benzersiz (1,2,3...)
+                        ekipmanId = currentEkipmanId,   // Sadece yukarıda eklediğimiz Sensörün ID'si
+                        vardiyaId = 1,
+                        deger = 20.5m,
+                        birim = "°C",
+                        olcumTarihi =  DateTime.AddHours(8 * (i % 3))
+                    });
+                }
+           // }
+
+  
+
+
+            /* modelBuilder.Entity<TakipCihazi>().HasData(new TakipCihazi
+ {
+     takipCihaziId = i,
+     takipCihaziSeriNo = $"TC-{i}",
+     personelId = i,
+     pilSeviyesi = 100.0m - (i % 40),
+     takipCihaziDurumu = i % 10 == 0 ? "Bakımda" : "Aktif",
+     takipCihaziHaberlesmeProtokolu = i % 2 == 0 ? "UHF-RFID" : "LoRaWAN",
+     takipCihaziModeli = i % 2 == 0 ? "MineTrack-v1" : "SafeZone-v4",
+     takipCihaziTuru = cihazTipleri[i % cihazTipleri.Length],
+ }); */
+
+
+            // --- 3. TAKİP CİHAZLARI (HATA ÇÖZÜCÜ VERSİYON) ---
+            //for (int t = 1; t <= 50; t++)
+           // {
+                int benzersizId = 3000 + i;
+
+                modelBuilder.Entity<TakipCihazi>().HasData(new TakipCihazi
+                {
+                    ekipmanId = benzersizId, // PK
+                    ekipmanAdi = $"Takip Cihazı Unit-{i}",
+                    ekipmanTuru = "Takip Cihazı",
+                    ekipmanMarka = "SafeZone",
+                    ekipmanModel = "v4",
+                    durum = "Aktif",
+                    seriNo = $"TC-SN-{i}",
+                    RFIDEtiket = $"RFID-TC-{i}",
+                    ureticiFirma = "Minemation Tech",
+                    tedarikciFirma = "Minemation Tech",
+                    operasyonTuru = "Takip",
+                    uretimYili = new DateTime(2025, 1, 1),
+                    satinAlmaTarihi = new DateTime(2025, 1, 1),
+                    garantiBaslangicTarihi = new DateTime(2025, 1, 1),
+                    sonBakimTarihi = new DateTime(2026, 01, 01),
+                    gelecekBakimTarihi = new DateTime(2027, 01, 01),
+                    boyut = 0.2m,
+                    agirlik = 0.5m,
+                    bakimFormu = "N/A",
+                    teknikDokuman = "N/A",
+                    kullanimKilavuzu = "N/A",
+                    garantiBelgesi = "N/A",
+                    satinAlmaBelgesi = "N/A",
+                    takipCihaziSeriNo = $"TC-SPEC-SN-{i}",
+                    personelId = null,
+                    pilSeviyesi = 100.0m - (i % 40),
+                    takipCihaziDurumu = "Aktif",
+                    takipCihaziHaberlesmeProtokolu = "LoRaWAN",
+                    takipCihaziModeli = "SafeZone-v4",
+                    takipCihaziTuru = "Personel Bilekliği"
+                });
+           // }
+
+
+
+
+
+            /*
             // --- 2. EKİPMAN VE ALT TİPLERİ (50 Kayıt - TPT Yapısı) ---
             for (int i = 1; i <= 50; i++)
             {
                 int currentEkipmanId = 500 + i;
+
+                // 5'li modulo yapısı ile türü belirliyoruz
+                string secilenTur = i % 5 == 0 ? "Ekskavatör" :
+                             (i % 5 == 1 ? "Hafriyat" :
+                             (i % 5 == 2 ? "Kepçe" :
+                             (i % 5 == 3 ? "Kırıcı" : "Sensör")));
+
                 modelBuilder.Entity<Ekipman>().HasData(new Ekipman
                 {
                     ekipmanId = currentEkipmanId,
-                    ekipmanAdi = i % 2 == 0 ? $"Ekskavatör EX-{i}" : $"Kamyon TR-{i}",
+                    ekipmanAdi = $"{secilenTur} Unit-{i}",
                     ekipmanMarka = i % 2 == 0 ? "Caterpillar" : "Volvo",
                     ekipmanModel = i % 2 == 0 ? "320-GC" : "FMX-460",
+                    ekipmanTuru = secilenTur,
                     durum = "Aktif",
                     seriNo = $"SN-2026-{currentEkipmanId}",
                     RFIDEtiket = $"RFID-EQ-{currentEkipmanId}",
                     ureticiFirma = "Global Mining Tech",
                     tedarikciFirma = "Borusan Makina",
-                    operasyonTuru = i % 2 == 0 ? "Kazı" : "Nakliye",
+                    operasyonTuru = i % 2 == 0 ? "Kazı/Ölçüm" : "Nakliye/Analiz",
 
                     bakimFormu = $"/docs/maint_{currentEkipmanId}.pdf",
                     teknikDokuman = $"/docs/tech_{currentEkipmanId}.pdf",
@@ -982,49 +1328,87 @@ namespace Minemation.Infrastructure.Persistence
                 });
 
                 // TPT Miras Yapısı: Her ekipmanı tipine göre detay tablosuna ekle
-                if (i % 4 == 0)
+                if (secilenTur == "Ekskavatör")
                 {
                     modelBuilder.Entity<Ekskavator>().HasData(new Ekskavator
                     {
                         ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Ekskavatör Unit-{i}",
+                        ekipmanMarka = "Caterpillar",
+                        ekipmanModel = "320-GC",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-{currentEkipmanId}",
                         plaka = $"06-BS-{i}",
                         kovaKapasitesi = 5m,
                         motorGucu = 400m,
                         paletTipi = "Çelik"
                     });
                 }
-                else if (i % 4 == 1)
+                else if (secilenTur == "Hafriyat")
                 {
                     modelBuilder.Entity<Hafriyat>().HasData(new Hafriyat
                     {
                         ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Hafriyat Unit-{i}",
+                        ekipmanMarka = "Caterpillar",
+                        ekipmanModel = "320-GC",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-{currentEkipmanId}",
                         plaka = $"06-AR-{i}",
                         damperHacmi = 15m,
                         azamiYukAgirligi = 30000m
                     });
                 }
-                else if (i % 4 == 2)
+                else if (secilenTur == "Kepçe")
                 {
                     modelBuilder.Entity<Kepce>().HasData(new Kepce
                     {
                         ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Kepçe Unit-{i}",
+                        ekipmanMarka = "Caterpillar",
+                        ekipmanModel = "320-GC",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-{currentEkipmanId}",
                         plaka = $"06-MN-{i}",
                         yuklemeKapasitesi = 8m,
                         kovaKapasitesi = 4m
                     });
                 }
-                else
+                else if (secilenTur == "Kırıcı")
                 {
                     modelBuilder.Entity<Kirici>().HasData(new Kirici
                     {
                         ekipmanId = currentEkipmanId,
+                        ekipmanAdi = $"Kırıcı Unit-{i}",
+                        ekipmanMarka = "Caterpillar",
+                        ekipmanModel = "320-GC",
+                        durum = "Aktif",
+                        seriNo = $"SN-2026-{currentEkipmanId}",
                         ucTipi = "Sivri",
                         gerekenYagDebisi = "50L/dk"
                     });
 
                 }
+                else if (secilenTur == "Sensör") // 5. Seçenek: Sensör Detayı
+                {
+                    modelBuilder.Entity<Sensor>().HasData(new Sensor
+                    {
+                        ekipmanId = currentEkipmanId,
+                        seriNo = $"SN-2026-{currentEkipmanId}",
+                        sensorTipi = i % 2 == 0 ? "Gaz (Metan)" : "Sıcaklık",
+                        ekipmanAdi = $"Sensör Unit-{i}",
+                        ekipmanMarka = "Global Mining Tech",
+                        ekipmanModel = "S-100",
+                        sensorDurumu = "Aktif",
+                        baglantiProtokolu = "MQTT",
+                        haberlesmeTipi = "Kablosuz",
+                        minEsikDeger = 0.0,
+                        maxEsikDeger = 100.0,
+                        hassasiyet = 0.1
+                    });
+                }
 
-                // Her ekipmana bir Sensör
+                /*
                 modelBuilder.Entity<Sensor>().HasData(new Sensor
                 {
                     ekipmanId = currentEkipmanId,
@@ -1038,13 +1422,19 @@ namespace Minemation.Infrastructure.Persistence
                     maxEsikDeger = 100.0,
                     hassasiyet = 0.1
                 });
-            }
+
+            */
+
+
+
+
+
 
 
 
             // --- 3. VARDİYA, EKİP VE TAKİP (50 Kayıt) ---
-            for (int i = 1; i <= 50; i++)
-            {
+           // for (int i = 1; i <= 50; i++)
+          //  {
                 modelBuilder.Entity<Vardiya>().HasData(new Vardiya
                 {
                     vardiyaId = i,
@@ -1076,24 +1466,14 @@ namespace Minemation.Infrastructure.Persistence
                     personelGorevi = gorevler[i % gorevler.Length]
                 });
 
-                modelBuilder.Entity<TakipCihazi>().HasData(new TakipCihazi
-                {
-                    takipCihaziId = i,
-                    takipCihaziSeriNo = $"TC-{i}",
-                    personelId = i,
-                    pilSeviyesi = 100.0m - (i % 40),
-                    takipCihaziDurumu = i % 10 == 0 ? "Bakımda" : "Aktif",
-                    takipCihaziHaberlesmeProtokolu = i % 2 == 0 ? "UHF-RFID" : "LoRaWAN",
-                    takipCihaziModeli = i % 2 == 0 ? "MineTrack-v1" : "SafeZone-v4",
-                    takipCihaziTuru = cihazTipleri[i % cihazTipleri.Length],
-                });
-            }
+
+         //   }
 
             // --- 4. VAKA, AKSİYON VE LOG (50 Kayıt) ---
 
 
-            for (int i = 1; i <= 50; i++)
-            {
+          //  for (int i = 1; i <= 50; i++)
+          //  {
                 modelBuilder.Entity<Vaka>().HasData(new Vaka
                 {
                     vakaId = i,
@@ -1117,14 +1497,15 @@ namespace Minemation.Infrastructure.Persistence
                     uygulananCozum = cozumler[i % cozumler.Length],
                     mudahaleBaslangicSaati = DateTime.AddHours(-i)
                 });
-            }
+          //  }
 
 
             // --- SENSÖR VERİSİ DÖNGÜSÜ (Eşleşen ID'ler) ---
-            for (int i = 1; i <= 50; i++)
-            {
+          //  for (int i = 1; i <= 50; i++)
+          //  {
                 // Ekipman döngüsünde başlangıç ID'si neyse (örn: 500), aynısını burada kullan!
-                int eslesenEkipmanId = 500 + i;
+               
+                /*int eslesenEkipmanId = 500 + i;
 
                 modelBuilder.Entity<SensorVerisi>().HasData(new SensorVerisi
                 {
@@ -1134,14 +1515,14 @@ namespace Minemation.Infrastructure.Persistence
                     deger = 20.5m + i,
                     birim = i % 2 == 0 ? "°C" : "%",
                     olcumTarihi = new DateTime(2026, 1, 1).AddHours(i)
-                });
-            }
+                });*/
+           }
 
 
 
             // --- 5. RAPORLAR VE ALT TİPLERİ (50 Kayıt) ---
             for (int r = 1; r <= 51; r++)
-            {
+           {
                 modelBuilder.Entity<Rapor>().HasData(new Rapor
                 {
                     raporId = r,

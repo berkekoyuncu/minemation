@@ -32,7 +32,7 @@ public class SensorServisi : ISensorServisi
                 (s.sensorDurumu ?? "").ToLower().Contains(arama) ||
                 (s.baglantiProtokolu ?? "").ToLower().Contains(arama) ||
                 (s.haberlesmeTipi ?? "").ToLower().Contains(arama) ||
-                (s.Ekipman != null && (s.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)));
+                (s.ekipmanAdi ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.SensorTipi))
@@ -85,7 +85,7 @@ public class SensorServisi : ISensorServisi
             .Select(s => new SensorListeDto
             {
                 EkipmanId = s.ekipmanId,
-                EkipmanAdi = s.Ekipman == null ? null : s.Ekipman.ekipmanAdi,
+                EkipmanAdi = s.ekipmanAdi,
                 SensorTipi = s.sensorTipi,
                 SensorDurumu = s.sensorDurumu,
                 MinEsikDeger = s.minEsikDeger,
@@ -186,8 +186,8 @@ public class SensorServisi : ISensorServisi
         return new SensorDetayDto
         {
             EkipmanId = sensor.ekipmanId,
-            EkipmanAdi = sensor.Ekipman == null ? null : sensor.Ekipman.ekipmanAdi,
-            EkipmanDurumu = sensor.Ekipman == null ? null : sensor.Ekipman.durum,
+            EkipmanAdi = sensor.ekipmanAdi,
+            EkipmanDurumu = sensor.durum,
             SensorTipi = sensor.sensorTipi,
             SensorDurumu = sensor.sensorDurumu,
             MinEsikDeger = sensor.minEsikDeger,

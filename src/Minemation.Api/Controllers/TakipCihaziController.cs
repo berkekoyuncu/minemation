@@ -25,7 +25,7 @@ public class TakipCihaziController : ControllerBase
     [HttpGet("{id:int}")]
     public async Task<IActionResult> IdIleGetir(int id)
     {
-        var sonuc = await _takipCihaziServisi.IdIleGetirAsync(id);
+        var sonuc = await _takipCihaziServisi.EkipmanIdIleGetirAsync(id);
 
         if (!sonuc.Success)
             return NotFound(sonuc);

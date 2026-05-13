@@ -8,6 +8,7 @@ namespace Minemation.Domain.Entities
     {
         public int ekipmanId { get; set; }
         public string ekipmanAdi { get; set; }
+        public string ekipmanTuru { get; set; }
         public string ekipmanMarka { get; set; }
         public string ekipmanModel { get; set; }
         public string durum { get; set; }
@@ -32,8 +33,12 @@ namespace Minemation.Domain.Entities
         public string operasyonTuru { get; set; }
 
 
-
-        public Sensor Sensor { get; set; }
+        /*
+ 
+        public int? AtanmisTakipCihaziId { get; set; } // Foreign Key (ID)
+        public virtual TakipCihazi? TakipCihazi { get; set; } // Navigation Property
+        */
 
     }
+
 }

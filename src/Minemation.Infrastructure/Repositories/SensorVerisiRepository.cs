@@ -22,7 +22,6 @@ public class SensorVerisiRepository : ISensorVerisiRepository
         return await _context.SensorVerisi
             .AsNoTracking()
             .Include(sv => sv.Sensor)
-                .ThenInclude(s => s.Ekipman)
             .Include(sv => sv.Vardiya)
             .ToListAsync();
     }
@@ -31,7 +30,6 @@ public class SensorVerisiRepository : ISensorVerisiRepository
     {
         return await _context.SensorVerisi
             .Include(sv => sv.Sensor)
-                .ThenInclude(s => s.Ekipman)
             .Include(sv => sv.Vardiya)
             .FirstOrDefaultAsync(sv => sv.sensorVerisiId == id);
     }

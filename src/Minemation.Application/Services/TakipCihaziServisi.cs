@@ -33,7 +33,7 @@ public class TakipCihaziServisi : ITakipCihaziServisi
                 (t.takipCihaziModeli ?? "").ToLower().Contains(arama) ||
                 (t.takipCihaziHaberlesmeProtokolu ?? "").ToLower().Contains(arama) ||
                 (t.Personel != null && ((t.Personel.personelAdi ?? "") + " " + (t.Personel.personelSoyadi ?? "")).ToLower().Contains(arama)) ||
-                (t.Ekipman != null && (t.Ekipman.ekipmanAdi ?? "").ToLower().Contains(arama)));
+                (t.ekipmanAdi ?? "").ToLower().Contains(arama));
         }
 
         if (!string.IsNullOrWhiteSpace(sorgu.TakipCihaziTuru))
@@ -111,7 +111,7 @@ public class TakipCihaziServisi : ITakipCihaziServisi
                     ? null
                     : $"{t.Personel.personelAdi} {t.Personel.personelSoyadi}",
                 EkipmanId = t.ekipmanId,
-                EkipmanAdi = t.Ekipman == null ? null : t.Ekipman.ekipmanAdi
+                EkipmanAdi = t.ekipmanAdi
             })
             .ToList();
 
@@ -125,9 +125,9 @@ public class TakipCihaziServisi : ITakipCihaziServisi
         return ApiResponse<PagedResult<TakipCihaziListeDto>>.Ok(sayfaliSonuc);
     }
 
-    public async Task<ApiResponse<TakipCihaziDetayDto>> IdIleGetirAsync(int id)
+    public async Task<ApiResponse<TakipCihaziDetayDto>> EkipmanIdIleGetirAsync(int ekipmanId)
     {
-        var cihaz = await _takipCihaziRepository.IdIleGetirAsync(id);
+        var cihaz = await _takipCihaziRepository.EkipmanIdIleGetirAsync(ekipmanId);
 
         if (cihaz is null)
             return ApiResponse<TakipCihaziDetayDto>.Fail("Takip cihazı bulunamadı.");
@@ -152,7 +152,7 @@ public class TakipCihaziServisi : ITakipCihaziServisi
             takipCihaziHaberlesmeProtokolu = dto.TakipCihaziHaberlesmeProtokolu,
             pilSeviyesi = dto.PilSeviyesi,
             personelId = dto.PersonelId,
-            ekipmanId = dto.EkipmanId
+            ekipmanId = dto.EkipmanId.Value
         };
 
         await _takipCihaziRepository.EkleAsync(cihaz);
@@ -164,14 +164,14 @@ public class TakipCihaziServisi : ITakipCihaziServisi
         );
     }
 
-    public async Task<ApiResponse<TakipCihaziDetayDto>> GuncelleAsync(int id, TakipCihaziGuncelleDto dto)
+    public async Task<ApiResponse<TakipCihaziDetayDto>> GuncelleAsync(int ekipmanId, TakipCihaziGuncelleDto dto)
     {
-        var cihaz = await _takipCihaziRepository.IdIleGetirAsync(id);
+        var cihaz = await _takipCihaziRepository.EkipmanIdIleGetirAsync(ekipmanId);
 
         if (cihaz is null)
             return ApiResponse<TakipCihaziDetayDto>.Fail("Takip cihazı bulunamadı.");
 
-        var seriNoVarMi = await _takipCihaziRepository.SeriNoVarMiAsync(dto.TakipCihaziSeriNo, id);
+        var seriNoVarMi = await _takipCihaziRepository.SeriNoVarMiAsync(dto.TakipCihaziSeriNo, ekipmanId);
 
         if (seriNoVarMi)
             return ApiResponse<TakipCihaziDetayDto>.Fail("Bu seri numarası başka bir takip cihazına ait.");
@@ -184,7 +184,7 @@ public class TakipCihaziServisi : ITakipCihaziServisi
         cihaz.takipCihaziHaberlesmeProtokolu = dto.TakipCihaziHaberlesmeProtokolu;
         cihaz.pilSeviyesi = dto.PilSeviyesi;
         cihaz.personelId = dto.PersonelId;
-        cihaz.ekipmanId = dto.EkipmanId;
+        cihaz.ekipmanId = dto.EkipmanId.Value; 
 
         await _takipCihaziRepository.DegisiklikleriKaydetAsync();
 
@@ -194,9 +194,9 @@ public class TakipCihaziServisi : ITakipCihaziServisi
         );
     }
 
-    public async Task<ApiResponse<bool>> SilAsync(int id)
+    public async Task<ApiResponse<bool>> SilAsync(int ekipmanId)
     {
-        var cihaz = await _takipCihaziRepository.IdIleGetirAsync(id);
+        var cihaz = await _takipCihaziRepository.EkipmanIdIleGetirAsync(ekipmanId);
 
         if (cihaz is null)
             return ApiResponse<bool>.Fail("Takip cihazı bulunamadı.");
@@ -225,8 +225,8 @@ public class TakipCihaziServisi : ITakipCihaziServisi
                 ? null
                 : $"{cihaz.Personel.personelAdi} {cihaz.Personel.personelSoyadi}",
             EkipmanId = cihaz.ekipmanId,
-            EkipmanAdi = cihaz.Ekipman == null ? null : cihaz.Ekipman.ekipmanAdi,
-            EkipmanDurumu = cihaz.Ekipman == null ? null : cihaz.Ekipman.durum
+            EkipmanAdi = cihaz.ekipmanAdi,
+            EkipmanDurumu = cihaz.durum
         };
     }
 }

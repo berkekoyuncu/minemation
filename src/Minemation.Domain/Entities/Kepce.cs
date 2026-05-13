@@ -4,10 +4,8 @@ using System.Text;
 
 namespace Minemation.Domain.Entities
 {
-    public class Kepce
+    public class Kepce : Ekipman
     {
-        public int ekipmanId { get; set; }
-
 
         public string plaka { get; set; }
         public decimal yuklemeKapasitesi { get; set; }
@@ -16,8 +14,6 @@ namespace Minemation.Domain.Entities
         public decimal devrilmeYuku { get; set; }
 
 
-
-        public Ekipman Ekipman { get; set; }
     }
     // uml ve er diyagrm arasında farklılıklar var
 }
